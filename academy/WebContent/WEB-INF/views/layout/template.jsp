@@ -22,6 +22,16 @@
 
 <style type="text/css">
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
+#background{
+	background-image:url(/academy/resource/images/back1.jpg); 
+    background-position: center;
+    background-repeat: no-repeat;
+   	background-size: 1350px 600px;
+   	width: 1400px;
+   	height: 550px;
+  	margin: 0px auto 0px auto;
+}
+
 body{
 	font-family: 'Nanum Square', sans-serif;
 	font-size: 20px;

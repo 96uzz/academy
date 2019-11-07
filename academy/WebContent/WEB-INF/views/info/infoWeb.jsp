@@ -24,7 +24,7 @@
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/semi-project/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back1.jpg); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
