@@ -77,7 +77,7 @@ body{
         <li>
             <a href="<%=cp%>/notice/list.do">고객센터</a>
             <ul>
-                <li><a href="<%=cp%>/board/list.do" style="margin-left: 380px;" onmouseover="this.style.marginLeft='380px';">공지사항</a></li>
+                <li><a href="<%=cp%>/notice/list.do" style="margin-left: 380px;" onmouseover="this.style.marginLeft='380px';">공지사항</a></li>
                 <li><a href="<%=cp%>/qna/list.do">Q&amp;A</a></li>
             </ul>
         </li>
