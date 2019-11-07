@@ -51,44 +51,44 @@ body{
             <a href="<%=cp%>/info/infoWeb.do" style="margin-left: 15px;">홈페이지소개</a>
             <ul>
                 <li><a href="<%=cp%>/info/infoWeb.do">조장 인사말</a></li>
-                <li><a href="#">연혁</a></li>
-                <li><a href="#">찾아오시는 길</a></li>
-                <li><a href="#">역할 분담</a></li>
+                <li><a href="<%=cp%>/info/history.do">연혁</a></li>
+                <li><a href="<%=cp%>/info/direction.do">찾아오시는 길</a></li>
+                <li><a href="<%=cp%>/info/group.do">역할 분담</a></li>
             </ul>
         </li>
 			
         <li>
-            <a href="#">교육 정보</a>
+            <a href="<%=cp%>/acs/list.do">교육 정보</a>
             <ul>
                 <li><a href="#" style="margin-left: 150px;" onmouseover="this.style.marginLeft='150px';">학원 검색</a></li>
-                <li><a href="#">강의 검색</a></li>
-                <li><a href="#">일정 검색</a></li>
+                <li><a href="<%=cp%>/acs/list.do">강의 검색</a></li>
+                <li><a href="<%=cp%>/lts/list.do">일정 검색</a></li>
             </ul>
         </li>
 
         <li>
-            <a href="#">커뮤니티</a>
+            <a href="<%=cp%>/board/list.do">커뮤니티</a>
             <ul>
-	 			<li><a href="#" style="margin-left: 267px;" onmouseover="this.style.marginLeft='267px';">자유 게시판</a></li>
-                <li><a href="#">강의 평가</a></li>
+	 			<li><a href="<%=cp%>/board/list.do" style="margin-left: 267px;" onmouseover="this.style.marginLeft='267px';">자유 게시판</a></li>
+                <li><a href="<%=cp%>/review/list.do">강의 평가</a></li>
             </ul>
         </li>
 
         <li>
-            <a href="#">고객센터</a>
+            <a href="<%=cp%>/notice/list.do">고객센터</a>
             <ul>
-                <li><a href="#" style="margin-left: 380px;" onmouseover="this.style.marginLeft='380px';">공지사항</a></li>
-                <li><a href="#">Q&amp;A</a></li>
+                <li><a href="<%=cp%>/board/list.do" style="margin-left: 380px;" onmouseover="this.style.marginLeft='380px';">공지사항</a></li>
+                <li><a href="<%=cp%>/qna/list.do">Q&amp;A</a></li>
             </ul>
         </li>
 		
         
         <li>
-            <a href="#">마이 페이지</a>
+            <a href="<%=cp%>/mypage/interlecture.do">마이 페이지</a>
             <ul>
-                <li><a href="#" style="margin-left: 305px;" onmouseover="this.style.marginLeft='305px';">관심 강좌</a></li>
-                <li><a href="#">정보 수정</a></li>
-                <li><a href="#">수강중인 강좌</a></li>
+                <li><a href="<%=cp%>/mypage/interlecture.do" style="margin-left: 305px;" onmouseover="this.style.marginLeft='305px';">관심 강좌</a></li>
+                <li><a href="<%=cp%>/mypage/myinfo.do">정보 수정</a></li>
+                <li><a href="<%=cp%>/mypage/takinglecture.do">수강중인 강좌</a></li>
             </ul>
         </li>
        
