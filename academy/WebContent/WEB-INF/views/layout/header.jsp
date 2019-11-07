@@ -60,9 +60,9 @@ body{
         <li>
             <a href="<%=cp%>/acs/list.do">교육 정보</a>
             <ul>
-                <li><a href="#" style="margin-left: 150px;" onmouseover="this.style.marginLeft='150px';">학원 검색</a></li>
-                <li><a href="<%=cp%>/acs/list.do">강의 검색</a></li>
-                <li><a href="<%=cp%>/lts/list.do">일정 검색</a></li>
+                <li><a href="<%=cp%>/acs/list.do" style="margin-left: 150px;" onmouseover="this.style.marginLeft='150px';">학원 검색</a></li>
+                <li><a href="<%=cp%>/lts/list.do">강의 검색</a></li>
+                <li><a href="<%=cp%>/cal/list.do">일정 검색</a></li>
             </ul>
         </li>
 
