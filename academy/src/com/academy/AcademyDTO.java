@@ -1,5 +1,6 @@
 package com.academy;
 
+
 public class AcademyDTO {
 	private int listNum;
 	private int acaNum;
