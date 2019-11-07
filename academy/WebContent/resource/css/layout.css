@@ -1,0 +1,149 @@
+@CHARSET "UTF-8";
+
+.header {
+    width:100%;
+    text-align:left;
+    border-bottom: 1px solid #cccccc;
+}
+
+.container {
+    width:100%;
+    text-align:left;
+}
+
+.body-container {
+    margin: 2px 0px 20px 100px auto;
+    min-height: 500px;
+    text-align: left;
+    float: left;
+}
+
+.body-title {
+    color: #424951;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    margin: 0 0 25px 0;
+    border-bottom: 1px solid #dddddd;
+}
+.body-title h3 {
+    font-size: 23px;
+    min-width: 300px;
+    font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+    font-weight: bold;
+    margin: 0 0 -5px 0;
+    padding-bottom: 5px;
+    display: inline-block;
+    border-bottom: 3px solid #3598DB;
+}
+
+.footer {
+    clear:both;
+    width:100%;
+}
+
+/* header */
+.header-top {
+    margin:0px auto;
+    width: 1300px;
+    height: 100px;
+    clear: both;
+   
+}
+
+.header-left {
+    width: 350px;
+    height: 100px;
+    float: left;
+}
+
+.header-right {
+    width: 250px;
+    height: 100px;
+    float: right;
+    text-align: right;
+}
+
+/* menu */
+.menu {
+	float: left;
+    margin:0px auto;
+    width: 700px;
+    min-height: 40px;
+    
+}
+
+ul.nav {
+  margin-top: 15px;
+  padding: 0;
+  list-style: none;
+  font-weight: 800;
+  font-size: 20px;
+  
+}
+
+ul.nav li { 
+  display: inline;
+  text-align: right;
+}
+
+ul.nav li a {                    
+  float: left;
+  line-height: 40px;
+  color: #555;
+  text-decoration: none;
+  margin: 0 10px 0 0;
+  padding: 0 15px;
+}
+
+
+ul.nav .current a, ul.nav li:hover > a {
+  color: #333;
+  font-weight : 800;
+  text-decoration: none;
+  
+}
+
+
+ul.nav ul {
+  display: none;
+}
+
+ul.nav li:hover > ul {
+  position: absolute;
+  display: block;
+  width: 1300px;
+  height: 40px;
+  margin: 40px 0 0 10px;
+  z-index: 101;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+ul.nav li:hover > ul li a {
+  float: left;
+  line-height: 39px;
+  color: #333;
+  text-decoration: none;
+  margin: 0;
+  padding: 0 20px 0 20px;
+  
+}
+
+ul.nav li:hover > ul li a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+
+/* footer */
+.footer {
+    width:100%;
+    height:50px;
+    margin:0px auto;
+    text-align:center;
+    background-color: #ffffff;
+    line-height: 50px;
+    border-top:1px solid #cccccc;
+}
+
