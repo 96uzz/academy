@@ -1,6 +1,7 @@
 package com.notice;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import com.util.DBConn;
@@ -8,8 +9,32 @@ import com.util.DBConn;
 public class NoticeDAO {
 	private Connection conn=DBConn.getConnection();
 	
-	public int insertNotice(NoticeDTO dto) {
-		return 0;
+	public void insertNotice(NoticeDTO dto) {
+		PreparedStatement pstmt=null;
+		StringBuilder sb=new StringBuilder();
+		
+		try {
+			sb.append("INSERT INTO notice(noticeNum, notice, userId, subject, content) ");
+			sb.append(" VALUES(notice_seq.NEXTVAL, ?, ?, ?, ?) ");
+			pstmt=conn.prepareStatement(sb.toString());
+			
+			pstmt.setInt(1, dto.getNotice());
+			pstmt.setString(2, dto.getUserId());
+			pstmt.setString(3, dto.getSubject());
+			pstmt.setString(4, dto.getContent());
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
 	}
 	
 	public int dataCount(String condition, String keyword) {

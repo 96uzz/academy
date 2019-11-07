@@ -7,6 +7,28 @@ public class NoticeDTO {
 	private String userId;
 	private String subject;
 	private String content;
+	private String saveFilename;
+	private String originalFilename;
+	private long filesize;
+	
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
+	public long getFilesize() {
+		return filesize;
+	}
+	public void setFilesize(long filesize) {
+		this.filesize = filesize;
+	}
 	private int hitCount;
 	private String created;
 	

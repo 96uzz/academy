@@ -4,34 +4,29 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.util.MyServlet;
+
 @WebServlet("/qna/*")
-public class QnaServlet extends HttpServlet {
+public class QnaServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-	}
-	
-	protected void forward(HttpServletRequest req, HttpServletResponse resp, String path) throws ServletException, IOException {
+	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
 		
-	}
-
-	protected void Process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String cp=req.getContextPath();
 		
+		String uri=req.getRequestURI();
+		if(uri.indexOf("list.do")!=-1) {
+			list(req, resp);
+		}
 	}
 	
 	protected void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		forward(req, resp, "/WEB-INF/views/qna/list.jsp");
 	}
 	
 	protected void createdForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -67,4 +62,5 @@ public class QnaServlet extends HttpServlet {
 	protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 	}
+
 }

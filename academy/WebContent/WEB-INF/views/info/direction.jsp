@@ -1,4 +1,4 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -91,14 +91,14 @@ body{
             <h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span>   홈페이지 소개 </h3>
         	</div>
 			<table>
-				<tr><td><a href="<%=cp%>/info/infoWeb.do" id="nav1">조장 인사말</a></td></tr>
-				<tr><td><a href="<%=cp%>/info/history.do" id="nav2">연혁</a></td></tr>
-				<tr><td><a href="<%=cp%>/info/direction.do" id="nav3">찾아오시는 길</a></td></tr>
-				<tr><td><a href="<%=cp%>/info/group.do" id="nav4">역할 분담</a></td></tr>
+				<tr><td><a href="<%=cp%>/info/infoWeb.do" id="nav3">조장 인사말</a></td></tr>
+				<tr><td><a href="<%=cp%>/info/history.do" id="nav4">연혁</a></td></tr>
+				<tr><td><a href="<%=cp%>/info/direction.do" id="nav1">찾아오시는 길</a></td></tr>
+				<tr><td><a href="<%=cp%>/info/group.do" id="nav2">역할 분담</a></td></tr>
 			</table>
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB;">
-			조장 인사말
+			찾아오시는 길
 		</div>
 	
     </div>
