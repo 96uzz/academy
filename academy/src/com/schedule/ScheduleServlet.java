@@ -31,17 +31,19 @@ public class ScheduleServlet extends MyServlet {
 		HttpSession session = req.getSession();
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
+		
 		// AJAX에서 로그인이 안된 경우 403이라는 에러 코드를 던진다.
 		String header = req.getHeader("AJAX");
 		if (header != null && header.equals("true") && info == null) {
 			resp.sendError(403);
 			return;
 		}
-
+	
 		if (info == null) {
 			resp.sendRedirect(cp + "/member/login.do");
 			return;
 		}
+	
 
 		if (uri.indexOf("list.do") != -1) {
 			monthSchedule(req, resp);
@@ -59,8 +61,8 @@ public class ScheduleServlet extends MyServlet {
 	}
 
 	private void monthSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		//HttpSession session = req.getSession();
+		//SessionInfo info = (SessionInfo) session.getAttribute("member");
 
 		ScheduleDAO dao = new ScheduleDAO();
 
@@ -105,7 +107,8 @@ public class ScheduleServlet extends MyServlet {
 		// 스케쥴 가져오기
 		String startDay = String.format("%04d%02d%02d", syear, smonth, sdate);
 		String endDay = String.format("%04d%02d%02d", eyear, emonth, edate);
-		List<ScheduleDTO> list = dao.listMonth(startDay, endDay, info.getUserId());
+		//List<ScheduleDTO> list = dao.listMonth(startDay, endDay, info.getUserId());
+		List<ScheduleDTO> list = dao.listMonth(startDay, endDay, "admin");
 
 		String s;
 		String[][] days = new String[cal.getActualMaximum(Calendar.WEEK_OF_MONTH)][7];
@@ -182,7 +185,7 @@ public class ScheduleServlet extends MyServlet {
 
 					if((sd8 == cn8 || sd8 <=cn8 && ed8 >= cn8 )) {
 						days[row][i]+="<span class='scheduleSubject' data-date='"+s+"' data-num='"
-								 +dto.getNum()+"' >"+dto.getLecName()+"</span>"; cnt++; 
+								 +dto.getNum()+"' >"+dto.getLecName()+"</span>";
 						cnt++;
 					} else if ((sd8 > cn8 && ed8 < cn8)) {
 						break;
@@ -247,8 +250,8 @@ public class ScheduleServlet extends MyServlet {
 	}
 
 	private void daySchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		//HttpSession session = req.getSession();
+		//SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
 		ScheduleDAO dao = new ScheduleDAO();
 
@@ -278,8 +281,9 @@ public class ScheduleServlet extends MyServlet {
 
 		// 테이블에서 일일 전체일절 리스트 가져오기 가져오기
 		date = String.format("%04d%02d%02d", year, month, day);
-		List<ScheduleDTO> list = dao.listDay(date, info.getUserId());
-
+		//List<ScheduleDTO> list = dao.listDay(date, info.getUserId());
+		List<ScheduleDTO> list = dao.listDay(date, "admin");
+		
 		int num = 0;
 		ScheduleDTO dto = null;
 		if (snum != null) {
@@ -482,8 +486,8 @@ public class ScheduleServlet extends MyServlet {
 	}
 
 	private void deleteSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		//HttpSession session = req.getSession();
+		//SessionInfo info = (SessionInfo) session.getAttribute("member");
 
 		String cp = req.getContextPath();
 
@@ -491,7 +495,8 @@ public class ScheduleServlet extends MyServlet {
 		String date = req.getParameter("date");
 		int num = Integer.parseInt(req.getParameter("num"));
 
-		dao.deleteSchedule(num, info.getUserId());
+		//dao.deleteSchedule(num, info.getUserId());
+		dao.deleteSchedule(num, "admin");
 
 		resp.sendRedirect(cp + "/schedule/day.do?date=" + date);
 	}

@@ -459,7 +459,7 @@ $(function(){
 				</div>
 				-->
 
-				<div id="tab-content" style="clear: both; margin: auto 40px;">
+				<div id="tab-content" style="clear: both; margin: auto 40px; padding-bottom:20px;">
 
 					<table style="width: 840px; margin: 0px auto; border-spacing: 0;">
 						<tr height="60">
