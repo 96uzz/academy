@@ -87,7 +87,7 @@ public class MemberServlet extends MyServlet {
 		String msg = "아이디 또는 패스워드가 일치하지 않습니다.";
 		req.setAttribute("message", msg);
 
-		forward(req, resp, "/WEB-INF/views/main/main.jsp"); // 포워드 할 떄 /는 cp 포함
+		forward(req, resp, "/WEB-INF/views/member/login.jsp"); // 포워드 할 떄 /는 cp 포함
 
 	}
 

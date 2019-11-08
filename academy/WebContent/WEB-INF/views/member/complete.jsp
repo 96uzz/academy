@@ -88,7 +88,7 @@
 		<div class="container">
 			<div>
 				<div
-					style="margin: 0px auto 0px; width: 450px; min-height: 350px; ">
+					style="margin: 0px auto 0px; width: 450px; min-height: 350px;">
 
 					<div style="text-align: center;">
 					<br><br><br><br>	

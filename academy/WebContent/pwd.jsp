@@ -128,16 +128,17 @@ body{
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 
+function bgLabel(ob, id) {
+    if(!ob.value) {
+	    document.getElementById(id).style.display="";
+    } else {
+	    document.getElementById(id).style.display="none";
+    }
+}
+
 
 function sendLogin() {
     var f = document.loginForm;
-
-	var str = f.userId.value;
-    if(!str) {
-        alert("아이디를 입력하세요. ");
-        f.userId.focus();
-        return;
-    }
 
     str = f.userPwd.value;
     if(!str) {
@@ -146,7 +147,7 @@ function sendLogin() {
         return;
     }
 
-    f.action = "<%=cp%>/member/login_ok.do";
+    f.action = "<%=cp%>/member/pwd_ok.do";
     f.submit();
 }
 
@@ -166,32 +167,31 @@ function sendLogin() {
         	</div>
 		</div>
 		<div class="content2" style="margin-left: auto; margin-right: auto;">
-		<h2 style="padding-left: 120px;">로그인</h2>
-		<br>
+		<h2 style="padding-left: 80px;">비밀번호 확인</h2>
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;비밀번호를 한 번 더 입력해주세요.
 		<br><br>
-			<form name="loginForm" method="post">
+		<form name="loginForm" method="post">
       <table style="border-collapse: collapse; border-spacing: 0px;">
          <tr style="border-spacing: 0px; border-collapse: collapse;">
             <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/man.JPG"></td>
-            <td><input class="loginInput" type="text" id="userId" name="userId" style="margin-bottom: 5px;"></td>
+            <td><input class="loginInput" type="text" id="userId" name="userId" style="margin-bottom: 5px;"
+            value="${sessionScope.member.userId}" readonly="readonly"></td>
          </tr>
          <tr>
             <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/key.JPG"></td>
-            <td><input class="loginInput" type="password" id="userPwd" name="userPwd" style="margin-bottom: 5px;"></td>
+            <td>
+           	<label for="userPwd" id="lblUserPwd" class="lbl"></label>
+            <input class="loginInput" type="password" id="userPwd" name="userPwd" style="margin-bottom: 5px;"
+            onfocus="document.getElementById('lblUserPwd').style.display='none';" onblur="bgLabel(this, 'lblUserPwd');"></td>
          </tr>
       </table>
       
       <div id="confirmLogin">${message}</div>
       <table style="width: 341px; padding-top: 5px">
          <tr>
-            <td><button class="loginButton" type="button"
-                  name="login" onclick="sendLogin();">로그인</button></td>
-         	 <td><button class="loginButton" type="button"
-                  name="register" onclick="javascript:location.href='<%=cp%>/member/member.do';">회원가입</button></td>
-            <td><button class="loginButton" type="button" name="find"
-                  onclick="">ID/PWD 찾기</button></td>
+           <td><button type="button" onclick="sendOk();" class="loginButton" style="margin-left: 113px;">확인</button></td>
          </tr>
-             </table>
+      </table>
         </form>
 		</div>
 	
