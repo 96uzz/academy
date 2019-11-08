@@ -1,308 +1,131 @@
-<%@ page  contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String cp = request.getContextPath();
+   String cp = request.getContextPath();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap&subset=korean" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>spring</title>
+
+<link rel="stylesheet" href="<%=cp%>/resource/css/style.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 
 <style type="text/css">
-html {
-  width: 100%;
-  height: 100%;
+@import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
+#background{
+	background-image:url(/academy/resource/images/back1.jpg); 
+    background-position: center;
+    background-repeat: no-repeat;
+   	background-size: 1350px 600px;
+
+   	width: 1400px;
+   	height: 550px;
+  	margin: 0px auto 0px auto;
+
 }
 
-body {
-  background: -webkit-linear-gradient(45deg, rgba(66, 183, 245, 0.8) 0%, rgba(66, 245, 189, 0.4) 100%);
-  background: linear-gradient(45deg, rgba(66, 183, 245, 0.8) 0%, rgba(66, 245, 189, 0.4) 100%);
-  color: rgba(0, 0, 0, 0.6);
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  line-height: 1.6em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body{
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 20px;
 }
 
-.overlay, .form-panel.one:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: none;
-  background: rgba(0, 0, 0, 0.8);
-  width: 100%;
-  height: 100%;
+.container2 {
+    width:100%;
+    text-align:left;
+	position: relative;
+}
+.body-container2 {
+	margin-top : 120px;
+	width: 1000px;
+	clear: both;
+	min-height: 500px;
+	position: absolute;
+	top: 80%;
+	left: 37%;
+	
+}
+.navigation2 {
+	float: left;
 }
 
-.form {
-  z-index: 15;
-  position: relative;
-  background: #FFFFFF;
-  width: 600px;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  margin: 100px auto 10px;
-  overflow: hidden;
-}
-.form-toggle {
-  z-index: 10;
-  position: absolute;
-  top: 60px;
-  right: 60px;
-  background: #FFFFFF;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  -webkit-transform-origin: center;
-      -ms-transform-origin: center;
-          transform-origin: center;
-  -webkit-transform: translate(0, -25%) scale(0);
-      -ms-transform: translate(0, -25%) scale(0);
-          transform: translate(0, -25%) scale(0);
-  opacity: 0;
-  cursor: pointer;
-  -webkit-transition: all 0.3s ease;
-          transition: all 0.3s ease;
-}
-.form-toggle:before, .form-toggle:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 4px;
-  background: #4285F4;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-.form-toggle:before {
-  -webkit-transform: translate(-50%, -50%) rotate(45deg);
-      -ms-transform: translate(-50%, -50%) rotate(45deg);
-          transform: translate(-50%, -50%) rotate(45deg);
-}
-.form-toggle:after {
-  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
-      -ms-transform: translate(-50%, -50%) rotate(-45deg);
-          transform: translate(-50%, -50%) rotate(-45deg);
-}
-.form-toggle.visible {
-  -webkit-transform: translate(0, -25%) scale(1);
-      -ms-transform: translate(0, -25%) scale(1);
-          transform: translate(0, -25%) scale(1);
-  opacity: 1;
-}
-.form-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin: 0 0 20px;
-}
-.form-group:last-child {
-  margin: 0;
-}
-.form-group label {
-  display: block;
-  margin: 0 0 10px;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: .2em;
-}
-.two .form-group label {
-  color: #FFFFFF;
-}
-.form-group input {
-  outline: none;
-  display: block;
-  background: rgba(0, 0, 0, 0.1);
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  box-sizing: border-box;
-  padding: 12px 20px;
-  color: rgba(0, 0, 0, 0.6);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: inherit;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-}
-.form-group input:focus {
-  color: rgba(0, 0, 0, 0.8);
-}
-.two .form-group input {
-  color: #FFFFFF;
-}
-.two .form-group input:focus {
-  color: #FFFFFF;
-}
-.form-group button {
-  outline: none;
-  background: #4285F4;
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  padding: 12px 20px;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: inherit;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.two .form-group button {
-  background: #FFFFFF;
-  color: #4285F4;
-}
-.form-group .form-remember {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-}
-.form-group .form-remember input[type='checkbox'] {
-  display: inline-block;
-  width: auto;
-  margin: 0 10px 0 0;
-}
-.form-group .form-recovery {
-  color: #4285F4;
-  font-size: 12px;
-  text-decoration: none;
-}
-.form-panel {
-  padding: 60px calc(5% + 60px) 60px 60px;
-  box-sizing: border-box;
-}
-.form-panel.one:before {
-  content: '';
-  display: block;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-}
-.form-panel.one.hidden:before {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-}
-.form-panel.two {
-  z-index: 5;
-  position: absolute;
-  top: 0;
-  left: 95%;
-  background: #4285F4;
-  width: 100%;
-  min-height: 100%;
-  padding: 60px calc(10% + 60px) 60px 60px;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-  cursor: pointer;
-}
-.form-panel.two:before, .form-panel.two:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 60px;
-  left: 1.5%;
-  background: rgba(255, 255, 255, 0.2);
-  height: 30px;
-  width: 2px;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-}
-.form-panel.two:after {
-  left: 3%;
-}
-.form-panel.two:hover {
-  left: 93%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-.form-panel.two:hover:before, .form-panel.two:hover:after {
-  opacity: 0;
-}
-.form-panel.two.active {
-  left: 10%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  cursor: default;
-}
-.form-panel.two.active:before, .form-panel.two.active:after {
-  opacity: 0;
-}
-.form-header {
-  margin: 0 0 40px;
-}
-.form-header h1 {
-  padding: 4px 0;
-  color: #4285F4;
-  font-size: 24px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-.two .form-header h1 {
-  position: relative;
-  z-index: 40;
-  color: #FFFFFF;
+.content2 {
+	float: left;
+	margin-left: 30px;
+	margin-top: 30px;
 }
 
-.pen-footer {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 600px;
-  margin: 20px auto 100px;
-}
-.pen-footer a {
-  color: #FFFFFF;
-  font-size: 12px;
-  text-decoration: none;
-  text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.1);
-}
-.pen-footer a .material-icons {
-  width: 12px;
-  margin: 0 5px;
-  vertical-align: middle;
-  font-size: 12px;
+.navigation2 td {
+ 	font-family: 'Nanum Square', sans-serif;
+	font-size : 20px;
+	border-radius: 2px;
+	margin : 20px auto;
+	padding : 10px;
+	
 }
 
-.cp-fab {
-  background: #FFFFFF !important;
-  color: #4285F4 !important;
+#nav1 {
+	font-weight: 800;
+}
+
+.loginImage {
+   width: 40px;
+   height: 40px;
+   padding-top: 0px;
+}
+
+.loginInput {
+   height: 35px;
+   width: 280px;
+   font-size: 18px;
+   padding-top: 1px;
+}
+
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: white;
+   font-size: 15px;
+   background-color: #3598DB;
+   border: 0px;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#e6e6e6;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
+#confirmLogin{
+   font-size: 15px;
+   color : red;
 }
 
 </style>
-
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+
+
 function sendLogin() {
     var f = document.loginForm;
 
@@ -323,70 +146,60 @@ function sendLogin() {
     f.action = "<%=cp%>/member/login_ok.do";
     f.submit();
 }
+
 </script>
 </head>
 <body>
 
-<!-- Form-->
-<div class="form">
-  <div class="form-toggle"></div>
-  <div class="form-panel one">
-    <div class="form-header">
-      <h1>Account Login</h1>
+<div class="header">
+    <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
+</div>
+<div id="background" class="container2">
+<div class="container2">
+    <div class="body-container2">
+		<div class="navigation2" >
+			<div class="body-title">
+          
+        	</div>
+		</div>
+		<div class="content2" style="margin-left: auto; margin-right: auto;">
+		<h2 style="padding-left: 120px;">로그인</h2>
+		<br>
+		<br><br>
+			<form name="loginForm" method="post">
+      <table style="border-collapse: collapse; border-spacing: 0px;">
+         <tr style="border-spacing: 0px; border-collapse: collapse;">
+            <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/man.JPG"></td>
+            <td><input class="loginInput" type="text" id="userId" name="userId" style="margin-bottom: 5px;"></td>
+         </tr>
+         <tr>
+            <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/key.JPG"></td>
+            <td><input class="loginInput" type="password" id="userPwd" name="userPwd" style="margin-bottom: 5px;"></td>
+         </tr>
+      </table>
+      
+      <div id="confirmLogin">${message}</div>
+      <table style="width: 341px; padding-top: 5px">
+         <tr>
+            <td><button class="loginButton" type="button"
+                  name="login" onclick="sendLogin();">로그인</button></td>
+         	 <td><button class="loginButton" type="button"
+                  name="register" onclick="javascript:location.href='<%=cp%>/member/member.do';">회원가입</button></td>
+            <td><button class="loginButton" type="button" name="find"
+                  onclick="">ID/PWD 찾기</button></td>
+         </tr>
+             </table>
+        </form>
+		</div>
+	
     </div>
-    <div class="form-content">
-      <form name="loginForm" method="post" action="">
-        <div class="form-group">
-          <label for="userId">UserId</label>
-          <input type="text" id="userId" name="userId" />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="userPwd" name="userPwd"/>
-        </div>
-        <div class="form-group">
-          <label class="form-remember">
-            <input type="checkbox"/>Remember Me
-          </label><a href="<%=cp%>" class="form-recovery">Back to Main</a>
-        </div>
-        <div class="form-group">
-          <button type="button" onclick="sendLogin();">Log In</button>
-        </div>
-      </form>
-    </div>
-  </div>
- 
+</div>
+</div>
+<div class="footer">
+    <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script type="text/javascript">
-/*
-$(document).ready(function() {
-  var panelOne = $('.form-panel.two').height(),
-    panelTwo = $('.form-panel.two')[0].scrollHeight;
-
-  $('.form-panel.two').not('.form-panel.two.active').on('click', function(e) {
-    e.preventDefault();
-
-    $('.form-toggle').addClass('visible');
-    $('.form-panel.one').addClass('hidden');
-    $('.form-panel.two').addClass('active');
-    $('.form').animate({
-      'height': panelTwo
-    }, 200);
-  });
-
-  $('.form-toggle').on('click', function(e) {
-    e.preventDefault();
-    $(this).removeClass('visible');
-    $('.form-panel.one').removeClass('hidden');
-    $('.form-panel.two').removeClass('active');
-    $('.form').animate({
-      'height': panelOne
-    }, 200);
-  });
-});
-*/
-</script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 </body>
 </html>

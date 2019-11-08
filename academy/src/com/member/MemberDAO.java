@@ -3,6 +3,7 @@ package com.member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.util.DBConn;
 
@@ -47,6 +48,38 @@ public class MemberDAO {
 		}
 		return dto;
 
+	}
+	public void insertMember(MemberDTO dto) throws Exception {
+		PreparedStatement pstmt = null;
+		String sql;
+
+		sql = "INSERT INTO member(userId, userName, userPwd, birth, email, tel, lecCode) VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, dto.getUserId());
+		pstmt.setString(2, dto.getUserName());
+		pstmt.setString(3, dto.getUserPwd());
+		pstmt.setString(4, dto.getBirth());
+		pstmt.setString(5, dto.getEmail());
+		pstmt.setString(6, dto.getTel());
+		pstmt.setString(7, dto.getLecCode());
+		
+
+		pstmt.executeUpdate();
+		
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
 	}
 
 }

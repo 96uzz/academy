@@ -1,307 +1,121 @@
-<%@ page  contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String cp = request.getContextPath();
+   String cp = request.getContextPath();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap&subset=korean" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>spring</title>
+
+<link rel="stylesheet" href="<%=cp%>/resource/css/style.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
+
 <style type="text/css">
-html {
-  width: 100%;
-  height: 100%;
+@import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
+#background{
+	background-image:url(/academy/resource/images/back1.jpg); 
+    background-position: center top;
+    background-repeat: no-repeat;
+   	background-size: 1350px 600px;
+   	width: 1400px;
+   	height: 850px;
+  	margin: 0px auto 0px auto;
 }
 
-body {
-  background: -webkit-linear-gradient(45deg, rgba(66, 183, 245, 0.8) 0%, rgba(66, 245, 189, 0.4) 100%);
-  background: linear-gradient(45deg, rgba(66, 183, 245, 0.8) 0%, rgba(66, 245, 189, 0.4) 100%);
-  color: rgba(0, 0, 0, 0.6);
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  line-height: 1.6em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body{
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 20px;
 }
 
-.overlay, .form-panel.one:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: none;
-  background: rgba(0, 0, 0, 0.8);
-  width: 100%;
-  height: 100%;
+.container2 {
+    width:100%;
+    text-align:left;
+	position: relative;
+	
+	
+}
+.body-container2 {
+	
+	width: 600px;
+	clear: both;
+	min-height: 500px;
+	position: absolute;
+	top: 0%;
+	left: 23%;
+	
 }
 
-.form {
-  z-index: 15;
-  position: relative;
-  background: #FFFFFF;
-  width: 600px;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  margin: 100px auto 10px;
-  overflow: hidden;
+.body-board{
+	background: rgba(255, 255, 255, 0.7);
+	width: 600px;
+	height: 697px;
+	margin-left: 60px;
 }
-.form-toggle {
-  z-index: 10;
-  position: absolute;
-  top: 60px;
-  right: 60px;
-  background: #FFFFFF;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  -webkit-transform-origin: center;
-      -ms-transform-origin: center;
-          transform-origin: center;
-  -webkit-transform: translate(0, -25%) scale(0);
-      -ms-transform: translate(0, -25%) scale(0);
-          transform: translate(0, -25%) scale(0);
-  opacity: 0;
-  cursor: pointer;
-  -webkit-transition: all 0.3s ease;
-          transition: all 0.3s ease;
-}
-.form-toggle:before, .form-toggle:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 4px;
-  background: #4285F4;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-.form-toggle:before {
-  -webkit-transform: translate(-50%, -50%) rotate(45deg);
-      -ms-transform: translate(-50%, -50%) rotate(45deg);
-          transform: translate(-50%, -50%) rotate(45deg);
-}
-.form-toggle:after {
-  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
-      -ms-transform: translate(-50%, -50%) rotate(-45deg);
-          transform: translate(-50%, -50%) rotate(-45deg);
-}
-.form-toggle.visible {
-  -webkit-transform: translate(0, -25%) scale(1);
-      -ms-transform: translate(0, -25%) scale(1);
-          transform: translate(0, -25%) scale(1);
-  opacity: 1;
-}
-.form-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin: 0 0 20px;
-}
-.form-group:last-child {
-  margin: 0;
-}
-.form-group label {
-  display: block;
-  margin: 0 0 10px;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: .2em;
-}
-.two .form-group label {
-  color: #FFFFFF;
-}
-.form-group input {
-  outline: none;
-  display: block;
-  background: rgba(0, 0, 0, 0.1);
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  box-sizing: border-box;
-  padding: 12px 20px;
-  color: rgba(0, 0, 0, 0.6);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: inherit;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-}
-.form-group input:focus {
-  color: rgba(0, 0, 0, 0.8);
-}
-.two .form-group input {
-  color: #FFFFFF;
-}
-.two .form-group input:focus {
-  color: #FFFFFF;
-}
-.form-group button {
-  outline: none;
-  background: #4285F4;
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  padding: 12px 20px;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: inherit;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.two .form-group button {
-  background: #FFFFFF;
-  color: #4285F4;
-}
-.form-group .form-remember {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-}
-.form-group .form-remember input[type='checkbox'] {
-  display: inline-block;
-  width: auto;
-  margin: 0 10px 0 0;
-}
-.form-group .form-recovery {
-  color: #4285F4;
-  font-size: 12px;
-  text-decoration: none;
-}
-.form-panel {
-  padding: 30px calc(5% + 60px) 60px 60px;
-  box-sizing: border-box;
-}
-.form-panel.one:before {
-  content: '';
-  display: block;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-}
-.form-panel.one.hidden:before {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-}
-.form-panel.two {
-  z-index: 5;
-  position: absolute;
-  top: 0;
-  left: 95%;
-  background: #4285F4;
-  width: 100%;
-  min-height: 100%;
-  padding: 60px calc(10% + 60px) 60px 60px;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-  cursor: pointer;
-}
-.form-panel.two:before, .form-panel.two:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 60px;
-  left: 1.5%;
-  background: rgba(255, 255, 255, 0.2);
-  height: 30px;
-  width: 2px;
-  -webkit-transition: 0.3s ease;
-          transition: 0.3s ease;
-}
-.form-panel.two:after {
-  left: 3%;
-}
-.form-panel.two:hover {
-  left: 93%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-.form-panel.two:hover:before, .form-panel.two:hover:after {
-  opacity: 0;
-}
-.form-panel.two.active {
-  left: 10%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  cursor: default;
-}
-.form-panel.two.active:before, .form-panel.two.active:after {
-  opacity: 0;
-}
-.form-header {
-  margin: 0 0 40px;
-}
-.form-header h1 {
-  padding: 4px 0;
-  color: #4285F4;
-  font-size: 24px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-.two .form-header h1 {
-  position: relative;
-  z-index: 40;
-  color: #FFFFFF;
+.navigation2 {
+	float: left;
 }
 
-.pen-footer {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 600px;
-  margin: 20px auto 100px;
-}
-.pen-footer a {
-  color: #FFFFFF;
-  font-size: 12px;
-  text-decoration: none;
-  text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.1);
-}
-.pen-footer a .material-icons {
-  width: 12px;
-  margin: 0 5px;
-  vertical-align: middle;
-  font-size: 12px;
+.content2 {
+	float: left;
+	margin-left: 30px;
+	margin-top: 30px;
 }
 
-.cp-fab {
-  background: #FFFFFF !important;
-  color: #4285F4 !important;
+.navigation2 td {
+ 	font-family: 'Nanum Square', sans-serif;
+	font-size : 20px;
+	border-radius: 2px;
+	margin : 20px auto;
+	padding : 10px;
+	
 }
+
+#nav1 {
+	font-weight: 800;
+}
+
+
+.loginButton{
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: white;
+   font-size: 15px;
+   background-color: #3598DB;
+   border: 0px;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 29px;
+   width: 90px;
+   
+}
+
+.loginButton:hover {
+   cursor: pointer;
+}
+
+#confirmLogin{
+   font-size: 15px;
+   color : red;
+}
+
+.help-block{
+	font-size: 17px;
+}
+
 
 </style>
-
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript">
+
 function memberOk() {
 	var f = document.memberForm;
 	var str;
@@ -352,98 +166,397 @@ function memberOk() {
     str = f.birth.value;
 	str = str.trim();
     if(!str || !isValidDateFormat(str)) {
-        alert("생년월일를 입력하세요[YYYYMMDD]. ");
+        alert("생년월일를 입력하세요[YYYY-MM-DD]. ");
         f.birth.focus();
         return;
     }
     
-    str = f.tel.value;
+    str = f.tel1.value;
 	str = str.trim();
     if(!str) {
-        alert("전화번호를 입력하세요[01011112222]. ");
+        alert("전화번호를 입력하세요. ");
         f.tel1.focus();
         return;
     }
 
+    str = f.tel2.value;
+	str = str.trim();
+    if(!str) {
+        alert("전화번호를 입력하세요. ");
+        f.tel2.focus();
+        return;
+    }
     if(!/^(\d+)$/.test(str)) {
         alert("숫자만 가능합니다. ");
-        f.tel.focus();
+        f.tel2.focus();
         return;
     }
 
-    str = f.email.value;
+    str = f.tel3.value;
 	str = str.trim();
     if(!str) {
-        alert("이메일을 입력하세요.[aaa@naver.com] ");
+        alert("전화번호를 입력하세요. ");
+        f.tel3.focus();
+        return;
+    }
+    if(!/^(\d+)$/.test(str)) {
+        alert("숫자만 가능합니다. ");
+        f.tel3.focus();
+        return;
+    }
+    
+    str = f.email1.value;
+	str = str.trim();
+    if(!str) {
+        alert("이메일을 입력하세요. ");
         f.email1.focus();
         return;
     }
 
-    //강의 코드 확인 스크립트 필요
-    
+    str = f.email2.value;
+	str = str.trim();
+    if(!str) {
+        alert("이메일을 입력하세요. ");
+        f.email2.focus();
+        return;
+    }
 
-    f.action = "<%=cp%>/member/member_ok.do";
+    var mode="${mode}";
+    if(mode=="created") {
+    	f.action = "<%=cp%>/member/member_ok.do";
+    } else if(mode=="update") {
+    	f.action = "<%=cp%>/member/update_ok.do";
+    }
 
     f.submit();
 }
+
+function changeEmail() {
+    var f = document.memberForm;
+	    
+    var str = f.selectEmail.value;
+    if(str!="direct") {
+        f.email2.value=str; 
+        f.email2.readOnly = true;
+       
+    }
+    else {
+        f.email2.value="";
+        f.email2.readOnly = false;
+        f.email2.focus();
+    }
+}
+
+$(function(){
+	$("form input[name=userId]").change(function(){
+		var $id = $(this);
+		var userId = $id.val().trim();
+
+		if(!/^[a-z][a-z0-9_]{4,9}$/i.test(userId)) { 
+			$(this).focus();
+			return false;
+		}
+		
+		var url="<%=cp%>/member/userIdCheck.do";
+		var query="userId="+userId;
+		
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:query,
+			dataType:"json",
+			success:function(data) {
+				// console.log(data);
+				var passed = data.passed;
+				if(passed=="true"){
+					var s = "<span style='color:blue;font-weight:bold;'>"
+					+userId+"</span> 아이디는 사용가능합니다."
+					$id.parent().next(".help-block").html(s);
+				} else {
+					var s = "<span style='color:red;font-weight:bold;'>"
+						+userId+"</span> 아이디는 사용 불가능합니다."
+						$id.parent().next(".help-block").html(s);
+						$id.val("");
+						$id.focus();
+				}
+			},
+			error:function(e){
+				console.log(e.responseText);
+			}
+		});
+		
+	});
+});
+
+function termsOfUse(){
+	 window.open("termsOfUse.do", "a", "width=1000, height=770, left=450, top=50"); 
+}
+
 </script>
 </head>
 <body>
 
-<!-- Form-->
-<div class="form">
-  <div class="form-toggle"></div>
-  <div class="form-panel one">
-    <div class="form-header">
-      <h1>Account Login</h1>
+<div class="header">
+    <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
+</div>
+<div id="background" class="container2">
+<div class="container2">
+    <div class="body-container2">
+		<div class="navigation2" >
+			
+		</div>
+		<div class="content2" style="margin-left: auto; margin-right: auto;">
+		<h2 style="padding-left: 320px;">회원가입</h2>
+		
+    <div class="body-board">
+       			<form name="memberForm" method="post">
+			  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
+			  <tr><td width="150" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;"></label>
+			      </td></tr>
+			  <tr>
+			      <td width="150" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">아이디</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="text" name="userId" id="userId" value="${dto.userId}"
+                         style="width: 35%;"
+                         ${mode=="update" ? "readonly='readonly' ":""}
+                         maxlength="15" class="boxTF" placeholder="아이디">
+			        </p>
+			        <p class="help-block">5~10자 이내이며 첫글자는 영문자로 시작</p>
+			      </td>
+			  </tr>
+			
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">패스워드</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="password" name="userPwd" maxlength="15" class="boxTF"
+			                       style="width:35%;" placeholder="패스워드">
+			        </p>
+			        <p class="help-block">5~10자 이내이며 하나 이상의 숫자나 특수문자 포함</p>
+			      </td>
+			  </tr>
+			
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">패스워드 확인</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="password" name="userPwdCheck" maxlength="15" class="boxTF"
+			                       style="width:35%;" placeholder="패스워드 확인">
+			        </p>
+			        <p class="help-block"></p>
+			      </td>
+			  </tr>
+			
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">이름</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="text" name="userName" value="${dto.userName}" maxlength="30" class="boxTF"
+		                       style="width: 35%;"
+		                      ${mode=="update" ? "readonly='readonly' ":""}
+		                      placeholder="이름">
+			        </p>
+			      </td>
+			  </tr>
+			
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">생년월일</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="text" name="birth" value="${dto.birth}" maxlength="10" 
+			                       class="boxTF" style="width: 35%;" placeholder="생년월일">
+			        </p>
+			        <p class="help-block">2000-01-01 형식으로 입력</p>
+			      </td>
+			  </tr>
+			  
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">이메일</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            
+			            <input type="text" name="email1" value="${dto.email1}" size="18" maxlength="30"  class="boxTF">
+			            @ 
+			            <input type="text" name="email2" value="${dto.email2}" size="10" maxlength="30"  class="boxTF" readonly="readonly">
+			            <select name="selectEmail" onchange="changeEmail();" class="selectField" >
+			                <option value="">선 택</option>
+			                <option value="naver.com" ${dto.email2=="naver.com" ? "selected='selected'" : ""}>naver.com</option>
+			                <option value="hanmail.net" ${dto.email2=="hanmail.net" ? "selected='selected'" : ""}>hanmail.net</option>
+			                <option value="hotmail.com" ${dto.email2=="hotmail.com" ? "selected='selected'" : ""}>hotmail.com</option>
+			                <option value="gmail.com" ${dto.email2=="gmail.com" ? "selected='selected'" : ""}>gmail.com</option>
+			                <option value="direct">직접입력</option>
+			            </select>
+			        </p>
+			      </td>
+			  </tr>
+			  
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">전화번호</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <select class="selectField" id="tel1" name="tel1" >
+			                <option value="">선 택</option>
+			                <option value="010" ${dto.tel1=="010" ? "selected='selected'" : ""}>010</option>
+			                <option value="011" ${dto.tel1=="011" ? "selected='selected'" : ""}>011</option>
+			                <option value="016" ${dto.tel1=="016" ? "selected='selected'" : ""}>016</option>
+			                <option value="017" ${dto.tel1=="017" ? "selected='selected'" : ""}>017</option>
+			                <option value="018" ${dto.tel1=="018" ? "selected='selected'" : ""}>018</option>
+			                <option value="019" ${dto.tel1=="019" ? "selected='selected'" : ""}>019</option>
+			            </select>
+			            -
+			            <input type="text" name="tel2" value="${dto.tel2}" class="boxTF" maxlength="4" size="8" style="width: 10%;">
+			            -
+			            <input type="text" name="tel3" value="${dto.tel3}" class="boxTF" maxlength="4" size="8" style="width: 10%;">
+			  
+			        </p>
+			      </td>
+			  </tr>
+			  
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">우편번호</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="text" name="zip" id="zip" value="${dto.zip}"
+			                       class="boxTF" readonly="readonly" style="width: 10%;">
+			            <button type="button" class="btn" onclick="daumPostcode();">우편번호</button>          
+			        </p>
+			      </td>
+			  </tr>
+			  
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">주소</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="text" name="addr1" id="addr1" value="${dto.addr1}" maxlength="50" 
+			                       class="boxTF" style="width: 70%;" placeholder="기본 주소" readonly="readonly">
+			        </p>
+			        <p style="margin-bottom: 5px;">
+			            <input type="text" name="addr2" id="addr2" value="${dto.addr2}" maxlength="50" 
+			                       class="boxTF" style="width: 70%;" placeholder="나머지 주소">
+			        </p>
+			      </td>
+			  </tr>
+			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">강의코드</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="text" name="lecCode" value="${dto.lecCode}" maxlength="7" 
+			                       class="boxTF" style="width: 20%;" placeholder="강의코드">
+			        </p>
+			        <p class="help-block">추후 입력가능</p>
+			      </td>
+			  </tr>
+			  
+			  <c:if test="${mode=='created'}">
+				  <tr>
+				      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				            <label style="font-weight: 900;"></label>
+				      </td>
+				      <td style="padding: 0 0 15px 15px;">
+				        <p style="margin-top: 7px; margin-bottom: 5px;">
+				             <label>
+				                 <input id="agree" name="agree" type="checkbox" onchange="form.sendButton.disabled = !checked">
+				                 <span style="font-weight: bold;"><a href="javascript:termsOfUse();">이용약관</a></span>에 동의합니다.
+				             </label>
+				        </p>
+				      </td>
+				  </tr>
+			  </c:if>
+			  </table>
+			
+			  <table style="width:100%; margin: 0px auto; border-spacing: 0px;">
+			     <tr height="45"> 
+			      <td align="center" >
+			        <button type="button" name="sendButton" class="btn loginButton" onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
+			        <button type="reset" class="btn loginButton">다시입력</button>
+			        <button type="button" class="btn loginButton" onclick="javascript:location.href='<%=cp%>/';">${mode=="created"?"가입취소":"수정취소"}</button>
+			      </td>
+			    </tr>
+			    <tr height="30">
+			        <td align="center" style="color: blue;">${message}</td>
+			    </tr>
+			  </table>
+			</form>
+        </div>
+        
     </div>
-    <div class="form-content">
-      <form name="memberForm" method="post" action="">
-         <div class="form-group">
-          <label for="userId">User Id</label>
-          <input type="text" id="userId" name="userId"  value=""/>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="userPwd" name="userPwd" />
-        </div>
-        <div class="form-group">
-          <label for="userPwdCheck">Confirm Password</label>
-          <input type="password" id="userPwdCheck" name="userPwdCheck" />
-        </div>
-        <div class="form-group">
-          <label for="userName">User Name</label>
-          <input type="text" id="userName" name="userName" value=""/>
-        </div>
-        <div class="form-group">
-          <label for="birth">Birth</label>
-          <input type="text" id="birth" name="birth" value=""/>
-        </div>
-         <div class="form-group">
-          <label for="tel">Phone Number</label>
-          <input type="text" id="tel" name="tel" value=""/>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" id="email" name="email" value=""/>
-        </div>
-        <div class="form-group">
-          <label for="lecCode">Lecture Code</label>
-          <input type="text" id="lecCode" name="lecCode" value=""/>
-        </div>
-        <div class="form-group">
-          <button type="button" onclick="memberOk();">Register</button>
-          <label><a href="<%=cp%>" class="form-recovery">Back to Main</a></label>
-        </div>
-      </form>
+    
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    function daumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zip').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('addr1').value = fullAddr;
+
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('addr2').focus();
+            }
+        }).open();
+    }
+</script>    
+
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
+		</div>
+	
     </div>
-  </div>
- 
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script type="text/javascript">
-
-</script>
+<div class="footer">
+    <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
+</div>
 </body>
-</html>
+</html>	

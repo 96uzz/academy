@@ -43,7 +43,7 @@ padding: 60px 0px 0px 60px;
    padding-top: 1px;
 }
 
-.loginButton, .logoutButton {
+.loginButton {
    font-family: 'Nanum Square', sans-serif;
    font-weight: bold;
    color: white;
@@ -57,9 +57,19 @@ padding: 60px 0px 0px 60px;
    width: 100px;
    
 }
-
-.loginButton:hover {
-   cursor: pointer;
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#e6e6e6;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
 }
 
 .boardMenu {
@@ -178,7 +188,7 @@ function sendLogin() {
          <tr>
         <td style="padding-right: 25px;" ><img src="<%=cp%>/resource/images/login.png" height="85"> </td>
         <td style="font-size: 20px;">${sessionScope.member.userName} 님</td>
-        <td><button class="logoutButton" type="button"
+        <td><button class="loginButton" type="button"
                   name="logout" onclick="javascript:location.href='<%=cp%>/member/logout.do';">로그아웃</button></td>
          </tr>
     
