@@ -10,7 +10,15 @@ public class NoticeDTO {
 	private String saveFilename;
 	private String originalFilename;
 	private long filesize;
+	private long gap;
 	
+	
+	public long getGap() {
+		return gap;
+	}
+	public void setGap(long gap) {
+		this.gap = gap;
+	}
 	public String getSaveFilename() {
 		return saveFilename;
 	}
