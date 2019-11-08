@@ -269,6 +269,7 @@ public class NoticeDAO {
 			
 			pstmt=conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, num);
+			System.out.println("푸시가안되요");
 			
 			rs=pstmt.executeQuery();
 			
