@@ -24,7 +24,7 @@
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -37,6 +37,36 @@ body{
 	font-family: 'Nanum Square', sans-serif;
 	font-size: 20px;
 }
+
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
 
 .container2 {
     width:100%;
@@ -123,22 +153,65 @@ function searchList() {
 			
 			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
 				<tr style="border-bottom: 1px solid black; background-color: #3598DB;">
-					<td style="width: 50px; text-align: center;">No</td>				
-					<td style="width: 350px; text-align: center;">제목</td>				
-					<td style="width: 80px; text-align: center;">첨부</td>
+					<td style="width: 50px; text-align: center;">No</td>			
+					<td style="width: 350px; text-align: center;">제목</td>
+					<td style="width: 70px; text-align: center;">작성자</td>			
+					<td style="width: 50px; text-align: center;">첨부</td>
 					<td style="width: 100px; text-align: center;">작성일</td>
 					<td style="width: 60px; text-align: center;">조회수</td>
 				</tr>
-			<c:forEach var="dto" items="${listNotice}">
+			<c:forEach var="dto" items="${list}">
 				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
-					<td>${dto.noticeNum}</td>				
-					<td>${dto.subject}</td>				
-					<td>첨부파일</td>
+					<td>${dto.listNum}</td>				
+					<td>
+						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
+			           <c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif"></c:if>
+					</td>			
+					<td>관리자</td>
+					<td>
+						<c:if test="${not empty dto.saveFilename}">
+							<a href="<%=cp%>/notice/download.do?noticeNum=${dto.noticeNum}"><img src="<%=cp%>/resource/images/disk.gif" width="15" height="15"></a>
+						</c:if>
+			      	</td>
 					<td>${dto.created}</td>
 					<td>${dto.hitCount}</td>
 				</tr>
 			</c:forEach>	
 			</table>
+			
+			
+			
+			<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
+			   <tr height="40">
+			      <td align="left" width="100">
+			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/notice/list.do';">새로고침</button>
+			      </td>
+			      <td align="center">
+			          <form name="searchForm" action="<%=cp%>/notice/list.do" method="post">
+			              <select name="condition" class="selectField">
+			                  <option value="subject" ${condition=="subject" ? "selected='selected'":""}>제목</option>
+			            </select>
+			            <input type="text" name="keyword" class="boxTF" value="${keyword}">
+			            <input type="hidden" name="rows" value="${rows}">
+			            <button type="button" class="btn" onclick="searchList()">검색</button>
+			        </form>
+			      </td>
+			      <td align="right" width="100">
+			      	<c:if test="${sessionScope.member.userId=='admin'}">
+			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/notice/created.do';">글올리기</button>
+			        </c:if>
+			      </td>
+			   </tr>
+			</table>
+			
+			<table style="width: 100%; margin: 50px auto; border-spacing: 0px;">
+			   <tr height="35">
+				<td align="center">
+			        ${dataCount==0? "등록된 게시글이 없습니다." : paging}
+				</td>
+			   </tr>
+			</table>
+			
 		</div>
 		
 			

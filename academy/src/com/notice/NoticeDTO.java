@@ -4,9 +4,11 @@ public class NoticeDTO {
 	private int noticeNum;
 	private int listNum;
 	private int notice;
+	private int hitCount;
 	private String userId;
 	private String subject;
 	private String content;
+	private String created;
 	private String saveFilename;
 	private String originalFilename;
 	private long filesize;
@@ -37,8 +39,6 @@ public class NoticeDTO {
 	public void setFilesize(long filesize) {
 		this.filesize = filesize;
 	}
-	private int hitCount;
-	private String created;
 	
 	public int getNoticeNum() {
 		return noticeNum;
