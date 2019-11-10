@@ -10,7 +10,35 @@ public class LectureDTO {
 	private int lecLimit;
 	private int acaNum;
 	private String lecIntro;
+	private String created;
+	private int hitCount;
+	private String userId;
+	private Long gap;
 	
+	public Long getGap() {
+		return gap;
+	}
+	public void setGab(Long gap) {
+		this.gap = gap;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
+	public int getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getLecIntro() {
 		return lecIntro;
 	}

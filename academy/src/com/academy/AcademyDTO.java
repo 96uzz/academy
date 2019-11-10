@@ -4,13 +4,41 @@ package com.academy;
 public class AcademyDTO {
 	private int listNum;
 	private int acaNum;
+	private int hitCount;
 	private String acaName;
 	private String acaDiv;
 	private String acaIntro;
 	private String acaAddress;
 	private String acaWeb;
 	private String acaTel, acaTel1, acaTel2, acaTel3;
+	private String userId;
+	private String created;
+	private Long gap;
 	
+	public Long getGap() {
+		return gap;
+	}
+	public void setGap(Long gap) {
+		this.gap = gap;
+	}
+	public int getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
 	public int getListNum() {
 		return listNum;
 	}

@@ -1,49 +1,527 @@
 package com.lecture;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.academy.AcademyDTO;
 import com.util.DBConn;
 
 public class LectureDAO {
 	private Connection conn=DBConn.getConnection();
 	
 	public int insertLecture(LectureDTO dto) {
-		return 0;
+		int result=0;
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			sql="INSERT INTO lecture(lecCode, lecName, lecNum, lecStartDate, lecendDate, lecLimit, lecIntro, acaNum, userId) VALUES (lec_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getLecName());
+			pstmt.setInt(2, dto.getLecNum());
+			pstmt.setString(3, dto.getLecStartDate());
+			pstmt.setString(4, dto.getLecEndDate());
+			pstmt.setInt(5, dto.getLecLimit());
+			pstmt.setString(6, dto.getLecIntro());
+			pstmt.setInt(7, dto.getAcaNum());
+			pstmt.setString(8, dto.getUserId());
+			
+			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return result;
 	}
 	
 	public int dataCount() {
-		return 0;
+		int result=0;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql;
+		
+		try {
+			sql="SELECT NVL(COUNT(*), 0) FROM lecture ";
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return result;
 	}
 	
 	public int dataCount(String condition, String keyword) {
-		return 0;
+		int result=0;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql;
+		
+		try {
+			sql="SELECT NVL(COUNT(*), 0) FROM lecture ";
+			if(condition.equalsIgnoreCase("created")) {
+				keyword=keyword.replaceAll("-", "");
+				sql += " WHERE TO_CHAR(created, 'YYYYMMDD') = ? ";
+			} else if(condition.equalsIgnoreCase("lecName")) {
+				sql += " WHERE INSTR(lecName, ?) = 1 ";
+			} else {
+				sql += " WHERE INSTR("+condition+", ?) >= 1 ";
+			}
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+	
+		return result;
+	}
+	
+	public List<LectureDTO> listLecture() {
+		List<LectureDTO> list = new ArrayList<LectureDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			sb.append("SELECT lecCode, lecNum, lecName, lecStartDate, lecEndDate, lecLimit, lecIntro, ");
+			sb.append(" TO_CHAR(created, 'YYYY-MM-DD')created, l.userId, l.acaNum ");
+			sb.append(" FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+			sb.append(" ORDER BY lecCode DESC ");
+			
+			pstmt=conn.prepareStatement(sb.toString());
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				LectureDTO dto = new LectureDTO();
+				dto.setLecNum(rs.getInt("lecNum"));
+				dto.setLecName(rs.getString("lecName"));
+				dto.setLecStartDate(rs.getString("lecStartDate"));
+				dto.setLecEndDate(rs.getString("lecEndDate"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setLecIntro(rs.getString("lecIntro"));
+				dto.setCreated(rs.getString("created"));
+				dto.setUserId(rs.getString("l.userId"));
+				dto.setAcaNum(rs.getInt("l.acaNum"));;
+				
+				list.add(dto);
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return list;
 	}
 	
 	public List<LectureDTO> listLecture(int offset, int rows) {
-		return null;
+		List<LectureDTO> list = new ArrayList<LectureDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			sb.append("SELECT lecCode, lecNum, lecName, lecStartDate, lecEndDate, lecLimit, lecIntro, ");
+			sb.append(" TO_CHAR(created, 'YYYY-MM-DD')created, l.userId, l.acaNum ");
+			sb.append(" FROM lecture ORDER BY lecCode DESC ");
+			sb.append(" OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
+			
+			pstmt=conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, offset);
+			pstmt.setInt(2, rows);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				LectureDTO dto = new LectureDTO();
+				dto.setLecNum(rs.getInt("lecNum"));
+				dto.setLecName(rs.getString("lecName"));
+				dto.setLecStartDate(rs.getString("lecStartDate"));
+				dto.setLecEndDate(rs.getString("lecEndDate"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setLecIntro(rs.getString("lecIntro"));
+				dto.setCreated(rs.getString("created"));
+				dto.setUserId(rs.getString("l.userId"));
+				dto.setAcaNum(rs.getInt("l.acaNum"));;
+				
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null)
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+		}
+		return list;
 	}
 	
 	public List<LectureDTO> listLecture(int offset, int rows, String condition, String keyword) {
-		return null;
+		List<LectureDTO> list = new ArrayList<LectureDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			sb.append("SELECT lecCode, lecNum, lecName, lecStartDate, lecEndDate, lecLimit, lecIntro, ");
+			sb.append(" TO_CHAR(created, 'YYYY-MM-DD')created, l.userId, l.acaNum FROM lecture ");
+			if(condition.equalsIgnoreCase("Created")) {
+				keyword = keyword.replaceAll("-", "");
+				sb.append(" WHERE TO_CHAR(created, 'YYYYMMDD' = ? ");
+			} else if(condition.equalsIgnoreCase("lecName")) {
+				sb.append(" WHERE INSTR(lecName, ?) = 1 ");
+			} else {
+				sb.append(" WHERE INSTR("+condition+", ?) >= 1 ");
+			}
+			sb.append("ORDER BY lecCode DESC ");
+			sb.append("OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
+			
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, offset);
+			pstmt.setInt(3, rows);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				LectureDTO dto = new LectureDTO();
+				dto.setLecNum(rs.getInt("lecNum"));
+				dto.setLecName(rs.getString("lecName"));
+				dto.setLecStartDate(rs.getString("lecStartDate"));
+				dto.setLecEndDate(rs.getString("lecEndDate"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setLecIntro(rs.getString("lecIntro"));
+				dto.setCreated(rs.getString("created"));
+				dto.setUserId(rs.getString("l.userId"));
+				dto.setAcaNum(rs.getInt("l.acaNum"));;
+				
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return list;
+	}
+	
+	public LectureDTO readLecture(int num) {
+		LectureDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			sb.append("SELECT lecCode, lecNum, lecName, lecStartDate, lecEndDate, lecLimit, lecIntro, ");
+			sb.append(" created, hitcount, l.userId, l.acaNum FROM lecture ");
+			sb.append(" FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+			sb.append(" WHERE lecCode = ? ");
+			
+			pstmt=conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				dto=new LectureDTO();
+				dto.setLecNum(rs.getInt("lecNum"));
+				dto.setLecName(rs.getString("lecName"));
+				dto.setLecStartDate(rs.getString("lecStartDate"));
+				dto.setLecEndDate(rs.getString("lecEndDate"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setLecIntro(rs.getString("lecIntro"));
+				dto.setCreated(rs.getString("created"));
+				dto.setHitCount(rs.getInt("hitcount"));
+				dto.setUserId(rs.getString("l.userId"));
+				dto.setAcaNum(rs.getInt("l.acaNum"));;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return dto;
 	}
 	
 	// 이전글
 	public LectureDTO preReadLecture(int num, String condition, String keyword) {
-		return null;
+		LectureDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+			if(keyword.length() !=0) {
+				sb.append("SELECT lecCode, lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+				if(condition.equalsIgnoreCase("created")) {
+					keyword=keyword.replaceAll("-", "");
+					sb.append(" WHERE (TO_CHAR(created, 'YYYYMMDD') = ?) ");
+				} else {
+					sb.append(" WHERE (INSTR(" + condition + ", ?) >= 1) ");
+				}
+				sb.append("       AND (lecCode > ? ) ");
+				sb.append(" ORDER BY lecCode ASC ");
+				sb.append(" FETCH FIRST 1 ROWS ONLY ");
+				
+				pstmt=conn.prepareStatement(sb.toString());
+				pstmt.setString(1, keyword);
+				pstmt.setInt(2, num);
+			} else {
+				sb.append("SELECT lecCode, lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+				sb.append(" WHERE lecCode > ? ");
+				sb.append(" ORDER BY lecCode ASC ");
+				sb.append(" FETCH FIRST 1 ROWS ONLY");
+				
+				pstmt=conn.prepareStatement(sb.toString());
+				pstmt.setInt(1, num);
+			}
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto=new LectureDTO();
+				dto.setLecCode(rs.getInt("lecCode"));
+				dto.setLecName(rs.getString("lecName"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return dto;
 	}
 	
 	// 다음글
 	public LectureDTO nextReadLecture(int num, String condition, String keyword) {
-		return null;
+		LectureDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+			if(keyword.length() !=0) {
+				sb.append("SELECT lecCode, lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+				if(condition.equalsIgnoreCase("created")) {
+					keyword=keyword.replaceAll("-", "");
+					sb.append(" WHERE (TO_CHAR(created, 'YYYYMMDD') = ?) ");
+				} else {
+					sb.append(" WHERE (INSTR(" + condition + ", ?) >= 1) ");
+				}
+				sb.append("       AND (lecCode < ? ) ");
+				sb.append(" ORDER BY lecCode DESC ");
+				sb.append(" FETCH FIRST 1 ROWS ONLY ");
+				
+				pstmt=conn.prepareStatement(sb.toString());
+				pstmt.setString(1, keyword);
+				pstmt.setInt(2, num);
+			} else {
+				sb.append("SELECT lecCode, lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+				sb.append(" WHERE lecCode < ? ");
+				sb.append(" ORDER BY lecCode DESC ");
+				sb.append(" FETCH FIRST 1 ROWS ONLY");
+				
+				pstmt=conn.prepareStatement(sb.toString());
+				pstmt.setInt(1, num);
+			}
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto=new LectureDTO();
+				dto.setLecCode(rs.getInt("lecCode"));
+				dto.setLecName(rs.getString("lecName"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return dto;
 	}
 	
-	public int updateLecture(LectureDTO dto) {
-		return 0;
+	public void updateHitCount(int num) {
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			sql = "UPDATE lecture SET hitCount=hitCount+1 WHERE lecCode = ? ";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
 	}
 	
-	public int deleteLecture(int num, String userId) {
-		return num;
+	public void updateLecture(LectureDTO dto) {
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			sql = "UPDATE lecture SET lecNum=?, lecName=?, lecStartDate=?, lecEndDate=?, lecLimit=?, lecIntro=? ";
+			sql += " WHERE lecCode=? AND userId=? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getLecNum());
+			pstmt.setString(2, dto.getLecName());
+			pstmt.setString(3, dto.getLecStartDate());
+			pstmt.setString(4,  dto.getLecEndDate());
+			pstmt.setInt(5, dto.getLecLimit());
+			pstmt.setString(6, dto.getLecIntro());
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+	}
+	
+	public void deleteLecture(int num, String userId) {
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			if(userId.equals("admin")) {
+				sql="DELETE FROM lecture WHERE lecCode = ? ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, num);
+			} else {
+				sql="DELETE FROM lecture WHERE lecCode = ? AND userId = ? ";
+			}
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setString(2, userId);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		
 	}
 	
 }
