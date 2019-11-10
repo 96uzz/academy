@@ -99,6 +99,24 @@ body{
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB;">
 			찾아오시는 길
+			<br><br>
+			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
+				<tr style=" width: 800px; height: 250px; border: 1px solid black;">
+					<td>
+						사진 들어갈 부분
+					</td>
+				</tr>
+			</table>
+			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
+				<tr style="height: 30px;"></tr>
+				
+				<tr>
+					<td style="width: 300px;" colspan="2">
+						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
+						<p style="font-size: 30px;">상세 지도</p>
+					</td>
+				</tr>
+			</table>
 		</div>
 	
     </div>

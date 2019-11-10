@@ -24,7 +24,7 @@
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -36,6 +36,35 @@
 body{
 	font-family: 'Nanum Square', sans-serif;
 	font-size: 20px;
+}
+
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
 }
 
 .container2 {
@@ -97,9 +126,67 @@ body{
 				<tr><td><a href="<%=cp%>/info/group.do" id="nav4">역할 분담</a></td></tr>
 			</table>
 		</div>
+		
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB;">
 			연혁
+			<br><br>
+			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
+				<tr style=" width: 800px; height: 250px; border: 1px solid black;">
+					<td>
+						사진 들어갈 부분
+					</td>
+				</tr>
+			</table>
+			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
+				<tr style="height: 30px;"></tr>
+				
+				<tr>
+					<td style="width: 300px;" colspan="2">
+						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
+						<p style="font-size: 30px;">2017년 ~ 2018년</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 100px;">
+						<p style="font-size: 20px; display: inline-block; float: left; color: #3598DB; font-weight: 100;">2017.03&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 350px;">
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+					</td>
+				</tr>
+				<tr style="height: 20px;"></tr>
+				<tr>
+					<td style="width: 300px;" colspan="2">
+						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
+						<p style="font-size: 30px;">2016년 ~ 2017년</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 100px;">
+						<p style="font-size: 20px; display: inline-block; float: left; color: #3598DB; font-weight: 100;">2016.08&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 350px;">
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
+					</td>
+				</tr>
+
+			</table>
 		</div>
+		
 	
     </div>
 </div>

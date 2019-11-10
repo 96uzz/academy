@@ -17,9 +17,6 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 
-<script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
-
 <style type="text/css">
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
@@ -102,7 +99,9 @@ body{
 }
 
 </style>
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 function selectList() {
 	var f=document.selectForm;
@@ -135,12 +134,13 @@ function searchList() {
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
 			<p>공지사항</p>
-			<br>
+			
+			
 			<table style="width: 100%;">
 				<tr height="35px;">
 					<td align="right">
 						<form name="selectForm" action="<%=cp%>/notice/list.do" method="post" onchange="selectList();">
-							<select name="rows" class="selectedField" >
+							<select name="rows" class="selectField" style="margin-bottom: 5px;" >
 			          		<option value="10" ${rows==10? "selected='selected'" : ""}>10개</option>
 			          		<option value="20" ${rows==20? "selected='selected'" : ""}>20개</option>
 			          	</select>
@@ -160,12 +160,30 @@ function searchList() {
 					<td style="width: 100px; text-align: center;">작성일</td>
 					<td style="width: 60px; text-align: center;">조회수</td>
 				</tr>
+<%-- 			<c:forEach var="dto" items="${listNotice}"> --%>
+<!-- 				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;"> -->
+<%-- 					<td>${dto.listNum}</td>				 --%>
+<!-- 					<td> -->
+<%-- 						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a> --%>
+<!-- 					</td>			 -->
+<!-- 					<td>관리자</td> -->
+<!-- 					<td> -->
+<%-- 						<c:if test="${not empty dto.saveFilename}"> --%>
+<%-- 							<a href="<%=cp%>/notice/download.do?noticeNum=${dto.noticeNum}"><img src="<%=cp%>/resource/images/disk.gif" width="15" height="15"></a> --%>
+<%-- 						</c:if> --%>
+<!-- 			      	</td> -->
+<%-- 					<td>${dto.created}</td> --%>
+<%-- 					<td>${dto.hitCount}</td> --%>
+<!-- 				</tr> -->
+<%-- 			</c:forEach>		 --%>
+				
 			<c:forEach var="dto" items="${list}">
 				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
 					<td>${dto.listNum}</td>				
 					<td>
-						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
 			           <c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif"></c:if>
+						&nbsp;
+						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
 					</td>			
 					<td>관리자</td>
 					<td>
@@ -190,7 +208,8 @@ function searchList() {
 			          <form name="searchForm" action="<%=cp%>/notice/list.do" method="post">
 			              <select name="condition" class="selectField">
 			                  <option value="subject" ${condition=="subject" ? "selected='selected'":""}>제목</option>
-			            </select>
+			                  <option value="content" ${condition=="content" ? "selected='selected'":""}>내용</option>
+			              </select>
 			            <input type="text" name="keyword" class="boxTF" value="${keyword}">
 			            <input type="hidden" name="rows" value="${rows}">
 			            <button type="button" class="btn" onclick="searchList()">검색</button>

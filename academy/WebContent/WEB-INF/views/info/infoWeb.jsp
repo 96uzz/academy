@@ -38,6 +38,35 @@ body{
 	font-size: 20px;
 }
 
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
 .container2 {
     width:100%;
     text-align:left;
@@ -99,7 +128,25 @@ body{
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB;">
 			조장 인사말
+			<br><br>
+			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px;">
+				<tr style="width: 100%;">
+					<td style="width: 300px; height: 200px; border: 1px solid black;">
+						사진 들어갈 부분
+					</td>
+					<td style="width: 450px; height: 200px; border: 1px solid black;">
+						대문글 쏴라라락 부분
+					</td>
+				</tr>
+				<tr>
+					<td style="width:100%; border: 1px solid black;" colspan="2">
+						안녕하세요 승훈 어쩌고저쩌고,,,,,,안녕하세요 승훈 어쩌고저쩌고,,,,,,안녕하세요 승훈 어쩌고저쩌고,,,,,,안녕하세요 승훈 어쩌고저쩌고,,,,,,
+					</td>
+					<td></td>
+				</tr>
+			</table>
 		</div>
+		
 	
     </div>
 </div>

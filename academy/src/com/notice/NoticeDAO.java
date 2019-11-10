@@ -83,7 +83,14 @@ public class NoticeDAO {
 		String sql;
 		
 		try {
-			sql = "SELECT NVL(COUNT(*), 0) FROM notice WHERE INSTR(subject, ?) >= 1 ";
+			sql = "SELECT NVL(COUNT(*), 0) FROM notice ";
+			if(condition.equalsIgnoreCase("subject")) {
+				sql += " WHERE INSTR(subject, ?) >= 1 ";
+			} else if(condition.equalsIgnoreCase("content")){
+				sql += " WHERE INSTR(content, ?) >= 1 ";
+			} else {
+				sql += " WHERE INSTR("+condition+", ?) >= 1 ";
+			}
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, keyword);
@@ -114,47 +121,47 @@ public class NoticeDAO {
 	}
 	
 	// 공지글 리스트
-	public List<NoticeDTO> listNotice() {
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		StringBuilder sb=new StringBuilder();
-		List<NoticeDTO> list=new ArrayList<NoticeDTO>();
-		
-		try {
-			sb.append("SELECT noticeNum, subject, hitCount, saveFilename, created FROM notice ");
-			
-			pstmt=conn.prepareStatement(sb.toString());
-			
-			rs=pstmt.executeQuery();
-			
-			while(rs.next()) {
-				NoticeDTO dto=new NoticeDTO();
-				dto.setNoticeNum(rs.getInt("noticeNum"));
-				dto.setSubject(rs.getString("subject"));
-				dto.setHitCount(rs.getInt("hitCount"));
-				dto.setSaveFilename(rs.getString("saveFilename"));
-				dto.setCreated(rs.getString("created"));
-				list.add(dto);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(rs!=null) {
-				try {
-					rs.close();
-				} catch (Exception e2) {
-				}
-			}
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (Exception e2) {
-				}
-			}
-		}
-		return list;
-	}
+//	public List<NoticeDTO> listNotice() {
+//		PreparedStatement pstmt=null;
+//		ResultSet rs=null;
+//		StringBuilder sb=new StringBuilder();
+//		List<NoticeDTO> list=new ArrayList<NoticeDTO>();
+//		
+//		try {
+//			sb.append("SELECT noticeNum, subject, hitCount, saveFilename, created FROM notice WHERE notice=1 ");
+//			
+//			pstmt=conn.prepareStatement(sb.toString());
+//			
+//			rs=pstmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				NoticeDTO dto=new NoticeDTO();
+//				dto.setNoticeNum(rs.getInt("noticeNum"));
+//				dto.setSubject(rs.getString("subject"));
+//				dto.setHitCount(rs.getInt("hitCount"));
+//				dto.setSaveFilename(rs.getString("saveFilename"));
+//				dto.setCreated(rs.getString("created"));
+//				list.add(dto);
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			if(rs!=null) {
+//				try {
+//					rs.close();
+//				} catch (Exception e2) {
+//				}
+//			}
+//			if(pstmt!=null) {
+//				try {
+//					pstmt.close();
+//				} catch (Exception e2) {
+//				}
+//			}
+//		}
+//		return list;
+//	}
 	
 	public List<NoticeDTO> listNotice(int offset, int rows) {
 		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
@@ -216,8 +223,12 @@ public class NoticeDAO {
 		try {
 			sb.append("SELECT noticeNum, n.userId, subject, hitCount, saveFilename, created ");
 			sb.append(" FROM notice n JOIN member m ON n.userId=m.userId");
-			sb.append(" WHERE INSTR(subject, ?)>=1");
-			sb.append(" ORDER BY num DESC");
+			if(condition.equalsIgnoreCase("subject")) {
+				sb.append(" WHERE INSTR(subject, ?)>=1");
+			} else {
+				sb.append(" WHERE INSTR("+condition+", ?)>=1");
+			}
+			sb.append(" ORDER BY noticeNum DESC");
 			sb.append(" OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
 			
 			pstmt=conn.prepareStatement(sb.toString());
