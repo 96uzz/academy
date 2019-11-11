@@ -2,10 +2,16 @@ package com.schedule;
 
 public class ScheduleDTO {
 	private int num;
-	private String userId, userName;
-	private String lecName, memo;
+	private String userId;
+	private String lecCode;
+	private String lecName;
+	private String acaName, acaNum;
 	private String sday, eday;
+	private int lecLimit;
+	//private String lecIntro;
 	private String created;
+	private String memo;
+	
 	public int getNum() {
 		return num;
 	}
@@ -18,11 +24,11 @@ public class ScheduleDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getUserName() {
-		return userName;
+	public String getLecCode() {
+		return lecCode;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setLecCode(String lecCode) {
+		this.lecCode = lecCode;
 	}
 	public String getLecName() {
 		return lecName;
@@ -30,11 +36,17 @@ public class ScheduleDTO {
 	public void setLecName(String lecName) {
 		this.lecName = lecName;
 	}
-	public String getMemo() {
-		return memo;
+	public String getAcaName() {
+		return acaName;
 	}
-	public void setMemo(String memo) {
-		this.memo = memo;
+	public void setAcaName(String acaName) {
+		this.acaName = acaName;
+	}
+	public String getAcaNum() {
+		return acaNum;
+	}
+	public void setAcaNum(String acaNum) {
+		this.acaNum = acaNum;
 	}
 	public String getSday() {
 		return sday;
@@ -48,12 +60,35 @@ public class ScheduleDTO {
 	public void setEday(String eday) {
 		this.eday = eday;
 	}
+	public int getLecLimit() {
+		return lecLimit;
+	}
+	public void setLecLimit(int lecLimit) {
+		this.lecLimit = lecLimit;
+	}
+//	public String getLecIntro() {
+//		return lecIntro;
+//	}
+//	public void setLecIntro(String lecIntro) {
+//		this.lecIntro = lecIntro;
+//	}
 	public String getCreated() {
 		return created;
 	}
 	public void setCreated(String created) {
 		this.created = created;
 	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	
+
+	
+	
+	
 	
 	
 }

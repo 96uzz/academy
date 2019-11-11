@@ -84,7 +84,8 @@
 }
 
 /*일정 등록 제목*/
-.scheduleSubject {
+
+.scheduleSubjectStart {
 	display: block;
 	/*width:100%;*/
 	width: 110px;
@@ -97,7 +98,19 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-
+.scheduleSubjectEnd {
+	display: block;
+	/*width:100%;*/
+	width: 110px;
+	margin: 1.5px 0;
+	font-size: 13px;
+	color: white;
+	background: #F46F94;
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 /*일정 더보기 */
 .scheduleMore {
 	display: block;
@@ -175,28 +188,6 @@ $(function(){
     });
 });
 
-<%-- $(function(){
-	$("ul.tabs li").click(function() {
-		tab = $(this).attr("data-tab");
-		
-		$("ul.tabs li").each(function(){
-			$(this).removeClass("active");
-		});
-		
-		$("#tab-"+tab).addClass("active");
-		
-		var url="<%=cp%>/schedule"	
-		if(tab=="month") {
-			url+="/month.do";
-		} else if(tab=="day") {
-			url+="/day.do";
-		} else if(tab=="year") {
-			url+="/year.do";
-		}
-		
-		location.href=url;
-	});
-}); --%>
 
 function changeDate(year, month) {
 	<%-- var url="<%=cp%>/schedule/month.do?year="+year+"&month="+month; --%>
@@ -212,9 +203,7 @@ $(function(){
 		$("form[name=scheduleForm]").each(function(){
 			this.reset();
 		});
-		//$("#form-repeat_cycle").hide();
-		//$("#form-allDay").prop("checked", true);
-		//$("#form-allDay").removeAttr("disabled");
+		
 		$("#form-eday").closest("tr").show();
 		
 		var date=$(this).attr("data-date");
@@ -242,41 +231,13 @@ $(function(){
 });
 
 $(function(){
-	/* $("#form-allDay").click(function(){
-		if(this.checked==true) {
-			$("#form-stime").val("").hide();
-			$("#form-etime").val("").hide();
-		} else if(this.checked==false && $("#form-repeat").val()==0){
-			$("#form-stime").val("00:00").show();
-			$("#form-etime").val("00:00").show();
-		}
-	}); */
+	
 
 	$("#form-sday").change(function(){
 		$("#form-eday").val($("#form-sday").val());
 	});
 	
-	/* $("#form-repeat").change(function(){
-		if($(this).val()=="0") {
-			$("#form-repeat_cycle").val("").hide();
-			
-			$("#form-allDay").prop("checked", true);
-			$("#form-allDay").removeAttr("disabled");
-			
-			$("#form-eday").val($("#form-sday").val());
-			$("#form-eday").closest("tr").show();
-		} else {
-			$("#form-repeat_cycle").show();
-			
-			$("#form-allDay").prop("checked", true);
-			$("#form-allDay").attr("disabled","disabled");
 
-			$("#form-stime").val("").hide();
-			$("#form-eday").val("");
-			$("#form-etime").val("");
-			$("#form-eday").closest("tr").hide();
-		}
-	}); */
 	
 });
 
@@ -350,35 +311,6 @@ function check() {
 			return false;
 		}
 	}
-	/* 
-	if($("#form-stime").val()!="" && !isValidTime($("#form-stime").val())) {
-		$("#form-stime").focus();
-		return false;
-	}
-
-	if($("#form-etime").val()!="" && !isValidTime($("#form-etime").val())) {
-		$("#form-etime").focus();
-		return false;
-	}
-	
-	if($("#form-etime").val()) {
-		var s1=$("#form-stime").val().replace(":", "");
-		var s2=$("#form-etime").val().replace(":", "");
-		if(s1>s2) {
-			$("#form-stime").focus();
-			return false;
-		}
-	}	
-	
-	if($("#form-repeat").val()!="0" && ! /^(\d){1,2}$/g.test($("#form-repeat_cycle").val())) {
-		$("#form-repeat_cycle").focus();
-		return false;
-	}
-	
-	if($("#form-repeat").val()!="0" && $("#form-repeat_cycle").val()<1) {
-		$("#form-repeat_cycle").focus();
-		return false;
-	} */
 	
 	return true;
 }
@@ -398,11 +330,21 @@ function isValidTime(data) {
 }
 
 // 스케쥴 제목 클릭 -----------------------
+//시작 날짜
 $(function(){
-	$(".scheduleSubject").click(function(){
+	$(".scheduleSubjectStart").click(function(){
 		var date=$(this).attr("data-date");
 		var num=$(this).attr("data-num");
-		var url="<%=cp%>/schedule/day.do?date="+date+"&num="+num;
+		var url="<%=cp%>/cal/day.do?date="+date+"&num="+num;
+		location.href=url;
+	});
+});
+//종료 날짜
+$(function(){
+	$(".scheduleSubjectEnd").click(function(){
+		var date=$(this).attr("data-date");
+		var num=$(this).attr("data-num");
+		var url="<%=cp%>/cal/day.do?date="+date+"&num="+num;
 		location.href=url;
 	});
 });
@@ -411,7 +353,7 @@ $(function(){
 $(function(){
 	$(".scheduleMore").click(function(){
 		var date=$(this).attr("data-date");
-		var url="<%=cp%>/schedule/day.do?date="+date;
+		var url="<%=cp%>/cal/day.do?date="+date;
 		location.href=url;
 	});
 });
@@ -437,28 +379,18 @@ $(function(){
 				</div>
 				<table>
 					<tr>
-						<td><a href="#" id="nav1">학원 검색</a></td>
+						<td><a href="<%=cp%>/acs/list.do" id="nav1">학원 검색</a></td>
 					</tr>
 					<tr>
-						<td><a href="#" id="nav2">강의 검색</a></td>
+						<td><a href="<%=cp%>/lts/list.do" id="nav2">강의 검색</a></td>
 					</tr>
 					<tr>
-						<td><a href="#" id="nav3">일정 검색</a></td>
+						<td><a href="<%=cp%>/cal/list.do" id="nav3">일정 검색</a></td>
 					</tr>
 
 				</table>
 			</div>
 			<div class="content2">
-				<!--  
-				<div style="clear: both;">
-					<ul class="tabs">
-						<li id="tab-month" data-tab="month">월별일정</li>
-						<li id="tab-day" data-tab="day">상세일정</li>
-						<li id="tab-year" data-tab="year">년도</li>
-					</ul>
-				</div>
-				-->
-
 				<div id="tab-content" style="clear: both; margin: auto 40px; padding-bottom:20px;">
 
 					<table style="width: 840px; margin: 0px auto; border-spacing: 0;">
@@ -517,34 +449,19 @@ $(function(){
 							<p class="help-block">* 강의명은 필수 입니다.</p>
 						</td>
 					</tr>
-
-					<!-- <tr>
+					
+					<tr>
 						<td width="100" valign="top"
 							style="text-align: right; padding-top: 5px;"><label
-							style="font-weight: 900;">일정분류</label></td>
+							style="font-weight: 900;">강의 번호</label></td>
 						<td style="padding: 0 0 15px 15px;">
 							<p style="margin-top: 1px; margin-bottom: 5px;">
-								<select name="color" id="form-color" class="selectField">
-									<option value="green">시작일</option>
-									<option value="blue">가족일정</option>
-									<option value="tomato">회사일정</option>
-									<option value="purple">기타일정</option>
-								</select>
+								<input type="text" name="lecNum" id="form-subject"
+									maxlength="100" class="boxTF" style="width: 95%;">
 							</p>
+							<p class="help-block">* 2자리에서 5자리 숫자입니다.</p>
 						</td>
-					</tr> -->
-
-					<!-- <tr>
-						<td width="100" valign="top"
-							style="text-align: right; padding-top: 5px;"><label
-							style="font-weight: 900;">종일일정</label></td>
-						<td style="padding: 0 0 15px 15px;">
-							<p style="margin-top: 5px; margin-bottom: 5px;">
-								<input type="checkbox" name="allDay" id="form-allDay" value="1"
-									checked="checked"> <label for="allDay">하루종일</label>
-							</p>
-						</td>
-					</tr> -->
+					</tr>
 
 					<tr>
 						<td width="100" valign="top"
@@ -579,34 +496,40 @@ $(function(){
 							<p class="help-block">종료일자는 선택사항이며, 시작일자보다 작을 수 없습니다.</p>
 						</td>
 					</tr>
-
-					<!-- <tr>
-						<td width="100" valign="top"
-							style="text-align: right; padding-top: 5px;"><label
-							style="font-weight: 900;">일정반복</label></td>
-						<td style="padding: 0 0 15px 15px;">
-							<p style="margin-top: 1px; margin-bottom: 5px;">
-								<select name="repeat" id="form-repeat" class="selectField">
-									<option value="0">반복안함</option>
-									<option value="1">년반복</option>
-								</select> <input type="text" name="repeat_cycle" id="form-repeat_cycle"
-									maxlength="2" class="boxTF" style="width: 20%; display: none;"
-									placeholder="반복주기">
-							</p>
-						</td>
-					</tr> -->
-
+					
 					<tr>
 						<td width="100" valign="top"
 							style="text-align: right; padding-top: 5px;"><label
-							style="font-weight: 900;">메모</label></td>
+							style="font-weight: 900;">수강 가능 인원수</label></td>
 						<td style="padding: 0 0 15px 15px;">
 							<p style="margin-top: 1px; margin-bottom: 5px;">
-								<textarea name="memo" id="form-memo" class="boxTA"
-									style="width: 93%; height: 70px; resize: none;" ></textarea>
+								<input type="text" name="lecLimit" id="form-subject"
+									maxlength="100" class="boxTF" style="width: 95%;">
+							</p>
+							<p class="help-block">* 수강 가능 인원수를 입력하세요</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="100" valign="top"
+							style="text-align: right; padding-top: 5px;"><label
+							style="font-weight: 900;">학원 번호</label></td>
+						<td style="padding: 0 0 15px 15px;">
+							<p style="margin-top: 1px; margin-bottom: 5px;">
+								<input type="text" name="acaNum" id="form-subject"
+									maxlength="100" class="boxTF" style="width: 95%;">
 							</p>
 						</td>
 					</tr>
+					<tr>
+			      		<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">강좌 소개</label>
+			      		</td>
+			     		 <td style="padding: 0 0 15px 15px;">
+			       		 <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <textarea name="memo" id="form-memo" class="boxTA" style="width:93%; height: 70px;"></textarea>
+			        	</p>
+			     		 </td>
+			 		 </tr>
 
 					<tr height="45">
 						<td align="center" colspan="2">

@@ -49,8 +49,6 @@ public class ScheduleServlet extends MyServlet {
 			monthSchedule(req, resp);
 		} else if (uri.indexOf("day.do") != -1) {
 			daySchedule(req, resp);
-		} else if (uri.indexOf("year.do") != -1) {
-			yearSchedule(req, resp);
 		} else if (uri.indexOf("insert.do") != -1) {
 			insertSubmit(req, resp);
 		} else if (uri.indexOf("update.do") != -1) {
@@ -58,6 +56,8 @@ public class ScheduleServlet extends MyServlet {
 		} else if (uri.indexOf("delete.do") != -1) {
 			deleteSubmit(req, resp);
 		}
+		
+	
 	}
 
 	private void monthSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -108,7 +108,8 @@ public class ScheduleServlet extends MyServlet {
 		String startDay = String.format("%04d%02d%02d", syear, smonth, sdate);
 		String endDay = String.format("%04d%02d%02d", eyear, emonth, edate);
 		//List<ScheduleDTO> list = dao.listMonth(startDay, endDay, info.getUserId());
-		List<ScheduleDTO> list = dao.listMonth(startDay, endDay, "admin");
+		//List<ScheduleDTO> list = dao.listMonth(startDay, endDay, "admin");
+		List<ScheduleDTO> list = dao.listMonth(startDay, endDay);
 
 		String s;
 		String[][] days = new String[cal.getActualMaximum(Calendar.WEEK_OF_MONTH)][7];
@@ -138,10 +139,14 @@ public class ScheduleServlet extends MyServlet {
 					break;
 				}
 
-
-				if((sd8 == cn8 || sd8 <=cn8 && ed8 >= cn8 )) {
-					days[0][i - 1] += "<span class='scheduleSubject' data-date='" + s + "' data-num='" + dto.getNum()
-					+ "' >" + dto.getLecName() + "</span>";
+				//시작 날짜
+				if((sd8 == cn8)) {
+					days[0][i-1]+="<span class='scheduleSubjectStart' data-date='"+s+"' data-num='"
+							 +dto.getNum()+"' >"+dto.getLecName()+"</span>";
+					cnt++;
+				}else if((ed8 == cn8 )) {	//종료 날짜 
+					days[0][i-1]+="<span class='scheduleSubjectEnd' data-date='"+s+"' data-num='"
+							 +dto.getNum()+"' >"+dto.getLecName()+"</span>";
 					cnt++;
 				} else if ((sd8 > cn8 && ed8 < cn8)) {
 					break;
@@ -183,8 +188,12 @@ public class ScheduleServlet extends MyServlet {
 						break;
 					}
 
-					if((sd8 == cn8 || sd8 <=cn8 && ed8 >= cn8 )) {
-						days[row][i]+="<span class='scheduleSubject' data-date='"+s+"' data-num='"
+					if((sd8 == cn8)) { //시작 날짜
+						days[row][i]+="<span class='scheduleSubjectStart' data-date='"+s+"' data-num='"
+								 +dto.getNum()+"' >"+dto.getLecName()+"</span>";
+						cnt++;
+					}else if((ed8 == cn8 )) {	//종료 날짜
+						days[row][i]+="<span class='scheduleSubjectEnd' data-date='"+s+"' data-num='"
 								 +dto.getNum()+"' >"+dto.getLecName()+"</span>";
 						cnt++;
 					} else if ((sd8 > cn8 && ed8 < cn8)) {
@@ -224,9 +233,13 @@ public class ScheduleServlet extends MyServlet {
 						break;
 					}
 
-					if((sd8 == cn8 || sd8 <=cn8 && ed8 >= cn8 )) {
-						days[row][i]+="<span class='scheduleSubject' data-date='"+s+"' data-num='"
-								  +dto.getNum()+"' >"+dto.getLecName()+"</span>";
+					if((sd8 == cn8)) { //시작 날짜
+						days[row][i]+="<span class='scheduleSubjectStart' data-date='"+s+"' data-num='"
+								 +dto.getNum()+"' >"+dto.getLecName()+"</span>";
+						cnt++;
+					}else if((ed8 == cn8 )) {	//종료 날짜
+						days[row][i]+="<span class='scheduleSubjectEnd' data-date='"+s+"' data-num='"
+								 +dto.getNum()+"' >"+dto.getLecName()+"</span>";
 						cnt++;
 					} else if ((sd8 > cn8 && ed8 < cn8)) {
 						break;
@@ -252,7 +265,6 @@ public class ScheduleServlet extends MyServlet {
 	private void daySchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//HttpSession session = req.getSession();
 		//SessionInfo info = (SessionInfo) session.getAttribute("member");
-		
 		ScheduleDAO dao = new ScheduleDAO();
 
 		String date = req.getParameter("date");
@@ -379,58 +391,6 @@ public class ScheduleServlet extends MyServlet {
 		forward(req, resp, "/WEB-INF/views/schedule/day.jsp");
 	}
 
-	private void yearSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String syear = req.getParameter("year");
-		Calendar cal = Calendar.getInstance();
-		int year = cal.get(Calendar.YEAR);
-
-		int todayYear = cal.get(Calendar.YEAR);
-		String today = String.format("%04d%02d%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-				cal.get(Calendar.DATE));
-
-		if (syear != null)
-			year = Integer.parseInt(syear);
-		if (year < 1900)
-			year = cal.get(Calendar.YEAR);
-
-		String days[][][] = new String[12][6][7];
-
-		int row, col, month_of_day;
-		String s;
-		for (int m = 1; m <= 12; m++) {
-			cal.set(year, m - 1, 1);
-			row = 0;
-			col = cal.get(Calendar.DAY_OF_WEEK) - 1;
-			month_of_day = cal.getActualMaximum(Calendar.DATE);
-			for (int i = 1; i <= month_of_day; i++) {
-				s = String.format("%04d%02d%02d", year, m, i);
-
-				if (col == 0) {
-					days[m - 1][row][col] = "<span class='textDate sundayDate' data-date='" + s + "' >" + i + "</span>";
-				} else if (col == 6) {
-					days[m - 1][row][col] = "<span class='textDate saturdayDate' data-date='" + s + "' >" + i
-							+ "</span>";
-				} else {
-					days[m - 1][row][col] = "<span class='textDate nowDate' data-date='" + s + "' >" + i + "</span>";
-				}
-
-				col++;
-				if (col > 6) {
-					col = 0;
-					row++;
-				}
-			}
-		}
-
-		req.setAttribute("year", year);
-
-		req.setAttribute("todayYear", todayYear);
-		req.setAttribute("today", today);
-		req.setAttribute("days", days);
-
-		forward(req, resp, "/WEB-INF/views/schedule/year.jsp");
-	}
-
 	private void insertSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
@@ -442,10 +402,14 @@ public class ScheduleServlet extends MyServlet {
 
 		dto.setUserId(info.getUserId());
 		dto.setLecName(req.getParameter("subject"));
+		dto.setNum(Integer.parseInt(req.getParameter("lecNum")));
 		dto.setSday(req.getParameter("sday").replaceAll("-", ""));
 		dto.setEday(req.getParameter("eday").replaceAll("-", ""));
+		dto.setLecLimit(Integer.parseInt(req.getParameter("lecLimit")));
+		dto.setAcaNum(req.getParameter("acaNum"));
 		dto.setMemo(req.getParameter("memo"));
-
+		
+		
 		int result = dao.insertSchedule(dto);
 		if (result < 1)
 			state = "false";
@@ -467,10 +431,13 @@ public class ScheduleServlet extends MyServlet {
 		ScheduleDTO dto = new ScheduleDTO();
 
 		dto.setUserId(info.getUserId());
-		dto.setNum(Integer.parseInt(req.getParameter("num")));
+		
+		dto.setNum(Integer.parseInt(req.getParameter("lecNum")));
 		dto.setLecName(req.getParameter("subject"));
 		dto.setSday(req.getParameter("sday").replaceAll("-", ""));
 		dto.setEday(req.getParameter("eday").replaceAll("-", ""));
+		dto.setLecLimit(Integer.parseInt(req.getParameter("lecLimit")));
+		dto.setAcaNum(req.getParameter("acaNum"));
 		dto.setMemo(req.getParameter("memo"));
 
 		int result = dao.updateSchedule(dto);
@@ -492,12 +459,12 @@ public class ScheduleServlet extends MyServlet {
 		String cp = req.getContextPath();
 
 		ScheduleDAO dao = new ScheduleDAO();
-		String date = req.getParameter("date");
+		//String date = req.getParameter("date");
 		int num = Integer.parseInt(req.getParameter("num"));
 
 		//dao.deleteSchedule(num, info.getUserId());
-		dao.deleteSchedule(num, "admin");
+		dao.deleteSchedule(num);
 
-		resp.sendRedirect(cp + "/schedule/day.do?date=" + date);
+		resp.sendRedirect(cp + "/cal/list.do");
 	}
 }

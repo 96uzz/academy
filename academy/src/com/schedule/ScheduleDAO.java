@@ -12,39 +12,43 @@ import com.util.DBConn;
 public class ScheduleDAO {
 	private Connection conn = DBConn.getConnection();
 
-	public List<ScheduleDTO> listMonth(String startDay, String endDay, String userId) {
+	public List<ScheduleDTO> listMonth(String startDay, String endDay) {
 		List<ScheduleDTO> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		StringBuffer sb = new StringBuffer();
 
 		try {
-			sb.append("SELECT num, lecName, sday, eday, memo ");
-			sb.append("  FROM schedule");
-			sb.append("  WHERE userId = ? AND ");
+			sb.append("SELECT lecNum, lecName, acaName, lecStartDate, lecEndDate, lecLimit, lecIntro, l.acaNum ");
+			sb.append("  FROM lecture l ");
+			sb.append("  	JOIN academy a on l.acaNum=a.acaNum ");
+			sb.append("  WHERE  ");
 			sb.append("     ( ");
 			sb.append("        ( ");
-			sb.append("           TO_DATE(sday, 'YYYYMMDD') >= TO_DATE(?, 'YYYYMMDD') ");
-			sb.append("               AND TO_DATE(sday, 'YYYYMMDD') <= TO_DATE(?, 'YYYYMMDD')  ");
-			sb.append("               OR TO_DATE(eday, 'YYYYMMDD') <= TO_DATE(?, 'YYYYMMDD')  ");
+			sb.append("           TO_DATE(lecStartDate, 'YYYYMMDD') >= TO_DATE(?, 'YYYYMMDD') ");
+			sb.append("               AND TO_DATE(lecStartDate, 'YYYYMMDD') <= TO_DATE(?, 'YYYYMMDD')  ");
+			sb.append("               OR TO_DATE(lecEndDate, 'YYYYMMDD') <= TO_DATE(?, 'YYYYMMDD')  ");
 			sb.append("         )");         
 			sb.append("    ) ");
-			sb.append("  ORDER BY sday ASC, num DESC ");
+			sb.append("  ORDER BY lecStartDate ASC, lecNum DESC ");
 			
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, userId);
-			pstmt.setString(2, startDay);
+			pstmt.setString(1, startDay);
+			pstmt.setString(2, endDay);
 			pstmt.setString(3, endDay);
-			pstmt.setString(4, endDay);
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ScheduleDTO dto = new ScheduleDTO();
-				dto.setNum(rs.getInt("num"));
+				dto.setNum(rs.getInt("lecNum"));
 				dto.setLecName(rs.getString("lecName"));
-				dto.setSday(rs.getString("sday"));
-				dto.setEday(rs.getString("eday"));
-				dto.setMemo(rs.getString("memo"));
+				dto.setAcaName(rs.getString("acaName"));
+				dto.setSday(rs.getString("lecStartDate"));
+				dto.setEday(rs.getString("lecEndDate"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setMemo(rs.getString("lecIntro"));
+				dto.setAcaNum(rs.getString("acaNum"));
+				
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -74,16 +78,18 @@ public class ScheduleDAO {
 		StringBuffer sb = new StringBuffer();
 
 		try {
-			sb.append("INSERT INTO schedule(");
-			sb.append(" num, userId, lecName, sday, eday,memo) ");
-			sb.append(" VALUES(schedule_seq.nextval,?,?,?,?,?) ");
+			sb.append("INSERT INTO lecture( ");
+			sb.append(" lecCode, lecName, lecNum, lecStartDate,lecEndDate,lecLimit,acaNum,lecIntro) ");
+			sb.append(" VALUES(lec_seq.nextval, ?,?,?,?,?,?,?) ");
 
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, dto.getUserId());
-			pstmt.setString(2, dto.getLecName());
+			pstmt.setString(1, dto.getLecName());
+			pstmt.setInt(2, dto.getNum());
 			pstmt.setString(3, dto.getSday());
 			pstmt.setString(4, dto.getEday());
-			pstmt.setString(5, dto.getMemo());
+			pstmt.setInt(5, dto.getLecLimit());
+			pstmt.setString(6, dto.getAcaNum());
+			pstmt.setString(7, dto.getMemo());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -165,9 +171,11 @@ public class ScheduleDAO {
 		StringBuffer sb = new StringBuffer();
 
 		try {
-			sb.append("SELECT  num, lecName, sday, eday, memo ");
-			sb.append("  FROM schedule");
-			sb.append("  WHERE num = ? ");
+			sb.append("SELECT lecNum, lecName, acaName, lecStartDate, lecEndDate, lecLimit, lecIntro, l.acaNum ");
+			sb.append("  FROM lecture l ");
+			sb.append("  	JOIN academy a on l.acaNum=a.acaNum ");
+			sb.append("  WHERE  lecNum=?");
+
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, num);
 
@@ -176,40 +184,26 @@ public class ScheduleDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				dto = new ScheduleDTO();
-				dto.setNum(rs.getInt("num"));
+				dto.setNum(rs.getInt("lecNum"));
 				dto.setLecName(rs.getString("lecName"));
+				dto.setAcaName(rs.getString("acaName"));
 				
-				dto.setSday(rs.getString("sday"));
+				dto.setSday(rs.getString("lecStartDate"));
 				s = dto.getSday().substring(0, 4) + "-" + dto.getSday().substring(4, 6) + "-"
 						+ dto.getSday().substring(6);
 				dto.setSday(s);
 				
-				dto.setEday(rs.getString("eday"));
+				dto.setEday(rs.getString("lecEndDate"));
 				if (dto.getEday() != null && dto.getEday().length() == 8) {
 					s = dto.getEday().substring(0, 4) + "-" + dto.getEday().substring(4, 6) + "-"
 							+ dto.getEday().substring(6);
 					dto.setEday(s);
 				}
-				dto.setMemo(rs.getString("memo"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setMemo(rs.getString("lecIntro"));
+				dto.setAcaNum(rs.getString("acaNum"));
 				
-				/*
-				 * dto.setStime(rs.getString("stime")); if (dto.getStime() != null &&
-				 * dto.getStime().length() == 4) { s = dto.getStime().substring(0, 2) + ":" +
-				 * dto.getStime().substring(2); dto.setStime(s); }
-				 * dto.setEtime(rs.getString("etime")); if (dto.getEtime() != null &&
-				 * dto.getEtime().length() == 4) { s = dto.getEtime().substring(0, 2) + ":" +
-				 * dto.getEtime().substring(2); dto.setEtime(s); }
-				 * 
-				 * period = dto.getSday(); if (dto.getStime() != null && dto.getStime().length()
-				 * != 0) { period += " " + dto.getStime(); } if (dto.getEday() != null &&
-				 * dto.getEday().length() != 0) { period += " ~ " + dto.getEday(); } if
-				 * (dto.getEtime() != null && dto.getEtime().length() != 0) { period += " " +
-				 * dto.getEtime(); } dto.setPeriod(period);
-				 * 
-				 * dto.setColor(rs.getString("color")); dto.setRepeat(rs.getInt("repeat"));
-				 * dto.setRepeat_cycle(rs.getInt("repeat_cycle"));
-				 * dto.setMemo(rs.getString("memo")); dto.setCreated(rs.getString("created"));
-				 */
+		
 			}
 
 		} catch (Exception e) {
@@ -239,18 +233,20 @@ public class ScheduleDAO {
 		StringBuffer sb = new StringBuffer();
 
 		try {
-			sb.append("UPDATE schedule SET ");
-			sb.append("  lecName=?,sday=?,eday=?,memo=? ");
-			sb.append("  WHERE num=? AND userId=?");
-
+			sb.append("UPDATE lecture SET ");
+			sb.append(" lecName = ?, lecStartDate =?, lecEndDate = ?,  ");
+			sb.append(" lecLimit = ?, acaNum = ?, lecIntro = ? ");
+			sb.append(" where lecNum = ? ");
+			
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			pstmt.setString(1, dto.getLecName());
 			pstmt.setString(2, dto.getSday());
 			pstmt.setString(3, dto.getEday());
-			pstmt.setString(4, dto.getMemo());
-			pstmt.setInt(5, dto.getNum());
-			pstmt.setString(6, dto.getUserId());
+			pstmt.setInt(4, dto.getLecLimit());
+			pstmt.setString(5, dto.getAcaNum());
+			pstmt.setString(6, dto.getMemo());
+			pstmt.setInt(7, dto.getNum());
 
 
 			result = pstmt.executeUpdate();
@@ -269,16 +265,15 @@ public class ScheduleDAO {
 		return result;
 	}
 
-	public int deleteSchedule(int num, String userId) {
+	public int deleteSchedule(int num) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 
 		try {
-			sql = "DELETE FROM schedule WHERE num=? AND userId=?";
+			sql = "DELETE FROM lecture WHERE lecNum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			pstmt.setString(2, userId);
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
