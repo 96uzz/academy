@@ -24,7 +24,7 @@
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -131,16 +131,22 @@ body{
 			<br><br>
 			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px;">
 				<tr style="width: 100%;">
-					<td style="width: 300px; height: 200px; border: 1px solid black;">
-						사진 들어갈 부분
+					<td style="width: 300px; height: 200px;">
+						<img src="<%=cp%>/resource/images/infoWeb.png">
 					</td>
-					<td style="width: 450px; height: 200px; border: 1px solid black;">
-						대문글 쏴라라락 부분
+					<td style="width: 450px; height: 100%;">
+						<p style="font-size: 25px; color: blue;">승훈교육정보센터에 오신 여러분 환영합니다.</p>
+						<br><br>
+						<p style="font-size: 33px;">국내최대규모 승훈에서</p>
+						<p style="font-size: 33px;">당신의 꿈을 찾아가세요!</p>
+						<br>
+						<p>우수한 학원과 강의를 찾고자하면 바로 이곳</p>
 					</td>
 				</tr>
+				<tr height="50px;"></tr>
 				<tr>
 					<td style="width:100%; border: 1px solid black;" colspan="2">
-						안녕하세요 승훈 어쩌고저쩌고,,,,,,안녕하세요 승훈 어쩌고저쩌고,,,,,,안녕하세요 승훈 어쩌고저쩌고,,,,,,안녕하세요 승훈 어쩌고저쩌고,,,,,,
+						<p>무슨말을 채워넣어야 할까,,,</p>
 					</td>
 					<td></td>
 				</tr>

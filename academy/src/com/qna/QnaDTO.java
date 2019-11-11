@@ -4,6 +4,7 @@ public class QnaDTO {
 	private int listNum;
 	private int qnaNum;
 	private String userId;
+	private String userName;
 	private String subject;
 	private String content;
 	private String created;
@@ -12,6 +13,7 @@ public class QnaDTO {
 	private int depth;
 	private int parent;
 	private int hitCount;
+	
 	
 	public int getListNum() {
 		return listNum;
@@ -79,6 +81,13 @@ public class QnaDTO {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	
 	
 }

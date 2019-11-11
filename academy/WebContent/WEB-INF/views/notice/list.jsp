@@ -180,7 +180,7 @@ function searchList() {
 			<c:forEach var="dto" items="${list}">
 				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
 					<td>${dto.listNum}</td>				
-					<td>
+					<td style="text-align: left;">
 			           <c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif"></c:if>
 						&nbsp;
 						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>

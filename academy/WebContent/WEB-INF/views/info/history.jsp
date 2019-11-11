@@ -131,59 +131,81 @@ body{
 			연혁
 			<br><br>
 			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
-				<tr style=" width: 800px; height: 250px; border: 1px solid black;">
+				<tr style=" width: 800px; height: 250px;">
 					<td>
-						사진 들어갈 부분
+						<img src="<%=cp%>/resource/images/history.png">
 					</td>
 				</tr>
 			</table>
 			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
-				<tr style="height: 30px;"></tr>
+				<tr style="height: 50px;"></tr>
+				<tr>
+					<td colspan="2" style="padding-left: 50px;">
+						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
+						<p style="font-size: 30px;">2019년</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 100px;">
+						<p style="font-size: 20px; display: inline-block; float: left; color: brown; font-weight: 500;">2019.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 350px;">
+						<p style="font-size: 18px;">교육부 선정 모범적인 사이트 1위</p>
+						<p style="font-size: 18px;">&nbsp; - 승훈교육정보센터</p>
+						<p style="font-size: 18px;">SBC TV프로그램 '세상에 이런 사이트가?' 출연</p>
+						<p style="font-size: 18px;">EBF 교육프로그램 'CSS뚜루룩딱' 모델 사이트</p>
+					</td>
+				</tr>
+				<tr style="height: 50px;"></tr>
+				<tr>
+					<td colspan="2" style="padding-left: 50px;">
+						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
+						<p style="font-size: 30px;">2018년</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 100px;">
+						<p style="font-size: 20px; display: inline-block; float: left; color: brown; font-weight: 500;">2018.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 350px;">
+						<p style="font-size: 18px;">고용노동부 기관평가 최우수 훈련기관 유지</p>
+						<p style="font-size: 18px;">&nbsp; - 승훈교육정보센터</p>
+						<p style="font-size: 18px;">고용노동부 훈련조회자평가 결과 S등급 선정</p>
+						<p style="font-size: 18px;">고용노동부 교육훈련기관 인증평가 최고등급</p>
+					</td>
+				</tr>
+				<tr style="height: 50px;"></tr>
+				<tr>
+					<td colspan="2" style="padding-left: 50px;">
+						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
+						<p style="font-size: 30px;">2017년</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 100px;">
+						<p style="font-size: 20px; display: inline-block; float: left; color: brown; font-weight: 500;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
+					</td>
+					<td style="width: 350px;">
+						<p style="font-size: 18px;">고용 노동부 기관평가 최우수 훈련기관 선정</p>
+						<p style="font-size: 18px;">&nbsp; - 승훈교육정보센터</p>
+						<p style="font-size: 18px;">한국산업인력공단 위탁교육기관</p>
+						<p style="font-size: 18px;">교육부 선정 올해의 우수 사이트</p>
+					</td>
+					<tr style="height: 200px;"></tr>
+				</tr>
 				
-				<tr>
-					<td style="width: 300px;" colspan="2">
-						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
-						<p style="font-size: 30px;">2017년 ~ 2018년</p>
-						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
-					</td>
-					<td style="width: 100px;">
-						<p style="font-size: 20px; display: inline-block; float: left; color: #3598DB; font-weight: 100;">2017.03&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
-					</td>
-					<td style="width: 350px;">
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-					</td>
-				</tr>
-				<tr style="height: 20px;"></tr>
-				<tr>
-					<td style="width: 300px;" colspan="2">
-						<p style="font-size: 30px; font-weight:900; color: red; display: inline-block; float: left;">|&nbsp;</p>
-						<p style="font-size: 30px;">2016년 ~ 2017년</p>
-						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; width: 300px; opacity: 0;">2017.&nbsp;</p>
-					</td>
-					<td style="width: 100px;">
-						<p style="font-size: 20px; display: inline-block; float: left; color: #3598DB; font-weight: 100;">2016.08&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
-						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
-					</td>
-					<td style="width: 350px;">
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-						<p style="font-size: 20px;">승훈교육정보센터 홈페이지 개설</p>
-					</td>
-				</tr>
-
 			</table>
 		</div>
 		

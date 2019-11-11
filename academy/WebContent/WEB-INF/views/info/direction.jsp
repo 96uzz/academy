@@ -20,11 +20,12 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 
+
 <style type="text/css">
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -73,10 +74,6 @@ body{
 
 </style>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript">
-
-
-</script>
 </head>
 <body>
 
@@ -101,9 +98,9 @@ body{
 			찾아오시는 길
 			<br><br>
 			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
-				<tr style=" width: 800px; height: 250px; border: 1px solid black;">
+				<tr style=" width: 800px; height: 250px;">
 					<td>
-						사진 들어갈 부분
+						<img src="<%=cp%>/resource/images/direction.png">
 					</td>
 				</tr>
 			</table>
@@ -116,6 +113,16 @@ body{
 						<p style="font-size: 30px;">상세 지도</p>
 					</td>
 				</tr>
+				<tr style="height: 50px;"></tr>
+			</table>
+			
+			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
+				<tr style=" width: 800px; height: 500px; border: 1px solid black;">
+					<td>
+						<div id="staticMap" style="width:100%;height:500px;"></div>  
+					</td>
+				</tr>
+				<tr style="height: 50px;"></tr>
 			</table>
 		</div>
 	
@@ -125,7 +132,26 @@ body{
 <div class="footer">
     <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
 </div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea24f69cc8602cd4d0ce33868b3dd46d"></script>
+<script type="text/javascript">
+var markers = [
+    {
+        position: new kakao.maps.LatLng(37.556556, 126.919575), 
+        text: '승훈' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+    }
+];
 
+var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+    staticMapOption = { 
+        center: new kakao.maps.LatLng(37.556556, 126.919575), // 이미지 지도의 중심좌표
+        level: 3, // 이미지 지도의 확대 레벨
+        marker: markers // 이미지 지도에 표시할 마커 
+    };    
+
+//이미지 지도를 생성합니다
+var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+
+</script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 </body>

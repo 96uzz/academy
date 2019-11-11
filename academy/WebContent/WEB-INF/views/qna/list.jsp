@@ -24,7 +24,7 @@
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -37,6 +37,36 @@ body{
 	font-family: 'Nanum Square', sans-serif;
 	font-size: 20px;
 }
+
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
 
 .container2 {
     width:100%;
@@ -72,9 +102,19 @@ body{
 }
 
 </style>
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript">
 
+<script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+function selectList() {
+	var f=document.selectForm;
+	f.submit();
+}
+
+function searchList() {
+	var f=document.searchForm;
+	f.submit();
+}
 
 </script>
 </head>
