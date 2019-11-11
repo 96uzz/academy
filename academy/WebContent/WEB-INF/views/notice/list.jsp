@@ -155,7 +155,7 @@ function searchList() {
 				<tr style="border-bottom: 1px solid black; background-color: #3598DB;">
 					<td style="width: 50px; text-align: center;">No</td>			
 					<td style="width: 350px; text-align: center;">제목</td>
-					<td style="width: 70px; text-align: center;">작성자</td>			
+					<td style="width: 80px; text-align: center;">작성자</td>			
 					<td style="width: 50px; text-align: center;">첨부</td>
 					<td style="width: 100px; text-align: center;">작성일</td>
 					<td style="width: 60px; text-align: center;">조회수</td>
@@ -183,7 +183,8 @@ function searchList() {
 					<td style="text-align: left;">
 			           <c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif"></c:if>
 						&nbsp;
-						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
+						<a href="${articleUrl}&noticeNum=${dto.noticeNum}"><span style="    width: 415px;
+    display: inline-block;overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"> ${dto.subject}</span></a>
 					</td>			
 					<td>관리자</td>
 					<td>
