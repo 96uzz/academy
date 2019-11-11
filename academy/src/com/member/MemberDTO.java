@@ -5,6 +5,12 @@ public class MemberDTO {
 	private String birth, email, email1, email2, tel, tel1, tel2, tel3;
 	private String zip, addr1, addr2;
 	private String lecCode;
+	private String acaDiv;
+	private String acaName;
+	private String acaAddress;
+	private String lecName;
+	private String lecStartDate, lecEndDate;
+	private String lecLimit;
 
 	public String getUserId() {
 		return userId;
@@ -124,6 +130,62 @@ public class MemberDTO {
 
 	public void setLecCode(String lecCode) {
 		this.lecCode = lecCode;
+	}
+
+	public String getAcaDiv() {
+		return acaDiv;
+	}
+
+	public void setAcaDiv(String acaDiv) {
+		this.acaDiv = acaDiv;
+	}
+
+	public String getAcaName() {
+		return acaName;
+	}
+
+	public void setAcaName(String acaName) {
+		this.acaName = acaName;
+	}
+
+	public String getAcaAddress() {
+		return acaAddress;
+	}
+
+	public void setAcaAddress(String acaAddress) {
+		this.acaAddress = acaAddress;
+	}
+
+	public String getLecName() {
+		return lecName;
+	}
+
+	public void setLecName(String lecName) {
+		this.lecName = lecName;
+	}
+
+	public String getLecStartDate() {
+		return lecStartDate;
+	}
+
+	public void setLecStartDate(String lecStartDate) {
+		this.lecStartDate = lecStartDate;
+	}
+
+	public String getLecEndDate() {
+		return lecEndDate;
+	}
+
+	public void setLecEndDate(String lecEndDate) {
+		this.lecEndDate = lecEndDate;
+	}
+
+	public String getLecLimit() {
+		return lecLimit;
+	}
+
+	public void setLecLimit(String lecLimit) {
+		this.lecLimit = lecLimit;
 	}
 
 }

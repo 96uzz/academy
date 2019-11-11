@@ -84,11 +84,11 @@ body{
 		
         
         <li>
-            <a href="<%=cp%>/mypage/interlecture.do">마이 페이지</a>
+            <a href="<%=cp%>/member/interlecture.do">마이 페이지</a>
             <ul>
-                <li><a href="<%=cp%>/mypage/interlecture.do" style="margin-left: 305px;" onmouseover="this.style.marginLeft='305px';">관심 강좌</a></li>
-                <li><a href="<%=cp%>/mypage/myinfo.do">정보 수정</a></li>
-                <li><a href="<%=cp%>/mypage/takinglecture.do">수강중인 강좌</a></li>
+                <li><a href="<%=cp%>/member/interlecture.do" style="margin-left: 305px;" onmouseover="this.style.marginLeft='305px';">관심강좌</a></li>
+                <li><a href="<%=cp%>/member/pwd.do?mode=update">정보 수정</a></li>
+                <li><a href="<%=cp%>/member/takinglecture.do">수강중인 강좌</a></li>
             </ul>
         </li>
        

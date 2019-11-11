@@ -33,6 +33,111 @@
   font-size:14px;
   border-radius:4px;
 }
+
+#background{
+	background-image:url(/academy/resource/images/back1.jpg); 
+    background-position: center;
+    background-repeat: no-repeat;
+   	background-size: 1350px 600px;
+
+   	width: 1400px;
+   	height: 550px;
+  	margin: 0px auto 0px auto;
+
+}
+
+body{
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 20px;
+}
+
+.container2 {
+    width:100%;
+    text-align:left;
+	position: relative;
+}
+.body-container2 {
+	margin-top : 120px;
+	width: 1000px;
+	clear: both;
+	min-height: 500px;
+	position: absolute;
+	top: 80%;
+	left: 37%;
+	
+}
+.navigation2 {
+	float: left;
+}
+
+.content2 {
+	float: left;
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.navigation2 td {
+ 	font-family: 'Nanum Square', sans-serif;
+	font-size : 20px;
+	border-radius: 2px;
+	margin : 20px auto;
+	padding : 10px;
+	
+}
+
+#nav1 {
+	font-weight: 800;
+}
+
+.loginImage {
+   width: 40px;
+   height: 40px;
+   padding-top: 0px;
+}
+
+.loginInput {
+   height: 35px;
+   width: 280px;
+   font-size: 18px;
+   padding-top: 1px;
+}
+
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: white;
+   font-size: 15px;
+   background-color: #3598DB;
+   border: 0px;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#e6e6e6;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
+#confirmLogin{
+	font-weight:bold;
+	font-style:italic;
+	font-size: 17px;
+    color : red;
+    text-align: center;
+}
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
@@ -67,70 +172,50 @@
 <div class="header">
     <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
 </div>
-	
-<div class="container">
-	<div>
-	
-	    <div style="margin: 70px auto 60px; width:420px;">
-		
-	    	<div style="text-align: center;">
-	        	<span style="font-weight: bold; font-size:27px; color: #424951;">패스워드 재확인</span>
-	        </div>
-		
-			<form name="pwdForm" method="post" action="">
-			  <table style="width:420px; margin: 20px auto; padding:30px;  border-collapse: collapse; border: 1px solid #DAD9FF;">
-			  <tr style="height:50px;"> 
-			      <td style="padding-left: 30px; text-align: left;">
-			          정보보호를 위해 패스워드를 다시 한 번 입력해주세요.
-			      </td>
-			  </tr>
-
-			  <tr style="height:60px;" align="center"> 
-			      <td> 
-			        &nbsp;
-			        <input type="text" name="userId" class="loginTF" maxlength="15"
-			                   tabindex="1"
-			                   value="${sessionScope.member.userId}"
-	                           readonly="readonly">
-			           &nbsp;
-			      </td>
-			  </tr>
-			  <tr align="center" height="60"> 
-			      <td>
-			        &nbsp;
-			        <label for="userPwd" id="lblUserPwd" class="lbl" >패스워드</label>
-			        <input type="password" name="userPwd" id="userPwd" class="loginTF" maxlength="20" 
-			                   tabindex="2"
-	                           onfocus="document.getElementById('lblUserPwd').style.display='none';"
-	                           onblur="bgLabel(this, 'lblUserPwd');">
-			        &nbsp;
-			      </td>
-			  </tr>
-			  <tr align="center" height="65" > 
-			      <td>
-			        &nbsp;
-			        <button type="button" onclick="sendOk();" class="btnConfirm">확인</button>
-					<input type="hidden" name="mode" value="${mode}">
-			        &nbsp;
-			      </td>
-			  </tr>
-			  <tr align="center" height="10" > 
-			      <td>&nbsp;</td>
-			  </tr>
-		    </table>
-			</form>
-			           
-		    <table style="width:420px; margin: 10px auto 0; border-collapse: collapse;">
-			  <tr align="center" height="30" >
-			    	<td><span style="color: blue;">${message}</span></td>
-			  </tr>
-			</table>
+<div id="background" class="container2">
+<div class="container2">
+    <div class="body-container2">
+		<div class="navigation2" >
+			<div class="body-title">
+          
+        	</div>
 		</div>
-			
-	</div>
-
+		<div class="content2" style="margin-left: auto; margin-right: auto;">
+		<h2 style="padding-left:61px; color: #3598DB;">패스워드 재확인</h2>
+		<br>
+		<span style="margin-left:37px; font-size:17px; text-align: left;">패스워드를 다시 한 번 입력해주세요.</span>
+		<br><br>
+			<form name="pwdForm" method="post">
+      <table style="border-collapse: collapse; border-spacing: 0px;">
+         <tr style="border-spacing: 0px; border-collapse: collapse;">
+            <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/man.JPG"></td>
+            <td><input class="loginInput" type="text" id="userId" name="userId" style="margin-bottom: 5px;"  value="${sessionScope.member.userId}"
+	                           readonly="readonly"></td>
+         </tr>
+         <tr>
+            <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/key.JPG"></td>
+            <td><input class="loginInput" type="password" id="userPwd" name="userPwd" style="margin-bottom: 5px;" onfocus="document.getElementById('lblUserPwd').style.display='none';"
+	                           onblur="bgLabel(this, 'lblUserPwd');"></td>
+         </tr>
+      </table>
+      
+      <div id="confirmLogin">${message}</div>
+      <table style="width: 341px; padding-top: 5px">
+         <tr>
+         	<td><input type="hidden" name="mode" value="${mode}"></td>
+            <td><button class="loginButton" type="button"
+                  name="login" onclick="sendOk();" style="margin-left: 111px;">로그인</button></td>
+            
+        
+         </tr>
+             </table>
+        </form>
+      
+		</div>
+	
+    </div>
 </div>
-
+</div>
 <div class="footer">
     <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
 </div>

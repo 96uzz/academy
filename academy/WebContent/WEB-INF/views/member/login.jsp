@@ -166,7 +166,7 @@ function sendLogin() {
         	</div>
 		</div>
 		<div class="content2" style="margin-left: auto; margin-right: auto;">
-		<h2 style="padding-left: 120px;">로그인</h2>
+		<h2 style="padding-left: 120px; color: #3598DB;">로그인</h2>
 		<br>
 		<br><br>
 			<form name="loginForm" method="post">
