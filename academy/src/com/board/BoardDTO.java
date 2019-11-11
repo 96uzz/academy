@@ -1,18 +1,21 @@
 package com.board;
 
 public class BoardDTO {
-	private int listNum;
-	private int boardNum;
-	private String userId;
-	private String subject;
-	private String content;
+	private int listNum, boardNum;
+	private String userId, userName;
+	private String subject, content;
 	private String created;
-	private int groupNum;
-	private int orderNo;
-	private int depth;
-	private int parent;
 	private int hitCount;
+	private int groupNum, orderNo, depth, parent;
+	private long gap;
 	
+	
+	public long getGap() {
+		return gap;
+	}
+	public void setGap(long gap) {
+		this.gap = gap;
+	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -31,6 +34,12 @@ public class BoardDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public String getSubject() {
 		return subject;
 	}
@@ -48,6 +57,12 @@ public class BoardDTO {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public int getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
 	}
 	public int getGroupNum() {
 		return groupNum;
@@ -73,12 +88,4 @@ public class BoardDTO {
 	public void setParent(int parent) {
 		this.parent = parent;
 	}
-	public int getHitCount() {
-		return hitCount;
-	}
-	public void setHitCount(int hitCount) {
-		this.hitCount = hitCount;
-	}
-	
-	
 }

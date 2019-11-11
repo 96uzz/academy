@@ -10,6 +10,7 @@ public class ReviewDTO {
 	private String lecEndDate;
 	private int lecLimit;
 	private int acaNum;
+	private String acaName;
 
 	// °­ÁÂÀÇ ¸®ºä Á¤º¸
 	private int reNum;
@@ -17,6 +18,16 @@ public class ReviewDTO {
 	private double rate;
 	private String content;
 	private String created;
+
+	
+	
+	public String getAcaName() {
+		return acaName;
+	}
+
+	public void setAcaName(String acaName) {
+		this.acaName = acaName;
+	}
 
 	public int getListNum() {
 		return listNum;
