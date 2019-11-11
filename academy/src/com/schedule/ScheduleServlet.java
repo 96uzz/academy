@@ -31,7 +31,7 @@ public class ScheduleServlet extends MyServlet {
 		HttpSession session = req.getSession();
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
-		
+		/*
 		// AJAX에서 로그인이 안된 경우 403이라는 에러 코드를 던진다.
 		String header = req.getHeader("AJAX");
 		if (header != null && header.equals("true") && info == null) {
@@ -43,7 +43,7 @@ public class ScheduleServlet extends MyServlet {
 			resp.sendRedirect(cp + "/member/login.do");
 			return;
 		}
-	
+		 */
 
 		if (uri.indexOf("list.do") != -1) {
 			monthSchedule(req, resp);

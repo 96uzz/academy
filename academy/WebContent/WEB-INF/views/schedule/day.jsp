@@ -286,7 +286,7 @@ function isValidTime(data) {
 }
 
 function deleteOk(num) {
-	if(confirm("일정을 삭제 하시 겠습니까 ? ")) {
+	if(confirm("강의를 삭제 하시 겠습니까 ? ")) {
 		var date="${date}";
 		var url="<%=cp%>/cal/delete.do?date="+date+"&num="+num;
 		location.href=url;
