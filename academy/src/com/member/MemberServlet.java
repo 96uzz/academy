@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.saying.SayingDAO;
+import com.saying.SayingDTO;
 import com.util.MyServlet;
 
 import net.sf.json.JSONObject;
@@ -68,7 +70,7 @@ public class MemberServlet extends MyServlet {
 		HttpSession session = req.getSession();
 
 		MemberDAO dao = new MemberDAO();
-		String cp = req.getContextPath();
+		//String cp = req.getContextPath();
 
 		String userId = req.getParameter("userId");
 		String userPwd = req.getParameter("userPwd");
@@ -87,9 +89,22 @@ public class MemberServlet extends MyServlet {
 
 				// 세션에 member이라는 이름으로 session info 객체를 저장
 				session.setAttribute("member", info);
-
+				
+				int num = 0;
+				num = (int)(Math.random()*53)+1;
+				SayingDAO dao2 = new SayingDAO();
+				SayingDTO dto2 = dao2.readSaying(num);
+				info.setWiseSaying(dto2.getWiseSaying());
+				
+				req.setAttribute("num", num);	
+				req.setAttribute("dto2", dto2);
+				
+				
+				
+				forward(req, resp, "/WEB-INF/views/main/main.jsp");
+				
 				// 메인화면으로 리다이렉트
-				resp.sendRedirect(cp);
+				//resp.sendRedirect(cp);
 				return;
 			}
 		}

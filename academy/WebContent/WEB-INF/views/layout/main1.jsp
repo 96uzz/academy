@@ -1,3 +1,5 @@
+<%@page import="com.saying.SayingDAO"%>
+<%@page import="com.saying.SayingDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,6 +7,7 @@
 <%
    String cp = request.getContextPath();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -196,7 +199,7 @@ function sendLogin() {
        <td colspan="3" style="padding-left: 10px;">[오늘의 명언]</td>
       </tr>
       <tr>
-       <td colspan="3" style="padding-left: 10px; font-weight:bold;">고통이 남기고 간 뒤를 보라! 고난이 지나면 반드시 기쁨이 스며든다. -괴테</td>
+       <td colspan="3" style="padding-left: 10px; font-weight:bold;">${sessionScope.member.wiseSaying}</td>
       </tr>
       
       </table>

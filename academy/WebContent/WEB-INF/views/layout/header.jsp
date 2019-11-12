@@ -37,7 +37,7 @@ body{
 <div class="header-top">
    	 <div class="header-left">
         <p style="margin-top: 15px;">
-            <a href="<%=cp%>/" style="text-decoration: none;">
+            <a href="<%=cp%>/main.do" style="text-decoration: none;">
                 <span style="width: 350px; height: 150px; position: relative;">
                 	<img src="<%=cp%>/resource/images/logo2.png">
                 </span>

@@ -3,6 +3,7 @@ package com.member;
 public class SessionInfo {
 	private String userId, userName;
 	private int userRoll;
+	private String wiseSaying;
 	
 	public String getUserId() {
 		return userId;
@@ -22,4 +23,11 @@ public class SessionInfo {
 	public void setUserRoll(int userRoll) {
 		this.userRoll = userRoll;
 	}
+	public String getWiseSaying() {
+		return wiseSaying;
+	}
+	public void setWiseSaying(String wiseSaying) {
+		this.wiseSaying = wiseSaying;
+	}
+	
 }
