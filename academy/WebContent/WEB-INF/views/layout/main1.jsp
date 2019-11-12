@@ -75,11 +75,26 @@ padding: 60px 0px 0px 60px;
     opacity: .65;
 }
 
-.boardMenu {
+/* .boardMenu {
    padding: 0px 5px 5px 0px;
    color: black;
    text-decoration: none;
    font-size: 20px;
+} */
+.boardMenu {
+	padding: 0px 5px 5px 0px;
+	color : black;
+	border: none;
+	background: white;
+	font-size : 20px;
+}
+
+#btnNotice, #btnBoard, #btnQna {
+	padding: 0px 5px 5px 0px;
+	color : black;
+	border: none;
+	background: white;
+	font-size : 20px;
 }
 
 a {
@@ -208,44 +223,33 @@ function sendLogin() {
       
       <br> <br>
       <table>
-         <tr>
+       <!--   <tr>
             <td class="boardMenu"><a href="#">공지사항&nbsp;|</a></td>
             <td class="boardMenu"><a href="#">자유게시판&nbsp;|</a></td>
             <td class="boardMenu"><a href="#">Q/A&nbsp;</a></td>
+         </tr> -->
+         <tr>
+         	<td class="boardMenu"><button id="btnNotice">공지사항</button></td>
+         	<td class="boardMenu"><button id="btnBoard">자유게시판</button></td>
+         	<td class="boardMenu"><button id="btnQna">Q/A</button></td>
          </tr>
       </table>
+      
       <table class="board">
          <tr class="boardTop">
             <th style="width: 15%;">번호</th>
             <th style="width: 70%;">제목</th>
             <td style="width: 15%;"><a href="#">+more</a></td>
          </tr>
-
-         <tr class="boardMiddles">
-            <td>4</td>
-            <td class="boardSubject"><a href="#">dasdf241</a></td>
+		
+		<c:forEach var="dto" items="${list}">
+			 <tr class="boardMiddles">
+            <td>${dto.noticeNum}</td>
+            <td class="boardSubject"><a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
             <td></td>
          </tr>
-         <tr class="boardMiddles">
-            <td>6</td>
-            <td class="boardSubject"><a href="#">asdfasdfasdf</a></td>
-            <td></td>
-         </tr>
-         <tr class="boardMiddles">
-            <td>8</td>
-            <td class="boardSubject"><a href="#"></a></td>
-            <td></td>
-         </tr>
-         <tr class="boardMiddles">
-            <td>10</td>
-            <td class="boardSubject"><a href="#">asdas</a></td>
-            <td></td>
-         </tr>
-         <tr class="boardBottom">
-            <td>12</td>
-            <td class="boardSubject"><a href="#">asdfasdfsadfsdf</a></td>
-            <td></td>
-         </tr>
+		</c:forEach>
+        
 
       </table>
 </div>

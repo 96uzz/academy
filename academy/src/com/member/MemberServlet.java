@@ -70,7 +70,7 @@ public class MemberServlet extends MyServlet {
 		HttpSession session = req.getSession();
 
 		MemberDAO dao = new MemberDAO();
-		//String cp = req.getContextPath();
+		String cp = req.getContextPath();
 
 		String userId = req.getParameter("userId");
 		String userPwd = req.getParameter("userPwd");
@@ -98,13 +98,10 @@ public class MemberServlet extends MyServlet {
 				
 				req.setAttribute("num", num);	
 				req.setAttribute("dto2", dto2);
-				
-				
-				
-				forward(req, resp, "/WEB-INF/views/main/main.jsp");
+			
 				
 				// 메인화면으로 리다이렉트
-				//resp.sendRedirect(cp);
+				resp.sendRedirect(cp);
 				return;
 			}
 		}

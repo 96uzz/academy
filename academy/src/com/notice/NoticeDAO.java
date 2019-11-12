@@ -269,6 +269,51 @@ public class NoticeDAO {
 		return list;
 	}
 	
+	//메인 화면에 출력되는 최근 5개의 공지글
+	public List<NoticeDTO> listNotice() {
+		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		StringBuilder sb=new StringBuilder();
+		
+		try {
+			sb.append("SELECT noticeNum, subject ");
+			sb.append(" from notice ");
+			sb.append(" order by noticeNum desc ");
+			sb.append(" offset 0 rows fetch first 5 rows only ");
+			
+			pstmt=conn.prepareStatement(sb.toString());
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				NoticeDTO dto=new NoticeDTO();
+				
+				dto.setNoticeNum(rs.getInt("noticeNum"));
+				dto.setSubject(rs.getString("subject"));
+				
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		} 
+
+		return list;
+	}
 	
 	
 	public NoticeDTO readNotice(int noticeNum) {
