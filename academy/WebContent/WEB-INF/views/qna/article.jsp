@@ -103,8 +103,8 @@ body{
 </style>
 
 <script type="text/javascript">
-<c:if test="${sessionScope.member.userId=='admin'}">
-function deleteNotice(qnaNum) {
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+function deleteQna(qnaNum) {
 	if(confirm("게시물을 삭제 하시겠습니까 ?")) {
 		var url="<%=cp%>/qna/delete.do?qnaNum="+qnaNum+"&${query}";
 		location.href=url;
@@ -179,13 +179,17 @@ function deleteNotice(qnaNum) {
 			
 			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
-			    <td width="300" align="left">
-			       <c:if test="${sessionScope.member.userId==dto.userId}">				    
-			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/qna/update.do?qnaNum=${dto.qnaNum}&page=${page}';">수정</button>
+			    <td width="400" align="left">
+			       <c:if test="${sessionScope.member.userId!=null && dto.userName!='관리자'}">
+			       	<button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/qna/reply.do?qnaNum=${dto.qnaNum}&page=${page}';">답변</button>
 			       </c:if>
-			       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
-			          <button type="button" class="loginButton" onclick="deleteNotice('${dto.qnaNum}');">삭제</button>
-			       </c:if>
+			          <c:if test="${sessionScope.member.userId == dto.userId}">
+			              <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/qna/update.do?qnaNum=${dto.qnaNum}&${query}';">수정</button>
+			          </c:if>
+			          <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
+			              <button type="button" class="loginButton" onclick="deleteQna('${dto.qnaNum}');">삭제</button>
+			          </c:if>
+			          
 			    </td>
 			
 			    <td align="right">

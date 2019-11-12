@@ -125,15 +125,6 @@ body{
         f.submit();
     }
     
-    // mvc2 버전 코딩
-//     <c:if test="${mode=='update'}"> // 업데이트인 경우에만 사용 가능하도록
-//     function deleteFile() { // 삭제된 파일은 복구 불가능
-// 		if(confirm("첨부된 파일을 삭제하시겠습니까?")) {
-<%-- 			var url="<%=cp%>/notice/deleteFile.do?noticeNum=${dto.noticeNum}&page=${page}"; --%>
-// 			location.href=url;
-// 		}
-// 	}
-//     </c:if>
     
 </script>
 </head>
@@ -159,7 +150,7 @@ body{
 			<br>
         
        
-			<form name="qnaForm" method="post" enctype="multipart/form-data">
+			<form name="qnaForm" method="post">
 			  <table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
@@ -200,13 +191,7 @@ body{
 			      	     <input type="hidden" name="parent" value="${dto.qnaNum}">
 			      	     <input type="hidden" name="page" value="${page}">
 			      	</c:if>
-			
-			      	<c:if test="${mode=='update'}">
-			      		<input type="hidden" name="page" value="${page}">
-			      		<input type="hidden" name="noticeNum" value="${dto.qnaNum}">
-			      		<%-- 파일을 수정하지 않으면 기존에 있었던 파일의 이름과 크기를 유지시켜줘야하고,
-			      			 수정한다고 하면 이전 파일의 이름을 지워야하기 때문에 보내줘야한다. --%>
-			      	</c:if>
+
 			        <button type="button" class="loginButton" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="loginButton">다시입력</button>
 			        <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/qna/list.do';">${mode=='update'?'수정취소':'등록취소'}</button>

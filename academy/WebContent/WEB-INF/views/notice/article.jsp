@@ -169,18 +169,24 @@ function deleteNotice(noticeNum) {
 
 			<tr height="35" style="border-bottom: 1px solid #3598DB;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       이전글 :
+			       <p style="display: inline-block; float: left;">이전글 : &nbsp;</p>
 			         <c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/notice/article.do?${query}&noticeNum=${preReadDto.noticeNum}">${preReadDto.subject}</a>
+			              <a href="<%=cp%>/notice/article.do?${query}&noticeNum=${preReadDto.noticeNum}"
+			              style="width: 600px; display: inline-block; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;">
+			              	${preReadDto.subject}
+			              </a>
 			        </c:if>
 			    </td>
 			</tr>
 			
 			<tr height="35" style="border-bottom: 1px solid #3598DB;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
-			    다음글 :
+			    	<p style="display: inline-block; float: left;">다음글 : &nbsp;</p>
 			         <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/notice/article.do?${query}&noticeNum=${nextReadDto.noticeNum}">${nextReadDto.subject}</a>
+			              <a href="<%=cp%>/notice/article.do?${query}&noticeNum=${nextReadDto.noticeNum}"
+			              style="width: 600px; display: inline-block; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;">
+			              	${nextReadDto.subject}
+			              </a>
 			        </c:if>
 			    </td>
 			</tr>

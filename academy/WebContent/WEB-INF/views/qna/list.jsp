@@ -169,22 +169,21 @@ body {
 				
 				<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
 					<tr style="border-bottom: 1px solid black; background-color: #3598DB;">
-						<th width="60" style="text-align: center">번호</th>
-						<th style="text-align: center">제목</th>
+						<th width="60" style="text-align: center">No</th>
+						<th style="text-align: center; width: 300px;">제목</th>
 						<th width="100" style="text-align: center">작성자</th>
 						<th width="80" style="text-align: center">작성일</th>
 						<th width="60" style="text-align: center">조회수</th>
 					</tr>
 
 					<c:forEach var="dto" items="${list}">
-						<tr align="center" bgcolor="#ffffff" height="35"
+						<tr align="center" height="35"
 							style="border-bottom: 1px solid #cccccc;">
 							<td>${dto.listNum}</td>
 							<td align="left" style="padding-left: 10px;"><c:forEach
 									var="n" begin="1" end="${dto.depth}">&nbsp;&nbsp;</c:forEach>
 								<c:if test="${dto.depth!=0}">
-									<img src="<%=cp%>/resource/images/arrow.gif" width="30"
-										height="30">
+									<img src="<%=cp%>/resource/images/arrow.gif">
 								</c:if> <a href="${articleUrl}&qnaNum=${dto.qnaNum}">${dto.subject}</a>
 							</td>
 							<td>${dto.userName}</td>
@@ -217,17 +216,17 @@ body {
 										${condition=="userName"?"selected='selected'":"" }>작성자</option>
 									<option value="content"
 										${condition=="content"?"selected='selected'":"" }>내용</option>
-									<option value="created"
-										${condition=="created"?"selected='selected'":"" }>등록일</option>
 								</select> <input type="text" name="keyword" class="boxTF"
 									value="${keyword}">
 								<button type="button" class="btn" onclick="searchList()">검색</button>
 							</form>
 						</td>
+						<c:if test="${sessionScope.member.userId!=null}">
 						<td align="right" width="100">
 							<button type="button" class="loginButton"
 								onclick="javascript:location.href='<%=cp%>/qna/created.do';">글올리기</button>
 						</td>
+						</c:if>
 					</tr>
 				</table>
 			</div>

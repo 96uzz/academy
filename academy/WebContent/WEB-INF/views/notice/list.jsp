@@ -75,6 +75,7 @@ body{
 	clear: both;
 	min-height: 500px;
 }
+
 .navigation2 {
 	float: left;
 }
@@ -181,10 +182,10 @@ function searchList() {
 				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
 					<td>${dto.listNum}</td>				
 					<td style="text-align: left;">
-			           <c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif"></c:if>
-						&nbsp;
-						<a href="${articleUrl}&noticeNum=${dto.noticeNum}"><span style="    width: 415px;
-    display: inline-block;overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"> ${dto.subject}</span></a>
+						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">
+						<c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif" style="float: left;">&nbsp;</c:if>
+							<span style="width: 415px; display: inline-block; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"> ${dto.subject}</span>
+						</a>
 					</td>			
 					<td>관리자</td>
 					<td>

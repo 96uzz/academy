@@ -57,9 +57,17 @@ public class QnaServlet extends MyServlet {
 		// 파라미터로 넘어온 페이지 번호
 		String page = req.getParameter("page");
 		int current_page = 1;
-		if (page != null)
+		if (page != null) {
 			current_page = Integer.parseInt(page);
-
+		}
+		
+		// 전체페이지수
+		int rows = 10;
+		String srows=req.getParameter("rows");
+		if(srows!=null) {
+			rows=Integer.parseInt(srows);
+		}
+				
 		// 검색
 		String condition = req.getParameter("condition");
 		String keyword = req.getParameter("keyword");
@@ -74,26 +82,30 @@ public class QnaServlet extends MyServlet {
 
 		// 데이터 개수
 		int dataCount;
-		if (keyword.length() == 0)
+		if (keyword.length() == 0) {
 			dataCount = dao.dataCount();
-		else
+		} else {
 			dataCount = dao.dataCount(condition, keyword);
-
-		// 전체페이지수
-		int rows = 10;
+		}
+		
 		int total_page = util.pageCount(rows, dataCount);
-		if (current_page > total_page)
+		if(current_page > total_page) {
 			current_page = total_page;
+		}
 
 		// 게시물 가져오기
 		int offset = (current_page - 1) * rows;
+		if(offset<0) {
+			offset=0;
+		}
 
 		List<QnaDTO> list;
-		if (keyword.length() == 0)
+		if (keyword.length() == 0) {
 			list = dao.listQna(offset, rows);
-		else
+		} else {
 			list = dao.listQna(offset, rows, condition, keyword);
-
+		}
+		
 		// 리스트 글번호 만들기
 		int listNum, n = 0;
 		for(QnaDTO dto : list) {
@@ -102,29 +114,27 @@ public class QnaServlet extends MyServlet {
 			n++;
 		}
 
-		String query = "";
+		String query = "rows="+rows;
 		if (keyword.length() != 0) {
-			query = "condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 
 		// 페이징처리
-		String listUrl = cp + "/qna/list.do";
-		String articleUrl = cp + "/qna/article.do?page=" + current_page;
-		if (query.length() != 0) {
-			listUrl += "?" + query;
-			articleUrl += "&" + query;
-		}
+		String listUrl = cp + "/qna/list.do?"+query;
+		String articleUrl = cp + "/qna/article.do?page=" + current_page+"&"+query;
+		
 
 		String paging = util.paging(current_page, total_page, listUrl);
 
 		req.setAttribute("list", list);
-		req.setAttribute("dataCount", dataCount);
-		req.setAttribute("page", current_page);
-		req.setAttribute("total_page", total_page);
-		req.setAttribute("articleUrl", articleUrl);
 		req.setAttribute("paging", paging);
+		req.setAttribute("page", current_page);
+		req.setAttribute("dataCount", dataCount);
+		req.setAttribute("total_page", total_page);
+		req.setAttribute("rows", rows);
 		req.setAttribute("condition", condition);
 		req.setAttribute("keyword", keyword);
+		req.setAttribute("articleUrl", articleUrl);
 		
 		forward(req, resp, "/WEB-INF/views/qna/list.jsp");
 	}
@@ -324,7 +334,6 @@ public class QnaServlet extends MyServlet {
 		dto.setOrderNo(Integer.parseInt(req.getParameter("orderNo")));
 		dto.setDepth(Integer.parseInt(req.getParameter("depth")));
 		dto.setParent(Integer.parseInt(req.getParameter("parent")));
-		
 		dto.setUserId(info.getUserId());
 		
 		dao.insertQna(dto, "reply");
