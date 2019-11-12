@@ -229,12 +229,12 @@ function sendLogin() {
             <td class="boardMenu"><a href="#">Q/A&nbsp;</a></td>
          </tr> -->
          <tr>
-         	<td class="boardMenu"><button id="btnNotice">공지사항</button></td>
-         	<td class="boardMenu"><button id="btnBoard">자유게시판</button></td>
-         	<td class="boardMenu"><button id="btnQna">Q/A</button></td>
+         	<td class="boardMenu"><button id="btnNotice" onclick="javascript:location.href='<%=cp%>/main/main.do';">공지사항</button></td>
+         	<td class="boardMenu"><button id="btnBoard" onclick="javascript:location.href='<%=cp%>/main/boardMain.do';">자유게시판</button></td>
+         	<td class="boardMenu"><button id="btnQna" onclick="javascript:location.href='<%=cp%>/main/qnaMain.do';">Q/A</button></td>
          </tr>
       </table>
-      
+
       <table class="board">
          <tr class="boardTop">
             <th style="width: 15%;">번호</th>
@@ -249,7 +249,6 @@ function sendLogin() {
             <td></td>
          </tr>
 		</c:forEach>
-        
 
       </table>
 </div>

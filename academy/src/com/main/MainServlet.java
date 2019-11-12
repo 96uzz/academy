@@ -8,11 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.board.BoardDAO;
+import com.board.BoardDTO;
 import com.notice.NoticeDAO;
 import com.notice.NoticeDTO;
 import com.util.MyServlet;
 
-@WebServlet("/main.do")
+@WebServlet("/main/*")
 public class MainServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -23,6 +25,10 @@ public class MainServlet extends MyServlet {
 		
 		if(uri.indexOf("main.do")!=-1) {
 			noticeList(req, resp);
+		}else if(uri.indexOf("boardMain.do")!=-1) {
+			boardList(req, resp);
+		}else if(uri.indexOf("qnaMain.do")!=-1) {
+			qnaList(req, resp);
 		}
 	}
 	
@@ -34,8 +40,40 @@ public class MainServlet extends MyServlet {
 		list = dao.listNotice();
 		
 		String articleUrl = cp+"/notice/article.do?page=1";
+
+		req.setAttribute("list", list);
+		req.setAttribute("articleUrl", articleUrl);
+		
+		forward(req, resp, "/WEB-INF/views/main/main.jsp");
+		
+	}
+	
+	protected void boardList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
+		String cp = req.getContextPath();
 		
 		
+		List<BoardDTO> list;
+		list = dao.listBoard(0, 5);
+		
+		String articleUrl = cp+"/board/article.do?page=1";
+
+		req.setAttribute("list", list);
+		req.setAttribute("articleUrl", articleUrl);
+		
+		forward(req, resp, "/WEB-INF/views/main/main.jsp");
+		
+	}
+	
+	protected void qnaList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		NoticeDAO dao = new NoticeDAO();
+		String cp = req.getContextPath();
+		
+		List<NoticeDTO> list;
+		list = dao.listNotice();
+		
+		String articleUrl = cp+"/notice/article.do?page=1";
+
 		req.setAttribute("list", list);
 		req.setAttribute("articleUrl", articleUrl);
 		
