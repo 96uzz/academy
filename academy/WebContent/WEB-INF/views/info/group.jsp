@@ -71,6 +71,23 @@ body{
 	font-weight: 800;
 }
 
+.bunhal {
+	width: 150px;
+	height:40px;
+	
+}
+
+p {
+	width: 150px;
+	border-bottom: 1px solid orange;
+}
+
+.text_white {
+	border: none;
+	text-shadow: 0 0 6px blue;
+	color: white;
+}
+
 </style>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
@@ -99,8 +116,57 @@ body{
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB;">
 			역할 분담
+			<br><br>
+			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%; text-align: center;">
+				<tr style=" width: 800px; height: 150px;">
+					<td>
+						<img src="<%=cp%>/resource/images/person.png">
+					</td>
+					<td>
+						<img src="<%=cp%>/resource/images/person.png">
+					</td>
+					<td>
+						<img src="<%=cp%>/resource/images/person.png">
+					</td>
+					<td>
+						<img src="<%=cp%>/resource/images/person.png">
+					</td>
+					<td>
+						<img src="<%=cp%>/resource/images/person.png">
+					</td>
+				</tr>
+				<tr style="text-align: center; font-size: 25px; width: 800px;">
+					<td><p class="text_white">현욱</p></td>
+					<td><p class="text_white">지훈</p></td>
+					<td><p class="text_white">규동</p></td>
+					<td><p class="text_white">승훈</p></td>
+					<td><p class="text_white">유진</p></td>
+				</tr>
+				<tr style="height: 20px;"></tr>
+				<tr>
+					<td class="bunhal"><p>삥빠라뽕뽕</p></td>
+					<td class="bunhal"><p>슈루루루루루룽</p></td>
+					<td class="bunhal"><p>asd</p></td>
+					<td class="bunhal"><p>asd</p></td>
+					<td class="bunhal"><p>asd</p></td>
+				</tr>
+				<tr>
+					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>ewq</p></td>
+					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>we</p></td>
+				</tr>
+				<tr>
+					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>qwe</p></td>
+				</tr>
+				
+			</table>
 		</div>
-	
     </div>
 </div>
 

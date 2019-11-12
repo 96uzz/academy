@@ -46,7 +46,7 @@ public class QnaDAO {
 				dto.setOrderNo(dto.getOrderNo() + 1);
 			}
 			
-			sql = "INSERT INTO qna(QnaNum, userId, subject, content, ";
+			sql = "INSERT INTO qna(qnaNum, userId, subject, content, ";
 			sql += "  groupNum, depth, orderNo, parent) ";
 			sql += "  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			

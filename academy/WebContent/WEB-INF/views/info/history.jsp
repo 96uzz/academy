@@ -133,7 +133,7 @@ body{
 			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
 				<tr style=" width: 800px; height: 250px;">
 					<td>
-						<img src="<%=cp%>/resource/images/history.png">
+						<img src="<%=cp%>/resource/images/history2.png">
 					</td>
 				</tr>
 			</table>
@@ -204,7 +204,7 @@ body{
 						<p style="font-size: 18px;">교육부 선정 올해의 우수 사이트</p>
 					</td>
 					<tr style="height: 200px;"></tr>
-				</tr>
+				
 				
 			</table>
 		</div>

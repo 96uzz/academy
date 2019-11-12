@@ -117,12 +117,32 @@ body{
 			</table>
 			
 			<table style="border-collapse: collapse; border-spacing: 0; font-size: 18px; color: black; width: 800px; height: 100%;">
-				<tr style=" width: 800px; height: 500px; border: 1px solid black;">
+				<tr style=" width: 800px; height: 500px;">
 					<td>
 						<div id="staticMap" style="width:100%;height:500px;"></div>  
 					</td>
 				</tr>
-				<tr style="height: 50px;"></tr>
+				<tr style="height: 30px;"></tr>
+			</table>
+			<table style="width: 800px; font-size: 18px; color: black;" >
+				<tr style=" width: 800px; height: 80px;">
+					<td width="80px;" height="80px;">
+						<img src="<%=cp%>/resource/images/subway.png">
+					</td>
+					<td width="310px;">
+						<p>2호선 홍대입구역 하차</p>
+						<p>&nbsp;</p>
+						<p>1번 출구에서 도보로 5분</p>
+					</td>
+					<td width="80px;" height="80px;">
+						<img src="<%=cp%>/resource/images/walking.png">
+					</td>
+					<td width="310px;">
+						<p>2호선 홍대입구역 하차</p>
+						<p>&nbsp;</p>
+						<p>1번 출구에서 도보로 5분</p>
+					</td>
+				<tr style="height: 100px;"></tr>
 			</table>
 		</div>
 	

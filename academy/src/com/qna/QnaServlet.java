@@ -23,19 +23,30 @@ public class QnaServlet extends MyServlet {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		
-		HttpSession session=req.getSession();
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(info==null) {
-			forward(req, resp, "/WEB-INF/views/member/login.jsp");
-			return;
-		}
-		
 		String uri=req.getRequestURI();
 		
 		if(uri.indexOf("list.do")!=-1) {
 			list(req, resp);
+		} else if (uri.indexOf("created.do")!=-1) {
+			createdForm(req, resp);
+		} else if (uri.indexOf("created_ok.do")!=-1) {
+			createdSubmit(req, resp);
+		} else if (uri.indexOf("article.do")!=-1) {
+			article(req, resp);
+		} else if (uri.indexOf("update.do")!=-1) {
+			updateForm(req, resp);
+		} else if (uri.indexOf("update_ok.do")!=-1) {
+			updateSubmit(req, resp);
+		} else if (uri.indexOf("delete.do")!=-1) {
+			delete(req, resp);
+		} else if(uri.indexOf("reply.do") != -1) {
+			replyForm(req, resp);
+		} else if(uri.indexOf("reply_ok.do") != -1) {
+			replySubmit(req, resp);
 		}
 	}
+	
+	
 	
 	protected void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 글 리스트
@@ -93,7 +104,7 @@ public class QnaServlet extends MyServlet {
 
 		String query = "";
 		if (keyword.length() != 0) {
-			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+			query = "condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 
 		// 페이징처리
