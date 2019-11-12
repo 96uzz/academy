@@ -170,7 +170,7 @@ public class MemberDAO {
 			sb.append(" FROM academy a ");
 			sb.append(" INNER JOIN lecture l ON a.acaNum = l.acaNum  ");
 			sb.append("INNER JOIN member m ON m.lecCode = l.lecCode WHERE m.userId = ?");
-	
+
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setString(1, userId);
 
@@ -204,4 +204,83 @@ public class MemberDAO {
 		}
 		return dto;
 	}
+
+	public String findUserId(String userName, String birth) {
+		String userId = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+		sql = "SELECT userId FROM member WHERE userName = ? AND birth = ?";
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, userName);
+		pstmt.setString(2, birth);
+				
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			userId = rs.getString("userId");
+		}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+
+		return userId;
+	}
+
+	public String findUserPwd(String userId, String email) {
+		String userPwd = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+		sql = "SELECT userPwd FROM member WHERE userId= ? AND email = ?";
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, userId);
+		pstmt.setString(2, email);
+				
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			userPwd = rs.getString("userPwd");
+		}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+
+		return userPwd;
+	}
+
 }

@@ -54,6 +54,10 @@ public class MemberServlet extends MyServlet {
 			delete(req, resp);
 		} else if (uri.indexOf("find.do") != -1) {
 			find(req, resp);
+		}  else if (uri.indexOf("finduserid.do") != -1) {
+			findUserId(req, resp);
+		} else if (uri.indexOf("findpwd.do") != -1) {
+			findUserPwd(req, resp);
 		}
 	}
 
@@ -408,6 +412,55 @@ public class MemberServlet extends MyServlet {
 	}
 
 	private void find(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String path = "/WEB-INF/views/member/find.jsp";
+		forward(req, resp, path);
+
+	}
+	
+	private void findUserId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String userId = req.getParameter("userId");
+		String birth = req.getParameter("birth");
+		String userName = req.getParameter("userName");
+		String email = req.getParameter("email");	
+		
+		MemberDAO dao = new MemberDAO();
+		
+		String foundUserId = dao.findUserId(userName, birth);
+		if(foundUserId!=null) {
+			req.setAttribute("message", "회원님의 ID는 "+foundUserId+"입니다.");
+		} else {
+			req.setAttribute("message", "일치하는 ID가 없습니다.");
+		}
+		req.setAttribute("userId", userId);
+		req.setAttribute("birth", birth);
+		req.setAttribute("userName", userName);
+		req.setAttribute("email", email);
+				
+		String path = "/WEB-INF/views/member/find.jsp";
+		forward(req, resp, path);
+
+	}
+
+	private void findUserPwd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String userId = req.getParameter("userId");
+		String birth = req.getParameter("birth");
+		String userName = req.getParameter("userName");
+		String email = req.getParameter("email");	
+		
+		MemberDAO dao = new MemberDAO();
+		
+		String foundUserPwd = dao.findUserPwd(userId, email);
+		if(foundUserPwd!=null) {
+			req.setAttribute("message","회원님의 비밀번호는 "+foundUserPwd+"입니다.");
+		} else {
+			req.setAttribute("message", "일치하는 비밀번호가 없습니다.");
+		}
+		
+		req.setAttribute("userId", userId);
+		req.setAttribute("birth", birth);
+		req.setAttribute("userName", userName);
+		req.setAttribute("email", email);
+				
 		String path = "/WEB-INF/views/member/find.jsp";
 		forward(req, resp, path);
 
