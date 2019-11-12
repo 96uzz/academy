@@ -144,33 +144,26 @@ body{
                <td style="width: 120px; text-align: center;">종강일</td>
             </tr>
   			<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
-               <td>IT</td>
-               <td><a href="#">레슬링 입문</a></td>
-               <td><a href="#">구로구청레슬링</a></td>
-               <td>서울시 구로구</td>      
-               <td>20</td>
-               <td>2019/11/04</td>
-               <td>2020/04/03</td>
+               <td>${dto.acaDiv}</td>
+               <td><a href="#">${dto.lecName}</a></td>
+               <td><a href="#">${dto.acaName}</a></td>
+               <td>${dto.acaAddress}</td>      
+               <td>${dto.lecLimit}</td>
+               <td>${dto.lecStartDate}</td>
+               <td>${dto.lecEndDate}</td>
             </tr>
-
-
-
-
-
-
 <!-- 
-         <c:forEach var="dto" items="${list}">
             <tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
                <td>${dto.acaDiv}</td>
                <td>${dto.lecName}</td>
                <td>${dto.acaName}</td>
                <td>${dto.acaAddress}</td>      
-               <td>${dto.lecLemit }</td>
+               <td>${dto.lecLimit }</td>
                <td>${dto.lecStartDate}</td>
                <td>${dto.lecEndDate}</td>
             </tr>
-         </c:forEach>   
- -->		
+-->		
+
          </table>	
 			
 			

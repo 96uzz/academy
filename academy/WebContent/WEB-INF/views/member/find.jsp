@@ -31,6 +31,8 @@
 
 }
 
+
+
 body{
 	font-family: 'Nanum Square', sans-serif;
 	font-size: 20px;
@@ -49,16 +51,19 @@ body{
 	position: absolute;
 	top: 80%;
 	left: 37%;
+		
 	
 }
 .navigation2 {
 	float: left;
+
 }
 
 .content2 {
 	float: left;
 	margin-left: 30px;
 	margin-top: 30px;
+	
 }
 
 .navigation2 td {
@@ -85,6 +90,20 @@ body{
    width: 280px;
    font-size: 18px;
    padding-top: 1px;
+}
+
+.word{
+ font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: white;
+   font-size: 15px;
+   background-color: #3598DB;
+   border: 0px;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
 }
 
 .loginButton {
@@ -166,30 +185,57 @@ function sendLogin() {
         	</div>
 		</div>
 		<div class="content2" style="margin-left: auto; margin-right: auto;">
-		<h2 style="padding-left: 120px; color: #3598DB;">로그인</h2>
-		<br>
-		<br><br>
-			<form name="loginForm" method="post">
+		<h2 style="padding-left: 90px; color: #3598DB;">ID/PW 찾기</h2>
+		
+			<form name="idForm" method="post">
+      ID 찾기
+      <br><br>
       <table style="border-collapse: collapse; border-spacing: 0px;">
          <tr style="border-spacing: 0px; border-collapse: collapse;">
-            <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/man.JPG"></td>
-            <td><input class="loginInput" type="text" id="userId" name="userId" style="margin-bottom: 5px;"></td>
+        
+            <td>이름</td>
+            <td><input class="loginInput" type="text" id="name" name="name" style="margin-bottom: 5px;"></td>
          </tr>
          <tr>
-            <td><img class="loginImage" src="<%=request.getContextPath() %>/resource/images/key.JPG"></td>
-            <td><input class="loginInput" type="password" id="userPwd" name="userPwd" style="margin-bottom: 5px;"></td>
+            <td>생년월일</td>
+            <td><input class="loginInput" type="text" id="birth" name="birth" style="margin-bottom: 5px;"></td>
          </tr>
       </table>
       
       <div id="confirmLogin">${message}</div>
       <table style="width: 341px; padding-top: 5px">
          <tr>
+         	<td><input type="hidden" name="mode" value="${mode}"></td>
             <td><button class="loginButton" type="button"
-                  name="login" onclick="sendLogin();">로그인</button></td>
-         	 <td><button class="loginButton" type="button"
-                  name="register" onclick="javascript:location.href='<%=cp%>/member/member.do';">회원가입</button></td>
-            <td><button class="loginButton" type="button" name="find"
-                  onclick="javascript:location.href='<%=cp%>/member/find.do';">ID/PWD 찾기</button></td>
+                  name="login" onclick="sendOk();" style="margin-left: 111px;">로그인</button></td>
+            
+        
+         </tr>
+             </table>
+        </form>
+        		<form name="pwdForm" method="post">
+        		  PW 찾기
+        		  <br><br>
+      <table style="border-collapse: collapse; border-spacing: 0px;">
+         <tr style="border-spacing: 0px; border-collapse: collapse;">
+       
+            <td>ID</td>
+            <td><input class="loginInput" type="text" id="name" name="name" style="margin-bottom: 5px;"></td>
+         </tr>
+         <tr>
+            <td>이메일</td>
+            <td><input class="loginInput" type="text" id="email" name="email" style="margin-bottom: 5px;"></td>
+         </tr>
+      </table>
+      
+      <div id="confirmLogin">${message}</div>
+     <table style="width: 341px; padding-top: 5px">
+         <tr>
+         	<td><input type="hidden" name="mode" value="${mode}"></td>
+            <td><button class="loginButton" type="button"
+                  name="login" onclick="sendOk();" style="margin-left: 111px;">로그인</button></td>
+            
+        
          </tr>
              </table>
         </form>

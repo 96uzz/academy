@@ -4,13 +4,15 @@ public class MemberDTO {
 	private String userId, userName, userPwd;
 	private String birth, email, email1, email2, tel, tel1, tel2, tel3;
 	private String zip, addr1, addr2;
-	private String lecCode;
 	private String acaDiv;
 	private String acaName;
+	private int acaNum;
 	private String acaAddress;
 	private String lecName;
+	private String lecCode;
 	private String lecStartDate, lecEndDate;
-	private String lecLimit;
+	private int lecNum;
+	private int lecLimit;
 
 	public String getUserId() {
 		return userId;
@@ -124,14 +126,6 @@ public class MemberDTO {
 		this.addr2 = addr2;
 	}
 
-	public String getLecCode() {
-		return lecCode;
-	}
-
-	public void setLecCode(String lecCode) {
-		this.lecCode = lecCode;
-	}
-
 	public String getAcaDiv() {
 		return acaDiv;
 	}
@@ -146,6 +140,14 @@ public class MemberDTO {
 
 	public void setAcaName(String acaName) {
 		this.acaName = acaName;
+	}
+
+	public int getAcaNum() {
+		return acaNum;
+	}
+
+	public void setAcaNum(int acaNum) {
+		this.acaNum = acaNum;
 	}
 
 	public String getAcaAddress() {
@@ -164,6 +166,14 @@ public class MemberDTO {
 		this.lecName = lecName;
 	}
 
+	public String getLecCode() {
+		return lecCode;
+	}
+
+	public void setLecCode(String lecCode) {
+		this.lecCode = lecCode;
+	}
+
 	public String getLecStartDate() {
 		return lecStartDate;
 	}
@@ -180,11 +190,19 @@ public class MemberDTO {
 		this.lecEndDate = lecEndDate;
 	}
 
-	public String getLecLimit() {
+	public int getLecNum() {
+		return lecNum;
+	}
+
+	public void setLecNum(int lecNum) {
+		this.lecNum = lecNum;
+	}
+
+	public int getLecLimit() {
 		return lecLimit;
 	}
 
-	public void setLecLimit(String lecLimit) {
+	public void setLecLimit(int lecLimit) {
 		this.lecLimit = lecLimit;
 	}
 

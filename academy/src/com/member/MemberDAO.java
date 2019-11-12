@@ -126,17 +126,82 @@ public class MemberDAO {
 
 	}
 
-	public List<MemberDTO> interLecList(String userId){
-		List<MemberDTO> list = new ArrayList<MemberDTO>();
-		
-		return list;
-		
+	public void deleteMember(String userId) {
+		PreparedStatement pstmt = null;
+		String sql;
+
+		try {
+			sql = "DELETE FROM member WHERE userId = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, userId);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+
+				} catch (Exception e) {
+				}
+			}
+		}
 	}
-	
-	public List<MemberDTO> takingLecList(String userId){
+
+	public List<MemberDTO> interLecList(String userId) {
 		List<MemberDTO> list = new ArrayList<MemberDTO>();
-		
+
 		return list;
-		
+
+	}
+
+	public MemberDTO takingLecList(String userId) {
+		MemberDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			sb.append("SELECT acaDiv, acaName, acaAddress, a.acaNum, m.lecCode, lecName, lecStartDate, ");
+			sb.append("lecEndDate, lecLimit ");
+			sb.append(" FROM academy a ");
+			sb.append(" INNER JOIN lecture l ON a.acaNum = l.acaNum  ");
+			sb.append("INNER JOIN member m ON m.lecCode = l.lecCode WHERE m.userId = ?");
+	
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, userId);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new MemberDTO();
+				dto.setAcaDiv(rs.getString("acaDiv"));
+				dto.setLecName(rs.getString("lecName"));
+				dto.setAcaName(rs.getString("acaName"));
+				dto.setAcaAddress(rs.getString("acaAddress"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setLecStartDate(rs.getString("lecStartDate"));
+				dto.setLecEndDate(rs.getString("lecEndDate"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return dto;
 	}
 }

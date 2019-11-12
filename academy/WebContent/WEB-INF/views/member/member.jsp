@@ -200,6 +200,9 @@ function memberOk() {
         f.email2.focus();
         return;
     }
+       
+    
+    
     var mode="${mode}";
     if(mode=="created") {
     	f.action = "<%=cp%>/member/member_ok.do";
@@ -264,6 +267,20 @@ $(function(){
 });
 function termsOfUse(){
 	 window.open("termsOfUse.do", "a", "width=1000, height=770, left=450, top=50"); 
+
+}
+function cancel(){
+	var f = document.deleteForm;
+	
+	
+	if(confirm('정말로 탈퇴하시겠습니까? 탈퇴시 향후 3년간 재가입이 불가능합니다.')) {
+		f.action = "<%=cp%>/member/delete.do";
+		f.submit();
+	} else {
+		return;
+	}
+
+	
 }
 </script>
 </head>
@@ -484,7 +501,7 @@ function termsOfUse(){
 											<p style="margin-top: 7px; margin-bottom: 5px;">
 												<label> <input id="agree" name="agree"
 													type="checkbox"
-													onchange="form.sendButton.disabled = !checked"> <span
+													onclick="form.sendButton.disabled = !checked"> <span
 													style="font-weight: bold;"><a
 														href="javascript:termsOfUse();">이용약관</a></span>에 동의합니다.
 												</label>
@@ -498,7 +515,7 @@ function termsOfUse(){
 								style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 								<tr height="45">
 									<td align="center">
-										<button type="button" name="sendButton"
+										<button type="button" name="sendButton" ${mode=="created"?"disabled='disabled'":""} 
 											class="btn loginButton" onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
 										<button type="reset" class="btn loginButton">다시입력</button>
 										<button type="button" class="btn loginButton"
@@ -508,8 +525,24 @@ function termsOfUse(){
 								<tr height="30">
 									<td align="center" style="color: blue;">${message}</td>
 								</tr>
+								
 							</table>
+							
+							
 						</form>
+					
+								<form name="deleteForm" method="post">
+								<c:if test="${mode == 'update'}">
+								<table style="width: 100%">
+								<tr>
+								<td style="float: right; font-size: 10px;"><a href="javascript:cancel()">회원탈퇴</a></td>
+								<td><input type="hidden" name="userId" value="${sessionScope.member.userId}"></td>
+								</tr>
+								</table>
+								</c:if>
+					</form>
+	
+				
 					</div>
 
 				</div>
@@ -521,7 +554,50 @@ function termsOfUse(){
 <div class="footer">
     <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
 </div>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    function daumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zip').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('addr1').value = fullAddr;
+
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('addr2').focus();
+            }
+        }).open();
+    }
+</script>    
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 </body>

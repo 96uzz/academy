@@ -48,6 +48,10 @@ public class MemberServlet extends MyServlet {
 			interLecture(req, resp);
 		} else if (uri.indexOf("takinglecture.do") != -1) {
 			takingLecture(req, resp);
+		} else if (uri.indexOf("delete.do") != -1) {
+			delete(req, resp);
+		} else if (uri.indexOf("find.do") != -1) {
+			find(req, resp);
 		}
 	}
 
@@ -237,6 +241,7 @@ public class MemberServlet extends MyServlet {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		if (info == null) { // 로그인이 안된 경우 resp.sendRedirect(cp+"/member/login.do");
+			resp.sendRedirect(cp + "/member/login.do");
 			return;
 		}
 
@@ -254,8 +259,6 @@ public class MemberServlet extends MyServlet {
 		if (!dto.getUserPwd().equals(userPwd)) {
 			if (mode.equals("update")) {
 				req.setAttribute("title", "회원 정보 수정");
-			} else {
-				req.setAttribute("title", "회원 탈퇴");
 			}
 			req.setAttribute("mode", mode);
 			req.setAttribute("message", "<span style='color:red;'>패스워드가 일치하지 않습니다.</span>");
@@ -264,15 +267,12 @@ public class MemberServlet extends MyServlet {
 			return;
 		}
 
-		if (mode.equals("delete")) { // 회원 탈퇴
+		req.setAttribute("title", "회원 정보 수정");
+		req.setAttribute("dto", dto);
+		req.setAttribute("mode", "update");
 
-		} else if (mode.equals("update")) { // 회원 정보 수정 폼
-			req.setAttribute("title", "회원 정보 수정");
-			req.setAttribute("dto", dto);
-			req.setAttribute("mode", "update");
-
-			forward(req, resp, "/WEB-INF/views/member/member.jsp");
-		}
+		forward(req, resp, "/WEB-INF/views/member/member.jsp");
+		return;
 
 	}
 
@@ -309,6 +309,7 @@ public class MemberServlet extends MyServlet {
 		dto.setZip(req.getParameter("zip"));
 		dto.setAddr1(req.getParameter("addr1"));
 		dto.setAddr2(req.getParameter("addr2"));
+		dto.setLecCode(req.getParameter("lecCode"));
 
 		try {
 			dao.updateMember(dto);
@@ -347,11 +348,12 @@ public class MemberServlet extends MyServlet {
 			resp.sendRedirect(cp + "/member/login.do");
 			return;
 		}
-		
+
 		String path = "/WEB-INF/views/member/interlecture.jsp";
 		forward(req, resp, path);
-		
+
 	}
+
 	private void takingLecture(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 수강중인 강좌
 		HttpSession session = req.getSession();
@@ -362,14 +364,40 @@ public class MemberServlet extends MyServlet {
 			resp.sendRedirect(cp + "/member/login.do");
 			return;
 		}
-			
+		String userId = info.getUserId();
+		MemberDAO dao = new MemberDAO();
+		MemberDTO dto = dao.takingLecList(userId);
+
+		req.setAttribute("dto", dto);
+
 		String path = "/WEB-INF/views/member/takinglecture.jsp";
 		forward(req, resp, path);
 	}
-	
-	
-	
-	
-	
-	
+
+	private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		String cp = req.getContextPath();
+
+		String userId = req.getParameter("userId");
+		MemberDAO dao = new MemberDAO();
+		dao.deleteMember(userId);
+
+		HttpSession session = req.getSession();
+
+		// 세션에 저장된 정보 지우기
+		session.removeAttribute("member");
+
+		// 세션 초기화
+		session.invalidate();
+
+		PrintWriter out = resp.getWriter();
+		out.println("<script>alert('탈퇴완료'); location.href='" + cp + "';</script>");
+
+	}
+
+	private void find(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String path = "/WEB-INF/views/member/find.jsp";
+		forward(req, resp, path);
+
+	}
 }
