@@ -8,7 +8,6 @@ public class ScheduleDTO {
 	private String acaName, acaNum;
 	private String sday, eday;
 	private int lecLimit;
-	//private String lecIntro;
 	private String created;
 	private String memo;
 	

@@ -79,8 +79,8 @@ public class ScheduleDAO {
 
 		try {
 			sb.append("INSERT INTO lecture( ");
-			sb.append(" lecCode, lecName, lecNum, lecStartDate,lecEndDate,lecLimit,acaNum,lecIntro) ");
-			sb.append(" VALUES(lec_seq.nextval, ?,?,?,?,?,?,?) ");
+			sb.append(" lecCode, lecName, lecNum, lecStartDate,lecEndDate,lecLimit,acaNum,lecIntro,userId) ");
+			sb.append(" VALUES(lec_seq.nextval, ?,?,?,?,?,?,?,'admin') ");
 
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setString(1, dto.getLecName());
@@ -113,32 +113,37 @@ public class ScheduleDAO {
 		StringBuffer sb = new StringBuffer();
 
 		try {
-			sb.append("SELECT num, lecName, sday, eday, memo");
-			sb.append("  FROM schedule");
-			sb.append("  WHERE userId = ? AND ");
-			sb.append("  ( ");
-			sb.append("      ( ");
-			sb.append("         TO_DATE(sday, 'YYYYMMDD') = TO_DATE(?, 'YYYYMMDD') ");
-			sb.append("         OR (eday IS NOT NULL AND TO_DATE(sday, 'YYYYMMDD') <= TO_DATE(?, 'YYYYMMDD') AND TO_DATE(eday, 'YYYYMMDD') >= TO_DATE(?, 'YYYYMMDD')) ");
-			sb.append("      ) "); 
-			sb.append("  ) ");
-			sb.append("  ORDER BY num DESC ");
+			sb.append("SELECT lecNum, lecName, acaName, lecStartDate, lecEndDate, lecLimit, lecIntro, l.acaNum ");
+			sb.append("  FROM lecture l ");
+			sb.append("  	JOIN academy a on l.acaNum=a.acaNum ");
+			sb.append("  WHERE  ");
+			sb.append("     ( ");
+			sb.append("        ( ");
+			sb.append("           TO_DATE(lecStartDate, 'YYYYMMDD') = TO_DATE(?, 'YYYYMMDD') ");
+			sb.append("              OR (lecEndDate IS NOT NULL AND TO_DATE(lecStartDate, 'YYYYMMDD') <= TO_DATE(?, 'YYYYMMDD') AND TO_DATE(lecEndDate, 'YYYYMMDD') >= TO_DATE(?, 'YYYYMMDD'))   ");
+			sb.append("         )");         
+			sb.append("    ) ");
+			sb.append("  ORDER BY lecNum DESC ");
+			
 
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, userId);
+			
+			pstmt.setString(1, date);
 			pstmt.setString(2, date);
 			pstmt.setString(3, date);
-			pstmt.setString(4, date);
 
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				ScheduleDTO dto = new ScheduleDTO();
-				dto.setNum(rs.getInt("num"));
+				dto.setNum(rs.getInt("lecNum"));
 				dto.setLecName(rs.getString("lecName"));
-				dto.setSday(rs.getString("sday"));
-				dto.setEday(rs.getString("eday"));
-				dto.setMemo(rs.getString("memo"));
+				dto.setAcaName(rs.getString("acaName"));
+				dto.setSday(rs.getString("lecStartDate"));
+				dto.setEday(rs.getString("lecEndDate"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setMemo(rs.getString("lecIntro"));
+				dto.setAcaNum(rs.getString("acaNum"));
 			
 				list.add(dto);
 			}
@@ -200,7 +205,8 @@ public class ScheduleDAO {
 					dto.setEday(s);
 				}
 				dto.setLecLimit(rs.getInt("lecLimit"));
-				dto.setMemo(rs.getString("lecIntro"));
+				dto.setMemo(rs.getString("lecIntro").replace("\r\n", "<br>"));
+
 				dto.setAcaNum(rs.getString("acaNum"));
 				
 		

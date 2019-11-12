@@ -129,12 +129,27 @@ body {
 	font-family: 'Nanum Square', sans-serif;
 	font-size: 15px;
 }
+
+#btnList, #btnUpdate, #btnDelete {
+	background: #3598DB;
+	color : white;
+}
+
+#btnList:hover, #btnUpdate:hover, #btnDelete:hover{
+	background: #e6e6e6;
+	border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+
+
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript"
 	src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+
 $(function(){
 	$("#tab-day").addClass("active");
 });
@@ -328,7 +343,7 @@ function deleteOk(num) {
 			</div>
 			<div class="content2">
 				<div id="Right"
-					style="margin: auto 100px; padding-left: 30px; padding-rigth: 0px; width: 600px; box-sizing: border-box;">
+					style="margin: auto 40px; padding-left: 30px; padding-rigth: 0px; width: 700px; box-sizing: border-box;">
 
 					<table style="width: 100%; border-spacing: 0px;">
 						<tr height="35">
@@ -413,16 +428,17 @@ function deleteOk(num) {
 								<td colspan="2" align="right" style="padding-right: 5px;">
 									<button type="button" id="btnList" class="btn"
 										onclick="javascript:location.href='<%=cp%>/cal/list.do';">리스트</button>
-									<c:if test="${sessionScope.member.userId=='admin'}">
-										<td colspan="2" align="right" style="padding-right: 5px;">
-											<button type="button" id="btnUpdate" class="btn">수정</button>
-											<button type="button" id="btnDelete" class="btn"
-												onclick="deleteOk('${dto.num}');">삭제</button>
-										</td>
-									</c:if>
 								</td>
 							</tr>
-
+							<tr height="45">
+								<c:if test="${sessionScope.member.userId=='admin'}">
+									<td colspan="2" align="right" style="padding-right: 5px;">
+										<button type="button" id="btnUpdate" class="btn">수정</button>
+										<button type="button" id="btnDelete" class="btn"
+											onclick="deleteOk('${dto.num}');">삭제</button>
+									</td>
+								</c:if>
+							</tr>
 						</table>
 					</c:if>
 
