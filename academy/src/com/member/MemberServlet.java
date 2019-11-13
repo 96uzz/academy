@@ -59,6 +59,8 @@ public class MemberServlet extends MyServlet {
 			findUserId(req, resp);
 		} else if (uri.indexOf("finduserpassword.do") != -1) {
 			findUserPwd(req, resp);
+		} else if (uri.indexOf("personalInfo.do")!=-1){
+			personalInfo(req, resp);
 		}
 	}
 
@@ -364,11 +366,11 @@ public class MemberServlet extends MyServlet {
 			resp.sendRedirect(cp + "/member/login.do");
 			return;
 		}
-		
+
 		String userId = info.getUserId();
 		MemberDAO dao = new MemberDAO();
 		List<MemberDTO> list = dao.interLecList(userId);
-		
+
 		req.setAttribute("list", list);
 
 		String path = "/WEB-INF/views/member/interlecture.jsp";
@@ -456,11 +458,11 @@ public class MemberServlet extends MyServlet {
 		String birth = req.getParameter("birth");
 		String userName = req.getParameter("userName");
 		String email = req.getParameter("email");
-		
+
 		MemberDAO dao = new MemberDAO();
 
 		String foundUserPwd = dao.findUserPwd(userId, email);
-		
+
 		if (userId.equals("") || email.equals("")) {
 			req.setAttribute("message", "ID와 이메일을 입력해주세요.");
 			req.setAttribute("mode", "wrong");
@@ -479,5 +481,10 @@ public class MemberServlet extends MyServlet {
 		String path = "/WEB-INF/views/member/find.jsp";
 		forward(req, resp, path);
 
+	}
+
+	private void personalInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String path = "/WEB-INF/views/member/personalinfo.jsp";
+		forward(req, resp, path);
 	}
 }
