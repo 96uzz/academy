@@ -392,7 +392,7 @@ $(function(){
 			</div>
 			<div class="content2">
 				<div id="tab-content" style="clear: both; margin: auto 40px; padding-bottom:20px;">
-						<p style="font-size: 30px; font-weight: 800; color: #3598DB; padding-top:20px;">일정 관리</p>
+						<p style="font-size: 30px; font-weight: 800; color: #3598DB; padding-top:20px; ">일정 관리</p>
 					<table style="width: 840px; margin: 0px auto; border-spacing: 0;">
 						<tr height="60">
 							<td width="200">&nbsp;</td>
@@ -402,7 +402,8 @@ $(function(){
 								<span class="titleDate">${year}년 ${month}월</span> <span
 								class="btnDate" onclick="changeDate(${year}, ${month+1});">＞</span>
 							</td>
-							<td width="200">&nbsp;</td>
+							<!-- <td width="200">&nbsp;</td> -->
+							<td width="200" style="text-align: right;"><img src="<%=cp%>/resource/images/cal.png" style="width:120px;"/></td>
 						</tr>
 					</table>
 
@@ -426,6 +427,7 @@ $(function(){
 							</tr>
 						</c:forEach>
 					</table>
+					
 
 				</div>
 
