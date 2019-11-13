@@ -153,11 +153,57 @@ public class MemberDAO {
 
 	public List<MemberDTO> interLecList(String userId) {
 		List<MemberDTO> list = new ArrayList<MemberDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sb = new StringBuilder();
 
+		try {
+			sb.append("SELECT i.userId, acaDiv, acaName, acaAddress, a.acaNum, l.* FROM interlecture i  ");
+			sb.append("INNER JOIN (SELECT acaNum, lecCode, lecName, lecStartDate, lecEndDate, lecLimit FROM lecture) l ");
+			sb.append("ON i.lecCode = l.lecCode ");
+			sb.append("INNER JOIN academy a ON l.acaNum = a.acaNum ");
+			sb.append("WHERE i.userId = ?");
+
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, userId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MemberDTO dto = new MemberDTO();
+				dto.setAcaDiv(rs.getString("acaDiv"));
+				dto.setLecName(rs.getString("lecName"));
+				dto.setAcaName(rs.getString("acaName"));
+				dto.setAcaAddress(rs.getString("acaAddress"));
+				dto.setLecLimit(rs.getInt("lecLimit"));
+				dto.setLecStartDate(rs.getString("lecStartDate"));
+				dto.setLecEndDate(rs.getString("lecEndDate"));
+				dto.setLecCode(rs.getString("lecCode"));
+				dto.setAcaNum(rs.getInt("acaNum"));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
 		return list;
 
 	}
 
+	
+	
 	public MemberDTO takingLecList(String userId) {
 		MemberDTO dto = null;
 		PreparedStatement pstmt = null;
@@ -185,8 +231,10 @@ public class MemberDAO {
 				dto.setLecLimit(rs.getInt("lecLimit"));
 				dto.setLecStartDate(rs.getString("lecStartDate"));
 				dto.setLecEndDate(rs.getString("lecEndDate"));
+				dto.setLecCode(rs.getString("lecCode"));
+				dto.setAcaNum(rs.getInt("acaNum"));
 			}
-		} catch (Exception e) {
+			} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {

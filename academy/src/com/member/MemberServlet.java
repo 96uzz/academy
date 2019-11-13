@@ -2,6 +2,7 @@ package com.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -363,6 +364,12 @@ public class MemberServlet extends MyServlet {
 			resp.sendRedirect(cp + "/member/login.do");
 			return;
 		}
+		
+		String userId = info.getUserId();
+		MemberDAO dao = new MemberDAO();
+		List<MemberDTO> list = dao.interLecList(userId);
+		
+		req.setAttribute("list", list);
 
 		String path = "/WEB-INF/views/member/interlecture.jsp";
 		forward(req, resp, path);
