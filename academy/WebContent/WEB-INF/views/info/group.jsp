@@ -144,25 +144,25 @@ p {
 				</tr>
 				<tr style="height: 20px;"></tr>
 				<tr>
-					<td class="bunhal"><p>삥빠라뽕뽕</p></td>
-					<td class="bunhal"><p>슈루루루루루룽</p></td>
-					<td class="bunhal"><p>asd</p></td>
-					<td class="bunhal"><p>asd</p></td>
-					<td class="bunhal"><p>asd</p></td>
+					<td class="bunhal"><p>홈페이지 소개 구현</p></td>
+					<td class="bunhal"><p>커뮤니티 구현</p></td>
+					<td class="bunhal"><p>마이페이지 구현</p></td>
+					<td class="bunhal"><p>교육정보 구현</p></td>
+					<td class="bunhal"><p>교육정보 구현</p></td>
 				</tr>
 				<tr>
-					<td class="bunhal"><p>qwe</p></td>
-					<td class="bunhal"><p>ewq</p></td>
-					<td class="bunhal"><p>qwe</p></td>
-					<td class="bunhal"><p>qwe</p></td>
-					<td class="bunhal"><p>we</p></td>
+					<td class="bunhal"><p>공지사항 게시판</p></td>
+					<td class="bunhal"><p>자유 게시판</p></td>
+					<td class="bunhal"><p>로그인/회원가입</p></td>
+					<td class="bunhal"><p>학원 검색</p></td>
+					<td class="bunhal"><p>일정 검색</p></td>
 				</tr>
 				<tr>
-					<td class="bunhal"><p>qwe</p></td>
-					<td class="bunhal"><p>qwe</p></td>
-					<td class="bunhal"><p>qwe</p></td>
-					<td class="bunhal"><p>qwe</p></td>
-					<td class="bunhal"><p>qwe</p></td>
+					<td class="bunhal"><p>Q/A게시판</p></td>
+					<td class="bunhal"><p>강의 평가</p></td>
+					<td class="bunhal"><p>관심강좌 /수강강좌</p></td>
+					<td class="bunhal"><p>강의 검색</p></td>
+					<td class="bunhal"><p>메인 화면 구현</p></td>
 				</tr>
 				
 			</table>
