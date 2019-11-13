@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
+import com.lecture.LectureDAO;
 import com.member.SessionInfo;
 import com.util.MyUtil;
 
@@ -45,7 +45,6 @@ public class ReviewServlet extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 
 		HttpSession session = req.getSession();
-		String cp = req.getContextPath();
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		String uri = req.getRequestURI();
 
@@ -57,12 +56,14 @@ public class ReviewServlet extends HttpServlet {
 			} else if (uri.indexOf("createdReview.do") != -1) {
 				createdForm(req, resp);
 			} else if (uri.indexOf("created_ok.do") != -1) {
-				CreatedSubmit(req, resp);
+				createdSubmit(req, resp);
 			} else if (uri.indexOf("insertReply.do") != -1) {
 				// ´ñ±Û Ãß°¡
 				insertReply(req, resp);
 			}else if (uri.indexOf("listReply.do") != -1) { // ´ñ±Û ¸®½ºÆ®
 				listReply(req, resp);
+			} else if(uri.indexOf("listLectureChange.do")!=-1) {
+				listLectureChange(req, resp);
 			}
 		/*	} else if (uri.indexOf("update.do") != -1) {
 				updateForm(req, resp);
@@ -180,43 +181,49 @@ public class ReviewServlet extends HttpServlet {
 			return;
 		}
 		
+		ReviewDAO dao = new ReviewDAO();
+		List<ReviewDTO> listAcademy = dao.listAcademy();
+		List<ReviewDTO> listLecture = null;
+		if(listAcademy.size()>=0)
+			listLecture = dao.listLecture(listAcademy.get(0).getAcaNum());
+		
 		req.setAttribute("mode", "created");
+		req.setAttribute("listAcademy",listAcademy);
+		req.setAttribute("listLecture",listLecture);
 		forward(req, resp, "/WEB-INF/views/review/createdReview.jsp");
 	}
-	protected void CreatedSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		 String cp=req.getContextPath();
-	      if(req.getMethod().equalsIgnoreCase("GET")) {
-	         resp.sendRedirect(cp+"/review/list.do");
-	         return;
-	      }
-	      HttpSession session=req.getSession();
-	      SessionInfo info=(SessionInfo)session.getAttribute("member");
+	
+	private void listLectureChange(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int acaNum=Integer.parseInt(req.getParameter("acaNum"));
+		ReviewDAO dao = new ReviewDAO();
+		List<ReviewDTO> listLecture = dao.listLecture(acaNum);
+		req.setAttribute("listLecture",listLecture);
+		System.out.println(listLecture.size());
+		forward(req, resp, "/WEB-INF/views/review/listLecture.jsp");
+	}
+	
+	protected void createdSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	     HttpSession session=req.getSession();
+	     SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-	      if(info==null) {
-	  		resp.sendRedirect(cp+"/member/login.do");
-	  		return;
-	  	}
-	  	
-	  	if(! info.getUserId().equals("admin")) {
-	  		resp.sendRedirect(cp+"/review/list.do");
-	  		return;
-	  	}
 	  	
 	  	ReviewDAO dao = new ReviewDAO();
 		ReviewDTO dto = new ReviewDTO();
 		
-		dto.setUserId(info.getUserId());
-		dto.setReNum(Integer.parseInt(req.getParameter("reNum")));
+		dto.setLecCode(Integer.parseInt("lecCode"));
 		dto.setAcaName(req.getParameter("acaName"));
 		dto.setLecName(req.getParameter("lecName"));
+		dto.setUserId(info.getUserId());
 		dto.setRate(req.getParameter("rate"));
-		dto.setLecIntro(req.getParameter("lecIntro"));
+		dto.setContent(req.getParameter("content"));
 		
 		dao.insertBoard(dto, "created");
 		
-		forward(req, resp, "/WEB-INF/views/review/createdReview.jsp");
+		
+		forward(req, resp, "/WEB-INF/views/review/list.jsp");
 	}
 	
+	//¸®ºä ±Ûº¸±â
 	protected void review(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int reNum=Integer.parseInt(req.getParameter("reNum"));
 		String page=req.getParameter("page");
@@ -309,10 +316,7 @@ public class ReviewServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
-		int reNum = Integer.parseInt(req.getParameter("reNum"));
-		
-		//dto.setUserId(info.getUserId());
-		dto.setUserId("admin");
+		dto.setUserId(info.getUserId());
 		dto.setContent(req.getParameter("content"));
 		dto.setReNum(Integer.parseInt(req.getParameter("reNum")));
 		dto.setRate(req.getParameter("rate"));
