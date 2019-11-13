@@ -121,7 +121,7 @@ a {
    height: 25px;
 }
 
-.boardMiddles {
+.boardMiddles,.noticeMiddles,.qnaMiddles {
    border-bottom: 1px solid #AAAAAA;
    height: 25px;
 }
@@ -167,6 +167,23 @@ function sendLogin() {
     f.submit();
 }
 
+function listNotice(){
+	$(".noticeMiddles").show();
+	$(".boardMiddles").hide();
+	$(".qnaMiddles").hide();
+}
+
+function listBoard(){
+ 	$(".boardMiddles").show();
+	$(".noticeMiddles").hide();	
+	$(".qnaMiddles").hide(); 
+}
+
+function listQna(){
+	$(".noticeMiddles").hide();
+	$(".boardMiddles").hide();
+	$(".qnaMiddles").show();
+}
 
 </script>
 </head>
@@ -195,7 +212,7 @@ function sendLogin() {
             <td><button class="loginButton" type="button"
                   name="register" onclick="javascript:location.href='<%=cp%>/member/member.do';">회원가입</button></td>
             <td><button class="loginButton" type="button" name="find"
-                  onclick="">ID/PWD 찾기</button></td>
+                  onclick="javascript:location.href='<%=cp%>/member/find.do';">ID/PWD 찾기</button></td>
          </tr>
              </table>
         </form>
@@ -223,15 +240,10 @@ function sendLogin() {
       
       <br> <br>
       <table>
-       <!--   <tr>
-            <td class="boardMenu"><a href="#">공지사항&nbsp;|</a></td>
-            <td class="boardMenu"><a href="#">자유게시판&nbsp;|</a></td>
-            <td class="boardMenu"><a href="#">Q/A&nbsp;</a></td>
-         </tr> -->
          <tr>
-         	<td class="boardMenu"><button id="btnNotice" onclick="javascript:location.href='<%=cp%>/main/main.do';">공지사항</button>|</td>
-         	<td class="boardMenu"><button id="btnBoard" onclick="javascript:location.href='<%=cp%>/main/boardMain.do';">자유게시판</button>|</td>
-         	<td class="boardMenu"><button id="btnQna" onclick="javascript:location.href='<%=cp%>/main/qnaMain.do';">Q/A</button></td>
+         	<td class="boardMenu"><button id="btnNotice" onclick="listNotice();">공지사항</button>|</td>
+         	<td class="boardMenu"><button id="btnBoard" onclick="listBoard();">자유게시판</button>|</td>
+         	<td class="boardMenu"><button id="btnQna" onclick="listQna();">Q/A</button></td>
          </tr>
       </table>
 
@@ -242,31 +254,33 @@ function sendLogin() {
             <td style="width: 15%;"><a href="#">+more</a></td>
          </tr>
 		
-		<c:forEach var="dto" items="${list}">
+		
+		<c:forEach var="dto" items="${noticeList}">
 			 <tr class="noticeMiddles">
             <td>${dto.noticeNum}</td>
-            <td class="boardSubject"><a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
+            <td class="boardSubject"><a href="${noticeUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
             <td></td>
          </tr>
 		</c:forEach>
 		
-		<c:forEach var="dto" items="${list}">
-			 <tr class="boardMiddles" style="display: none;">
-            <td>${dto.listNum}</td>
-            <td class="boardSubject"><a href="${articleUrl}&boardNum=${dto.listNum}">${dto.subject}</a></td>
+		<c:forEach var="dto" items="${boardList}">
+			 <tr class="boardMiddles" style="display: none;" >
+            <td>${dto.boardNum}</td>
+            <td class="boardSubject"><a href="${boardUrl}&boardNum=${dto.boardNum}">${dto.subject}</a></td>
             <td></td>
          </tr>
 		</c:forEach>
 		
-		<c:forEach var="dto" items="${list}">
-			 <tr class="qnaMiddles" style="display: none;">
-            <td>${dto.listNum}</td>
-            <td class="boardSubject"><a href="${articleUrl}&noticeNum=${dto.listNum}">${dto.subject}</a></td>
+		<c:forEach var="dto" items="${qnaList}">
+			 <tr class="qnaMiddles" style="display: none;" >
+            <td>${dto.qnaNum}</td>
+            <td class="boardSubject"><a href="${qnaUrl}&qnaNum=${dto.qnaNum}">${dto.subject}</a></td>
             <td></td>
          </tr>
 		</c:forEach>
 
       </table>
+
 </div>
    </div>
 

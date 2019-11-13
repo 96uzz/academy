@@ -307,6 +307,7 @@ public class BoardDAO {
         return list;
     }
 	
+  	
 	public BoardDTO readBoard(int boardNum) {
 		BoardDTO dto=null;
 		PreparedStatement pstmt=null;
