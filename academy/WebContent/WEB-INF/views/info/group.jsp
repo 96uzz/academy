@@ -150,6 +150,7 @@ p {
 					<td class="bunhal"><p>교육정보 구현</p></td>
 					<td class="bunhal"><p>교육정보 구현</p></td>
 				</tr>
+				
 				<tr>
 					<td class="bunhal"><p>공지사항 게시판</p></td>
 					<td class="bunhal"><p>자유 게시판</p></td>
