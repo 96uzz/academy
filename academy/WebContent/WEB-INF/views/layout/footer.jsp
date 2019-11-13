@@ -18,8 +18,8 @@ function personalInfo(){
 
 </script>
 <a href="javascript:termsOfUse();">승훈교육정보센터 정책 및 약관</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="">사이트 소개</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="javascript:personalInfo();">개인정보 취급방침</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="">제휴 제안</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="<%=cp%>/info/infoWeb.do">사이트 소개</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="javascript:personalInfo();">개인정보처리방침</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://forms.gle/ophthu68gAC6pB4e9" target="_blank">제휴 제안</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
 
-<a href="" style="font-weight: 900;">© 승훈교육정보센터 Corp.</a>
+<span style="font-weight: 900;">© 승훈교육정보센터 Corp.</span>
