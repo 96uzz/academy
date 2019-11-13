@@ -54,9 +54,9 @@ public class MemberServlet extends MyServlet {
 			delete(req, resp);
 		} else if (uri.indexOf("find.do") != -1) {
 			find(req, resp);
-		}  else if (uri.indexOf("finduserid.do") != -1) {
+		} else if (uri.indexOf("finduserid.do") != -1) {
 			findUserId(req, resp);
-		} else if (uri.indexOf("findpwd.do") != -1) {
+		} else if (uri.indexOf("finduserpassword.do") != -1) {
 			findUserPwd(req, resp);
 		}
 	}
@@ -93,17 +93,16 @@ public class MemberServlet extends MyServlet {
 
 				// 세션에 member이라는 이름으로 session info 객체를 저장
 				session.setAttribute("member", info);
-				
+
 				int num = 0;
-				num = (int)(Math.random()*53)+1;
+				num = (int) (Math.random() * 53) + 1;
 				SayingDAO dao2 = new SayingDAO();
 				SayingDTO dto2 = dao2.readSaying(num);
 				info.setWiseSaying(dto2.getWiseSaying());
-				
-				req.setAttribute("num", num);	
+
+				req.setAttribute("num", num);
 				req.setAttribute("dto2", dto2);
-			
-				
+
 				// 메인화면으로 리다이렉트
 				resp.sendRedirect(cp);
 				return;
@@ -416,26 +415,30 @@ public class MemberServlet extends MyServlet {
 		forward(req, resp, path);
 
 	}
-	
+
 	private void findUserId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userId = req.getParameter("userId");
 		String birth = req.getParameter("birth");
 		String userName = req.getParameter("userName");
-		String email = req.getParameter("email");	
-		
+		String email = req.getParameter("email");
+
 		MemberDAO dao = new MemberDAO();
-		
+
 		String foundUserId = dao.findUserId(userName, birth);
-		if(foundUserId!=null) {
-			req.setAttribute("message", "회원님의 ID는 "+foundUserId+"입니다.");
+		if (userName.equals("") || birth.equals("")) {
+			req.setAttribute("message", "이름과 생년월일을 입력해주세요.");
+			req.setAttribute("mode", "wrong");
+		} else if (foundUserId != null) {
+			req.setAttribute("message", "회원님의 ID는 " + foundUserId + "입니다.");
 		} else {
 			req.setAttribute("message", "일치하는 ID가 없습니다.");
+			req.setAttribute("mode", "wrong");
 		}
 		req.setAttribute("userId", userId);
 		req.setAttribute("birth", birth);
 		req.setAttribute("userName", userName);
 		req.setAttribute("email", email);
-				
+
 		String path = "/WEB-INF/views/member/find.jsp";
 		forward(req, resp, path);
 
@@ -445,22 +448,27 @@ public class MemberServlet extends MyServlet {
 		String userId = req.getParameter("userId");
 		String birth = req.getParameter("birth");
 		String userName = req.getParameter("userName");
-		String email = req.getParameter("email");	
+		String email = req.getParameter("email");
 		
 		MemberDAO dao = new MemberDAO();
-		
+
 		String foundUserPwd = dao.findUserPwd(userId, email);
-		if(foundUserPwd!=null) {
-			req.setAttribute("message","회원님의 비밀번호는 "+foundUserPwd+"입니다.");
+		
+		if (userId.equals("") || email.equals("")) {
+			req.setAttribute("message", "ID와 이메일을 입력해주세요.");
+			req.setAttribute("mode", "wrong");
+		} else if (foundUserPwd != null) {
+			req.setAttribute("message", "회원님의 비밀번호는 " + foundUserPwd + "입니다.");
 		} else {
 			req.setAttribute("message", "일치하는 비밀번호가 없습니다.");
+			req.setAttribute("mode", "wrong");
 		}
-		
+
 		req.setAttribute("userId", userId);
 		req.setAttribute("birth", birth);
 		req.setAttribute("userName", userName);
 		req.setAttribute("email", email);
-				
+
 		String path = "/WEB-INF/views/member/find.jsp";
 		forward(req, resp, path);
 

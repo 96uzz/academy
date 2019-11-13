@@ -138,11 +138,15 @@ body {
 	box-shadow: none;
 	opacity: .65;
 }
-
-#confirmLogin {
+#confirm{
+	font-size: 19px;
+    color : blue;
+    width: 100%;
+     text-align: center;
+  }
+.confirmLogin {
 	font-weight: bold;
 	font-style: italic;
-	font-size: 17px;
 	color: red;
 	text-align: center;
 }
@@ -154,10 +158,7 @@ body {
 	padding-top: 30px;
 }
 
-#confirm{
-	font-size: 19px;
-    color : blue;
-  }
+
 </style>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
@@ -176,7 +177,7 @@ body {
 					<br> <br>
 					<br>
 					<div id=body-board>
-						<form id="findForm" method="post">
+						<form name="findForm" method="post">
 							<table style="border-collapse: collapse; border-spacing: 0px;">
 								<tr style="text-align: center;">
 									<td colspan="2" style="padding-bottom: 30px;"><span
@@ -188,7 +189,7 @@ body {
 								<tr>
 									<td><span class="word">이름</span></td>
 									<td><input class="loginInput" type="text" id="userName"
-										name="userName" style="margin-bottom: 5px;" value="${userName}"></td>
+										name="userName" style="margin-bottom: 5px;" placeholder="이름" value="${userName}"></td>
 									<td style="padding-left: 40px;"><span class="word">ID</span></td>
 									<td><input class="loginInput" type="text" id="userId"
 										name="userId" style="margin-bottom: 5px;" placeholder="ID" value="${userId}"></td>
@@ -208,7 +209,7 @@ body {
 							</table>
 
 
-							<div id="confirmLogin">${message}</div>
+							
 							<table style="width: 341px; padding-top: 5px">
 								<tr>
 
@@ -219,7 +220,7 @@ body {
 								</tr>
 							</table>
 							<br>
-							<div id="confirm" style="width: 100%; text-align: center;">${message }</div>
+							<div id="confirm" ${mode=="wrong"?"class='confirmLogin'":""}  ${mode=="wrong"?"style = 'color:red'":"style = 'color:blue'"}>${message }</div>
 
 						</form>
 					</div>
@@ -242,10 +243,11 @@ body {
 function find(index){
 	var f = document.findForm;
 	var str;
+	
 	if(index==1){
 		f.action = '<%=cp%>/member/finduserid.do';
 	} else if(index==2){
-		f.action = '<%=cp%>/member/findpwd.do';
+		f.action = '<%=cp%>/member/finduserpassword.do';
 	}
 	
 	f.submit();
