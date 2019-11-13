@@ -114,7 +114,7 @@ function memberOk() {
 		return;
 	}
 	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
-		alert("아이디는 5~10자이며 첫글자는 영문자이어야 합니다.");
+		alert("아이디는 5~12자의 영숫자이며 첫글자는 영문자이어야 합니다.");
 		f.userId.focus();
 		return;
 	}
@@ -127,7 +127,7 @@ function memberOk() {
 		return;
 	}
 	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
-		alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
+		alert("패스워드는 5~12자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
 		f.userPwd.focus();
 		return;
 	}
@@ -332,7 +332,7 @@ function cancel(){
 												${mode=="update" ? "readonly='readonly' ":""} maxlength="15"
 												class="boxTF" placeholder="아이디">
 										</p>
-										<p class="help-block">5~12자이며 첫글자는 영문자로 시작</p>
+										<p class="help-block">5~12자의 영숫자이며 첫글자는 영문자로 시작</p>
 									</td>
 								</tr>
 
@@ -345,7 +345,7 @@ function cancel(){
 											<input type="password" name="userPwd" maxlength="15"
 												class="boxTF" style="width: 35%;" placeholder="패스워드">
 										</p>
-										<p class="help-block">5~10자 이내이며 하나 이상의 숫자나 특수문자 포함</p>
+										<p class="help-block">5~12자 이내이며 하나 이상의 숫자나 특수문자 포함</p>
 									</td>
 								</tr>
 
@@ -373,7 +373,7 @@ function cancel(){
 												${mode=="update" ? "readonly='readonly' ":""}
 												placeholder="이름">
 										</p>
-										<p class="help-block">한글만 가능</p>
+										<p class="help-block"></p>
 									</td>
 								</tr>
 
