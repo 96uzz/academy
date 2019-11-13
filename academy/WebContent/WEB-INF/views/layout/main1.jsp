@@ -229,8 +229,8 @@ function sendLogin() {
             <td class="boardMenu"><a href="#">Q/A&nbsp;</a></td>
          </tr> -->
          <tr>
-         	<td class="boardMenu"><button id="btnNotice" onclick="javascript:location.href='<%=cp%>/main/main.do';">공지사항</button></td>
-         	<td class="boardMenu"><button id="btnBoard" onclick="javascript:location.href='<%=cp%>/main/boardMain.do';">자유게시판</button></td>
+         	<td class="boardMenu"><button id="btnNotice" onclick="javascript:location.href='<%=cp%>/main/main.do';">공지사항</button>|</td>
+         	<td class="boardMenu"><button id="btnBoard" onclick="javascript:location.href='<%=cp%>/main/boardMain.do';">자유게시판</button>|</td>
          	<td class="boardMenu"><button id="btnQna" onclick="javascript:location.href='<%=cp%>/main/qnaMain.do';">Q/A</button></td>
          </tr>
       </table>
@@ -243,9 +243,25 @@ function sendLogin() {
          </tr>
 		
 		<c:forEach var="dto" items="${list}">
-			 <tr class="boardMiddles">
+			 <tr class="noticeMiddles">
             <td>${dto.noticeNum}</td>
             <td class="boardSubject"><a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
+            <td></td>
+         </tr>
+		</c:forEach>
+		
+		<c:forEach var="dto" items="${list}">
+			 <tr class="boardMiddles" style="display: none;">
+            <td>${dto.listNum}</td>
+            <td class="boardSubject"><a href="${articleUrl}&boardNum=${dto.listNum}">${dto.subject}</a></td>
+            <td></td>
+         </tr>
+		</c:forEach>
+		
+		<c:forEach var="dto" items="${list}">
+			 <tr class="qnaMiddles" style="display: none;">
+            <td>${dto.listNum}</td>
+            <td class="boardSubject"><a href="${articleUrl}&noticeNum=${dto.listNum}">${dto.subject}</a></td>
             <td></td>
          </tr>
 		</c:forEach>
