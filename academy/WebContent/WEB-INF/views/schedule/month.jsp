@@ -402,7 +402,6 @@ $(function(){
 								<span class="titleDate">${year}년 ${month}월</span> <span
 								class="btnDate" onclick="changeDate(${year}, ${month+1});">＞</span>
 							</td>
-							<!-- <td width="200">&nbsp;</td> -->
 							<td width="200" style="text-align: right;"><img src="<%=cp%>/resource/images/cal.png" style="width:120px;"/></td>
 						</tr>
 					</table>
