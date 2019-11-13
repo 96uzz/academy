@@ -41,6 +41,7 @@ public class MainServlet extends MyServlet {
 		noticeList = dao1.listNotice(0,5);
 		String noticeUrl = cp+"/notice/article.do?page=1";
 		
+	
 		List<BoardDTO> boardList;
 		boardList = dao2.listBoard(0,5);
 		String boardUrl = cp+"/board/article.do?page=1";
