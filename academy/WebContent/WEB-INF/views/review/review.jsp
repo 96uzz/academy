@@ -10,6 +10,7 @@
 <html>
 <head>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap&subset=korean" rel="stylesheet">
+
 <meta charset="UTF-8">
 <title>spring</title>
 
@@ -17,12 +18,13 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 
+<script src="https://kit.fontawesome.com/efe4b4f562.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-function deleteBoard(num) {
+function deleteBoard(reNum) {
 	if(confirm("게시물을 삭제 하시겠습니까 ?")) {
-		var url="<%=cp%>/board/delete.do?boardNum="+num+"&${query}";
+		var url="<%=cp%>/review/delete.do?boardNum="+reNum+"&${query}";
 		location.href=url;
 	}
 }
@@ -32,13 +34,14 @@ function deleteBoard(num) {
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
    	width: 1400px;
-   	height: 550px;
+   	min-height: 550px;
   	margin: 0px auto 0px auto;
+  	background-attachment: scroll;
 }
 
 body{
@@ -49,12 +52,13 @@ body{
 .container2 {
     width:100%;
     text-align:left;
+    min-height: 600px;
 }
 .body-container2 {
 	margin : 20px auto;
 	width: 1300px;
 	clear: both;
-	min-height: 500px;
+	min-height: 600px;
 }
 .navigation2 {
 	float: left;
@@ -79,11 +83,222 @@ body{
 	font-weight: 800;
 }
 
+.btnLike {
+    color:#333333;
+    font-weight:500;
+    border:1px solid #cccccc;
+    background-color:#ffffff;
+    text-align:center;
+    cursor:pointer;
+    padding:6px 10px 5px;
+    border-radius:4px;
+}
+
+.star{
+  display:inline-block;
+  width: 30px;
+  height: 60px;
+  cursor: pointer;
+}
+.star_left{
+  background: url(http://gahyun.wooga.kr/main/img/testImg/star.png) no-repeat 0 0; 
+  background-size: 60px; 
+  margin-right: -3px;
+}
+.star_right{
+  background: url(http://gahyun.wooga.kr/main/img/testImg/star.png) no-repeat -30px 0; 
+  background-size: 60px; 
+  margin-left: -3px;
+}
+
+.star.on{
+  background-image: url(http://gahyun.wooga.kr/main/img/testImg/star_on.png);
+}
+
+/* .small{ */
+/* 	background-size: 30px !important;  */
+/* 	margin-right: -3px !important; */
+/* 	height: 25px !important; */
+/* 	cursor: text !important; */
+/* 	width: 15px !important; */
+/* } */
+
+/* .small.star_right{ */
+/* 	background:url(http://gahyun.wooga.kr/main/img/testImg/star.png) no-repeat -14px 0; */
+/* } */
+
+
 </style>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 
 
+jQuery(document).ready(function(){
+	drawAvgStar();
+	
+	jQuery(".star-box>.star").on('click',function(){
+		var idx = jQuery(this).index();
+	   	
+		jQuery(".star-box>.star").removeClass("on");
+	   	
+		for(var i=0; i<=idx; i++){
+	   		jQuery(".star-box>.star").eq(i).addClass("on");
+	   	}
+		
+		jQuery('#star_score').html(jQuery('.star-box>.star.on').length/2);
+	});
+});
+
+
+function drawAvgStar(){
+	var starCnt = Math.round(parseFloat(jQuery('.avg_rate').html()) * 2);
+	
+	for(var j=0; j<starCnt; j++){
+   		jQuery(".avg-draw-star-rate>.star").eq(j).addClass("on");
+   	}
+}
+
+function deleteBoard(reNum) {
+	<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+	    var query = "reNum="+reNum+"&${query}";
+	    var url = "<%=cp%>/review/delete.do?" + query;
+
+	    if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
+	    	location.href=url;
+	</c:if>
+	
+	<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+	    alert("게시물을 삭제할 수  없습니다.");
+	</c:if>
+	}
+
+	function updateBoard(reNum) {
+	<c:if test="${sessionScope.member.userId==dto.userId}">
+	    var page = "${page}";
+	    var query = "reNum="+reNum+"&page="+page;
+	    var url = "<%=cp%>/review/update.do?" + query;
+
+	    location.href=url;
+	</c:if>
+
+	<c:if test="${sessionScope.member.userId!=dto.userId}">
+	   alert("게시물을 수정할 수  없습니다.");
+	</c:if>
+	}
+	</script>
+
+	<script type="text/javascript">
+	
+	//-------------------------------------
+	// 댓글
+	function login() {
+		location.href="<%=cp%>/member/login.do";
+	}
+
+	// 댓글 리스트
+	$(function(){
+		listPage(1);
+	});
+
+	function listPage(page) {
+		var url="<%=cp%>/review/listReply.do";
+		var query="reNum=${dto.reNum}&pageNo="+page;
+		
+		$.ajax({
+			type:"get"
+			,url:url
+			,data:query
+			,success:function(data) {
+				$("#listReply").html(data);
+			}
+		    ,beforeSend :function(jqXHR) {
+		    	jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+	}
+
+	// 댓글 등록
+	$(function(){
+		$(".btnSendReply").click(function(){
+			var reNum="${dto.reNum}";
+			// var content=$(".boxTA:first").val();
+			var $tb = $(this).closest("table");
+			var content=$tb.find("textarea").val().trim();
+			if(! content) {
+				$tb.find("textarea").focus();
+				return;
+			}
+			content = encodeURIComponent(content);
+			
+			var query="reNum="+reNum+"&content="+content+"&rate="+jQuery('#star_score').html();
+			var url="<%=cp%>/review/insertReply.do";
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"json"
+				,success:function(data) {
+					$tb.find("textarea").val("");
+					$('#star_score').html('0');
+					jQuery(".star-box>.star").removeClass("on");
+					
+					var state=data.state;
+					if(state=="true") {
+						listPage(1);
+					} 
+				}
+			    ,beforeSend :function(jqXHR) {
+			    	jqXHR.setRequestHeader("AJAX", true);
+			    }
+			    ,error:function(jqXHR) {
+			    	if(jqXHR.status==403) {
+			    		login();
+			    		return;
+			    	}
+			    	console.log(jqXHR.responseText);
+			    }
+			});
+		});
+	});
+
+	// 댓글 삭제
+	$(function(){
+		$("body").on("click", ".deleteReply", function(){
+			if(! confirm("게시물을 삭제하시겠습니까 ? "))
+			    return;
+			
+			var url="<%=cp%>/review/deleteReply.do";
+			var replyNum=$(this).attr("data-replyNum");
+			var page=$(this).attr("data-pageNo");
+			
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:{replyNum:replyNum}
+				,dataType:"json"
+				,success:function(data) {
+					listPage(page);
+				}
+			    ,beforeSend :function(jqXHR) {
+			    	jqXHR.setRequestHeader("AJAX", true);
+			    }
+			    ,error:function(jqXHR) {
+			    	if(jqXHR.status==403) {
+			    		login();
+			    		return;
+			    	}
+			    	console.log(jqXHR.responseText);
+			    }
+			});
+		});
+	});
 </script>
 </head>
 <body>
@@ -99,83 +314,143 @@ body{
            <h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span> 커뮤니티 </h3>
         	</div>
 			<table>
-				<tr><td><a href="#" id="nav1">자유 게시판</a></td></tr>
-				<tr><td><a href="#" id="nav2">강의 평가</a></td></tr>
+				<tr><td><a href="<%=cp%>/board/list.do" id="nav2">자유 게시판</a></td></tr>
+				<tr><td><br><a href="<%=cp%>/review/list.do" id="nav1">강의 평가</a></td></tr>
 			</table>
 		</div>
 		<div class="content2">
-			자유 게시판
+			&nbsp;&nbsp;&nbsp;<h3 style="width: 200px; margin-left: 70px;">강의 평가</h3>
 		</div>
 			<br><br><br><br>
 			<!--  여기부터 소스 -->
 			
-			<div>
-			<table style="width: 800px; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+			<div style="min-height: 600px;">
+			 <div style="min-height: 600px;">
+			<table style="width: 800px; min-height: 600px; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			
+			<tr height="25" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="center">
-				   <c:if test="${dto.depth!=0 }">[Re] </c:if>
-				   ${dto.subject}
+				  강의명: ${dto.lecName}
 			    </td>
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
-			       이름 : ${dto.userName}
-			    </td>
-			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.created } | 조회 ${dto.hitCount}
+			<tr height="15" style="border-bottom: 1px solid #cccccc;">
+			    <td width="50%"  style="padding-left: 5px; text-align: right; ">
+			      <span style="float: left;">전체 평점 : </span><span style="float: left;" class="avg_rate">${dto.rate}</span>
+			      
+			      <span class='avg-draw-star-rate' style="cursor: text !important;">
+	        		<span class="draw star star_left small"></span>
+				  	<span class="draw star star_right small"></span>
+				
+				  	<span class="draw star star_left small"></span>
+				  	<span class="draw star star_right small"></span>
+				
+				  	<span class="draw star star_left small"></span>
+				  	<span class="draw star star_right small"></span>
+				
+					<span class="draw star star_left small"></span>
+					<span class="draw star star_right small"></span>
+					
+					<span class="draw star star_left small"></span>
+					<span class="draw star star_right small"></span>
+	        		</span>   
 			    </td>
 			</tr>
 			
-			<tr style="border-bottom: 1px solid #cccccc;">
-			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-			      ${dto.content}
+			<tr>
+			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="80">
+			      ${dto.lecIntro}
 			   </td>
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       이전글 :
-                  <c:if test="${not empty preReadDto}">
-                         <a href="<%=cp%>/board/article.do?boardNum=${preReadDto.boardNum}&${query}">${preReadDto.subject}</a>
-                  </c:if>
-			    </td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       다음글 :
-                  <c:if test="${not empty nextReadDto}">
-                         <a href="<%=cp%>/board/article.do?boardNum=${nextReadDto.boardNum}&${query}">${nextReadDto.subject}</a>
-                  </c:if>
-			    </td>
-			</tr>
 			</table>
 			
-			<table style="width: 800px; margin : 50px 100px 0 0; float : right;  border-spacing: 0px;">
+			<table style="width: 900px; margin: 0px auto 20px; border-spacing: 0px; float: right;">
 			<tr height="45">
-			    <td width="300" align="left">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/reply.do?boardNum=${dto.boardNum}&page=${page}';">답변</button>
-			          <c:if test="${sessionScope.member.userId == dto.userId}">
-			              <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/update.do?boardNum=${dto.boardNum}&${query}';">수정</button>
-			          </c:if>
-			          <c:if test="${sessionScope.member.userId != dto.userId}">
-			              <button type="button" class="btn" disabled="disabled">수정</button>
-			          </c:if>
-			          <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
-			              <button type="button" class="btn" onclick="deleteBoard('${dto.boardNum}');">삭제</button>
-			          </c:if>
-			          <c:if test="${sessionScope.member.userId!=dto.userId && sessionScope.member.userId!='admin'}">
-			              <button type="button" class="btn" disabled="disabled">삭제</button>
-			          </c:if>
+			    <td align="left" style="width: 250px;">
+			    	<c:if test="${sessionScope.member.userId=='admin'}">
+			          <button type="button" class="btn" onclick="updateBoard('${dto.reNum}');">수정</button>
+			       </c:if>
+			       <c:if test="${sessionScope.member.userId=='admin'}">			    
+			          <button type="button" class="btn" onclick="deleteBoard('${dto.reNum}');">삭제</button>
+			       </c:if>
 			    </td>
 			
-			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/list.do?${query}';">리스트</button>
+			    <td width ="150" align="right">
+			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/review/list.do?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>
         </div>
+
+ 	    <div style="min-height: 300px;">
+            <table style="width: 900px; margin: 0px auto 20px; border-spacing: 0px; float: right;">
+            <tr height='30'> 
+	            <td align='left'>
+	            	<span style='font-weight: bold;' >후기쓰기</span><span> - 수강 후기를 남겨주세요</span>
+	            </td>
+            </tr>
+            <tr height='30'> 
+	            <td>
+	            	<div class="star-box">
+	            		<span class="star star_left"></span>
+					  	<span class="star star_right"></span>
+					
+					  	<span class="star star_left"></span>
+					  	<span class="star star_right"></span>
+					
+					  	<span class="star star_left"></span>
+					  	<span class="star star_right"></span>
+					
+						<span class="star star_left"></span>
+						<span class="star star_right"></span>
+						
+						<span class="star star_left"></span>
+						<span class="star star_right"></span>
+					</div>
+	            </td>
+	            <td>
+			    	<span id="star_score">0</span> 점
+			    	<!--  jQuery('#star_score').html()  -->
+			    </td>
+            </tr>
+            <tr>
+               <td style='padding:5px 5px 0px;'>
+                    <textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
+                </td>
+            </tr>
+            <tr>
+               <td align='right'>
+                    <button type='button' class='btn btnSendReply' style='padding:10px 20px;'>댓글 등록</button>
+                </td>
+            </tr>
+            </table>
+            
+            <div id="listReply" style="width: 900px; float:right;"></div>
+ 	    </div>
+ 	    
+ 	    <div style="min-height: 300px;">
+ 	  	  <table style="width: 900px; float:right; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+	 	    	<tr height="35" style="border-bottom: 1px solid #cccccc;">
+				    <td colspan="2" align="left" style="padding-left: 5px;">
+				       이전글 :
+				         <c:if test="${not empty preReadDto}">
+				              <a href="<%=cp%>/review/review.do?${query}&renum=${preReadDto.reNum}">${preReadDto.subject}</a>
+				        </c:if>
+				    </td>
+				</tr>
+				
+				<tr height="35" style="border-bottom: 1px solid #cccccc;">
+				    <td colspan="2" align="left" style="padding-left: 5px;">
+				    다음글 :
+				         <c:if test="${not empty nextReadDto}">
+				              <a href="<%=cp%>/review/review.do?${query}&renum=${nextReadDto.reNum}">${nextReadDto.subject}</a>
+				        </c:if>
+				    </td>
+				</tr>
+			</table>
+		</div>
+ 	    </div>
         <!--  여기까지 메인 -->
     </div>
 </div>

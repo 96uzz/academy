@@ -11,11 +11,21 @@ public class ReviewDTO {
 	private int lecLimit;
 	private int acaNum;
 	private String acaName;
-
+	private String lecIntro;
+	
+	private int replyNum, num;
+	private String userName; 
+	private int answer;
+	private int replyLike;
+	
+	private int answerCount, likeCount, disLikeCount;
+	
+	
+	
 	// °­ÁÂÀÇ ¸®ºä Á¤º¸
 	private int reNum;
 	private String userId;
-	private double rate;
+	private String rate;
 	private String content;
 	private String created;
 
@@ -109,12 +119,84 @@ public class ReviewDTO {
 		this.userId = userId;
 	}
 
-	public double getRate() {
+	public String getRate() {
 		return rate;
 	}
 
-	public void setRate(double rate) {
+	public void setRate(String rate) {
 		this.rate = rate;
+	}
+
+	public String getLecIntro() {
+		return lecIntro;
+	}
+
+	public void setLecIntro(String lecIntro) {
+		this.lecIntro = lecIntro;
+	}
+
+	public int getReplyNum() {
+		return replyNum;
+	}
+
+	public void setReplyNum(int replyNum) {
+		this.replyNum = replyNum;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public int getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(int answer) {
+		this.answer = answer;
+	}
+
+	public int getReplyLike() {
+		return replyLike;
+	}
+
+	public void setReplyLike(int replyLike) {
+		this.replyLike = replyLike;
+	}
+
+	public int getAnswerCount() {
+		return answerCount;
+	}
+
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public int getDisLikeCount() {
+		return disLikeCount;
+	}
+
+	public void setDisLikeCount(int disLikeCount) {
+		this.disLikeCount = disLikeCount;
 	}
 
 	public String getContent() {
