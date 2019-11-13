@@ -57,6 +57,7 @@ public class MainServlet extends MyServlet {
 		req.setAttribute("qnaList", qnaList);
 		req.setAttribute("qnaUrl", qnaUrl);
 		
+		
 		forward(req, resp, "/WEB-INF/views/main/main.jsp");
 	}
 

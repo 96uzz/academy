@@ -183,6 +183,8 @@ function listQna(){
 	$(".noticeMiddles").hide();
 	$(".boardMiddles").hide();
 	$(".qnaMiddles").show();
+	
+	
 }
 
 </script>
