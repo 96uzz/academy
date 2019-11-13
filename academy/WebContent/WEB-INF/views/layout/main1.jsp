@@ -171,12 +171,16 @@ function listNotice(){
 	$(".noticeMiddles").show();
 	$(".boardMiddles").hide();
 	$(".qnaMiddles").hide();
+	
+	$("#mainBoardMore").attr("href", "<%=cp%>/notice/list.do");
 }
 
 function listBoard(){
  	$(".boardMiddles").show();
 	$(".noticeMiddles").hide();	
-	$(".qnaMiddles").hide(); 
+	$(".qnaMiddles").hide();
+	
+	$("#mainBoardMore").attr("href", "<%=cp%>/board/list.do");
 }
 
 function listQna(){
@@ -184,7 +188,7 @@ function listQna(){
 	$(".boardMiddles").hide();
 	$(".qnaMiddles").show();
 	
-	
+	$("#mainBoardMore").attr("href", "<%=cp%>/qna/list.do");
 }
 
 </script>
@@ -253,7 +257,7 @@ function listQna(){
          <tr class="boardTop">
             <th style="width: 15%;">번호</th>
             <th style="width: 70%;">제목</th>
-            <td style="width: 15%;"><a href="#">+more</a></td>
+            <td style="width: 15%;"><a href="<%=cp%>/notice/list.do" id="mainBoardMore">+more</a></td>
          </tr>
 		
 		
