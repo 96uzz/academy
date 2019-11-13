@@ -373,7 +373,7 @@ function cancel(){
 												${mode=="update" ? "readonly='readonly' ":""}
 												placeholder="이름">
 										</p>
-										<p class="help-block"></p>
+									
 									</td>
 								</tr>
 
