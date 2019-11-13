@@ -111,10 +111,11 @@ body {
 
 <script type="text/javascript">
 <c:if test="${sessionScope.member.userId=='admin'}">
-function deleteLecture(deletelenum) {
+function deleteLecture(lectureCode) {
 	if(confirm("게시물을 삭제 하시겠습니까 ?")) {
 		var url="<%=cp%>/lts/delete.do?lectureCode=" + lectureCode + "&${query}";
-			location.href = url;
+		
+		location.href = url;
 		}
 	}
 	</c:if>

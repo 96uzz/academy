@@ -205,7 +205,7 @@ public class LectureServlet extends MyServlet{
 		dto.setLecLimit(Integer.parseInt(req.getParameter("lecLimit")));
 		dto.setLecIntro(req.getParameter("lecIntro"));
 		
-		dao.updateLecture(dto);
+		dao.insertLecture(dto);
 		
 		resp.sendRedirect(cp+"/lts/list.do");
 	}
@@ -326,7 +326,7 @@ public class LectureServlet extends MyServlet{
 		}
 		
 		String page = req.getParameter("page");
-		int num = Integer.parseInt(req.getParameter("lecCode"));
+		int num = Integer.parseInt(req.getParameter("lectureCode"));
 		String condition=req.getParameter("condition");
 		String keyword=req.getParameter("keyword");
 		if(condition==null) {
@@ -342,12 +342,13 @@ public class LectureServlet extends MyServlet{
 		
 		LectureDAO dao = new LectureDAO();
 		LectureDTO dto = dao.readLecture(num);
+		
 		if(dto==null) {
 			resp.sendRedirect(cp+"/lts/list.do?"+query);
 			return;
 		}
 		dao.deleteLecture(num, info.getUserId());
 		
-		resp.sendRedirect(cp+"/lts/list.do?page="+page);
+		resp.sendRedirect(cp+"/lts/list.do?num="+num+"&page="+page);
 	}
 }
