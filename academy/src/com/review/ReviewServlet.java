@@ -207,9 +207,10 @@ public class ReviewServlet extends HttpServlet {
 		
 		dto.setUserId(info.getUserId());
 		dto.setReNum(Integer.parseInt(req.getParameter("reNum")));
-		dto.setLecName(req.getParameter("lecName"));
 		dto.setAcaName(req.getParameter("acaName"));
+		dto.setLecName(req.getParameter("lecName"));
 		dto.setRate(req.getParameter("rate"));
+		dto.setLecIntro(req.getParameter("lecIntro"));
 		
 		dao.insertBoard(dto, "created");
 		

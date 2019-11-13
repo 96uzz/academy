@@ -118,8 +118,9 @@ body{
 		</div>
 			<br><br><br><br>
 			<!--  여기부터 메인 -->
-			<form name="boardForm" method="post" >
-			  <table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
+			<form name="boardForm" method="post" style="width: 900px; float: right;">
+				<br><br>
+			  <table style="min-height: 400px;    border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">작성자</td>
 			      <td style="padding-left:10px;"> 
@@ -144,7 +145,7 @@ body{
 			    <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">교육과정 소개</td>
 			      <td style="padding-left:10px;"> 
-			          <input type="text" name="content" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.lecIntro}">
+			         ${dto.lecIntro}
 			      </td>
 			  </tr>
 			</table>

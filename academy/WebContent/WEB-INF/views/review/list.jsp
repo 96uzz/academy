@@ -20,6 +20,13 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+function drawAvgStar(){
+	var starCnt = Math.round(parseFloat(jQuery('#avg_rate').html()) * 2);
+	
+	for(var j=0; j<starCnt; j++){
+   		jQuery(".avg-draw-star-rate>.star").eq(j).addClass("on");
+   	}
+}
 
 function selectList() {
 	var f=document.selectForm;
@@ -37,7 +44,7 @@ function searchList() {
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -109,7 +116,7 @@ body{
 			</table>
 		</div>
 		<div class="content2">
-			강의 평가
+			&nbsp;&nbsp;&nbsp;<h3 style="width: 200px; margin-left: 70px;">강의 평가</h3>
 		</div>
 			<br><br>
 			<!--  여기부터 소스 -->
@@ -138,16 +145,16 @@ body{
 			<table style="width: 800px; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 			  <tr align="center" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; background-color: #3598DB;"> 
 			      <th width="60">No</th>
-			      <th>강의명</th>
-			      <th width="100">학원명</th>
+			      <th>과정명</th>
+			      <th width="100">기관명</th>
 			      <th width="150">평점</th>
 			  </tr>
 			 
 		<c:forEach var="dto" items="${list}">
 			  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-			      <td>${dto.listNum}</td>
+			      <td>${dto.reNum}</td>
 			      <td align="left" style="padding-left: 20px;">
-			           <a href="${articleUrl}&lecNum=${dto.lecNum}">${dto.lecName}</a>
+			           <a href="${articleUrl}&reNum=${dto.reNum}">${dto.lecName}</a>
 			      </td>
 			      <td>${dto.acaName}</td>
 			      <td>${dto.rate}</td>
@@ -166,13 +173,14 @@ body{
 			<table style="width: 800px; margin : 50px 100px 0 0; border-spacing: 0px; float: right;">
 			   <tr height="40">
 			      <td align="left" width="100px">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/list.do';">새로고침</button>
+			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/review/list.do';">새로고침</button>
 			      </td>
 			      <td align="center">
-			          <form name="searchForm" action="<%=cp%>/board/list.do" method="post">
+			          <form name="searchForm" action="<%=cp%>/review/list.do" method="post">
 			              <select name="condition" class="selectField">
-			                  <option value="subject"     ${condition=="subject"?"selected='selected'":"" }>제목</option>
-			                  <option value="userName" ${condition=="userName"?"selected='selected'":"" }>작성자</option>
+			                  <option value="lecName"   ${condition=="lecName"?"selected='selected'":"" }>강의명</option>
+			                  <option value="acadiv" 	${condition=="acadiv"?"selected='selected'":"" }>분야</option>
+			                  <option value="acaName"   ${condition=="acaName"?"selected='selected'":"" }>학원명</option>
 			            </select>
 			            <input type="text" name="keyword" class="boxTF" value="${keyword}">
 			            <input type="hidden" name="rows" value="${rows}">
@@ -180,8 +188,25 @@ body{
 			        </form>
 			      </td>
 			      <td align="right" width="100">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/created.do';">글올리기</button>
+			      	  <c:if test="${sessionScope.member.userId=='admin'}">
+			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/review/createdReview.do';">글올리기</button>
+			          </c:if>
 			      </td>
+			     
+			     
+			     <!--  관리자만 버튼 활성화.
+			      <c:if test="${sessionScope.member.userId=='admin'}">
+                              <td colspan="2" align="right" style="padding-right: 5px;">
+                                 <button type="button" id="btnUpdate" class="btn">수정</button>
+                                 <button type="button" id="btnDelete" class="btn"
+                                    onclick="deleteOk('${dto.num}');">삭제</button>
+                              </td>
+                  </c:if>
+                   --> 
+			      
+			      
+			      
+			      
 			   </tr>
 			</table>
         </div>
