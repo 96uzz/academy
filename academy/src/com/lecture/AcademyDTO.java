@@ -4,6 +4,8 @@ public class AcademyDTO {
 	private int acaNum;
 	private String acaName;
 	
+	
+	
 	public int getAcaNum() {
 		return acaNum;
 	}

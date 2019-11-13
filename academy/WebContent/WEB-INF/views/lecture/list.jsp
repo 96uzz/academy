@@ -128,8 +128,9 @@ function searchList() {
             	<h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span>   교육 정보 </h3>
         	</div>
 			<table>
-				<tr><td><a href="<%=cp%>/acs/list.do" id="nav1">교육기관 검색</a></td></tr>
-				<tr><td><a href="<%=cp%>/lts/list.do" id="nav2">교육과정 검색</a></td></tr>
+				<tr><td><a href="<%=cp%>/acs/list.do" id="nav2">학원 검색</a></td></tr>
+				<tr><td><a href="<%=cp%>/lts/list.do" id="nav1">강의 검색</a></td></tr>
+				<tr><td><a href="<%=cp%>/cal/list.do" id="nav2">일정 검색</a></td></tr>
 			</table>
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">

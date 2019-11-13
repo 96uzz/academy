@@ -84,11 +84,10 @@ public class AcademyDAO {
 		
 		try {
 			sql="SELECT NVL(COUNT(*), 0) FROM academy ";
-			if(condition.equalsIgnoreCase("created")) {
-				keyword=keyword.replaceAll("-", "");
-				sql += " WHERE TO_CHAR(created, 'YYYYMMDD') = ? ";
-			} else if(condition.equalsIgnoreCase("acaName")) {
-				sql += " WHERE INSTR(acaName, ?) = 1 ";
+			if(condition.equalsIgnoreCase("acaName")) {
+				sql += " WHERE INSTR(acaName, ?) >= 1 ";
+			} else if(condition.equalsIgnoreCase("acaDiv")) {
+				sql += " WHERE INSTR(acaDiv, ?) >= 1 ";
 			} else {
 				sql += " WHERE INSTR("+condition+", ?) >= 1 ";
 			}
@@ -174,7 +173,7 @@ public class AcademyDAO {
 		
 		try {
 			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv, ");
-			sb.append("  hitCount, TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
+			sb.append("  TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
 			sb.append("  FROM academy a JOIN member m ON a.userId=m.userId ");
 			sb.append("  ORDER BY acaNum DESC ");
 			sb.append("  OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
@@ -184,6 +183,7 @@ public class AcademyDAO {
 			pstmt.setInt(2, rows);
 			
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
 				AcademyDTO dto = new AcademyDTO();
 				dto.setAcaNum(rs.getInt("acaNum"));
@@ -191,9 +191,8 @@ public class AcademyDAO {
 				dto.setAcaTel(rs.getString("acaTel"));
 				dto.setAcaAddress(rs.getString("acaAddress"));
 				dto.setAcaDiv(rs.getString("acaDiv"));
-				dto.setHitCount(rs.getInt("hitCount"));
-				dto.setUserId(rs.getString("userId"));
 				dto.setCreated(rs.getString("created"));
+				dto.setUserId(rs.getString("userId"));
 				
 				list.add(dto);
 			}
@@ -224,14 +223,11 @@ public class AcademyDAO {
 		StringBuilder sb = new StringBuilder();
 		
 		try {
-			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv ");
-			sb.append(" hitCount, TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
-			sb.append("FROM academy a JOIN member m ON a.userId=m.userId ");
-			if(condition.equalsIgnoreCase("created")) {
-				keyword = keyword.replaceAll("-", "");
-				sb.append(" WHERE TO_CHAR(created, 'YYYYMMDD') = ? ");
-			} else if(condition.equalsIgnoreCase("acaName")) {
-				sb.append(" WHERE INSTR(acaName, ?) = 1 ");
+			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv, ");
+			sb.append(" TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
+			sb.append(" FROM academy a JOIN member m ON a.userId=m.userId ");
+			if(condition.equalsIgnoreCase("acaName")) {
+				sb.append(" WHERE INSTR(acaName, ?) >= 1 ");
 			} else {
 				sb.append(" WHERE INSTR("+condition+", ?) >= 1 ");
 			}
@@ -244,6 +240,7 @@ public class AcademyDAO {
 			pstmt.setInt(3, rows);
 			
 			rs=pstmt.executeQuery();
+			
 			while(rs.next()) {
 				AcademyDTO dto = new AcademyDTO();
 				dto.setAcaNum(rs.getInt("acaNum"));
@@ -251,9 +248,10 @@ public class AcademyDAO {
 				dto.setAcaTel(rs.getString("acaTel"));
 				dto.setAcaAddress(rs.getString("acaAddress"));
 				dto.setAcaDiv(rs.getString("acaDiv"));
-				dto.setHitCount(rs.getInt("hitCount"));
 				dto.setCreated(rs.getString("created"));
 				dto.setUserId(rs.getString("userId"));
+				
+				list.add(dto);
 			}
 			
 		} catch (Exception e) {
@@ -290,7 +288,9 @@ public class AcademyDAO {
 			
 			pstmt=conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, num);
+			
 			rs=pstmt.executeQuery();
+			
 			if(rs.next()) {
 				dto=new AcademyDTO();
 				dto.setAcaNum(rs.getInt("acaNum"));

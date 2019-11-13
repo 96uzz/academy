@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+   <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -128,8 +128,9 @@ function searchList() {
             	<h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span>   교육 정보 </h3>
         	</div>
 			<table>
-				<tr><td><a href="<%=cp%>/acs/list.do" id="nav1">교육기관 검색</a></td></tr>
-				<tr><td><a href="<%=cp%>/lts/list.do" id="nav2">교육과정 검색</a></td></tr>
+				<tr><td><a href="<%=cp%>/acs/list.do" id="nav1">학원 검색</a></td></tr>
+				<tr><td><a href="<%=cp%>/lts/list.do" id="nav2">강의 검색</a></td></tr>
+				<tr><td><a href="<%=cp%>/cal/list.do" id="nav2">일정 검색</a></td></tr>
 			</table>
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
@@ -189,8 +190,8 @@ function searchList() {
 			      <td align="center">
 			          <form name="searchForm" action="<%=cp%>/acs/list.do" method="post">
 			              <select name="condition" class="selectField">
-			                  <option value="subject" ${condition=="subject" ? "selected='selected'":""}>제목</option>
-			                  <option value="content" ${condition=="content" ? "selected='selected'":""}>내용</option>
+			                  <option value="acaDiv" ${condition=="acaDiv" ? "selected='selected'":""}>분류</option>
+			                  <option value="acaName" ${condition=="acaName" ? "selected='selected'":""}>학원이름</option>
 			              </select>
 			            <input type="text" name="keyword" class="boxTF" value="${keyword}">
 			            <input type="hidden" name="rows" value="${rows}">

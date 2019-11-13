@@ -138,16 +138,19 @@ function deleteLecture(lectureCode) {
 				</div>
 				<table>
 					<tr>
-						<td><a href="<%=cp%>/acs/list.do" id="nav1">교육기관 검색</a></td>
+						<td><a href="<%=cp%>/acs/list.do" id="nav2">학원 검색</a></td>
 					</tr>
 					<tr>
-						<td><a href="<%=cp%>/lts/list.do" id="nav2">교육과정 검색</a></td>
+						<td><a href="<%=cp%>/lts/list.do" id="nav1">강의 검색</a></td>
+					</tr>
+					<tr>
+						<td><a href="<%=cp%>/cal/list.do" id="nav2">일정 검색</a></td>
 					</tr>
 				</table>
 			</div>
 			<div class="content2"
 				style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px; height: 100%">
-				<p>교육과정 상세정보</p>
+				<p>강의 상세정보</p>
 				<br>
 
 

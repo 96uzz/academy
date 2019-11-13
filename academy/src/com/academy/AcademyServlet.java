@@ -81,6 +81,10 @@ public class AcademyServlet extends MyServlet{
 			current_page = Integer.parseInt(page);
 		}
 		int rows = 10;
+		String srows = req.getParameter("rows");
+		if(srows!=null) {
+			rows = Integer.parseInt(srows);
+		}
 		
 		String condition=req.getParameter("condition");
 		String keyword=req.getParameter("keyword");
@@ -92,24 +96,28 @@ public class AcademyServlet extends MyServlet{
 			keyword=URLDecoder.decode(keyword, "UTF-8");
 		}
 		int dataCount;
-		if(keyword.length()==0)
+		if(keyword.length()==0) {
 			dataCount = dao.dataCount();
-		else
+		} else {
 			dataCount = dao.dataCount(condition, keyword);
+		}
 		
 		int total_page = util.pageCount(rows, dataCount);
-		if(current_page > total_page)
+		if(current_page > total_page) {
 			current_page = total_page;
+		}
 		
 		int offset = (current_page-1)*rows;
-		if(offset<0) offset = 0;
+		if(offset<0) {
+			offset = 0;
+		}
 		
 		List<AcademyDTO> list;
 		if(keyword.length()==0) {
 			list = dao.listAcademy(offset, rows);
 		} else
 			list = dao.listAcademy(offset, rows, condition, keyword);
-		
+		/*
 		List<AcademyDTO> listAcademy=null;
 		if(current_page==1) {
 			listAcademy = dao.listAcademy();
@@ -117,7 +125,7 @@ public class AcademyServlet extends MyServlet{
 				dto.setCreated(dto.getCreated().substring(0, 10));
 			}
 		}
-		
+		*/
 		long gap;
 		Date curDate = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -145,7 +153,7 @@ public class AcademyServlet extends MyServlet{
 		String paging=util.paging(current_page, total_page, listUrl);
 		
 		req.setAttribute("list", list);
-		req.setAttribute("listAcademy", listAcademy);
+		// req.setAttribute("listAcademy", listAcademy);
 		req.setAttribute("paging", paging);
 		req.setAttribute("page", current_page);
 		req.setAttribute("dataCount", dataCount);
