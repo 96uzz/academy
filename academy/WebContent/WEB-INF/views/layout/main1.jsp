@@ -260,24 +260,24 @@ function listQna(){
 		<c:forEach var="dto" items="${noticeList}">
 			 <tr class="noticeMiddles">
             <td>${dto.noticeNum}</td>
-            <td class="boardSubject"><a href="${noticeUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
-            <td></td>
+            <td colspan="2" class="boardSubject"><a href="${noticeUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
+            
          </tr>
 		</c:forEach>
 		
 		<c:forEach var="dto" items="${boardList}">
 			 <tr class="boardMiddles" style="display: none;" >
             <td>${dto.boardNum}</td>
-            <td class="boardSubject"><a href="${boardUrl}&boardNum=${dto.boardNum}">${dto.subject}</a></td>
-            <td></td>
+            <td colspan="2" class="boardSubject"><a href="${boardUrl}&boardNum=${dto.boardNum}">${dto.subject}</a></td>
+           
          </tr>
 		</c:forEach>
 		
 		<c:forEach var="dto" items="${qnaList}">
 			 <tr class="qnaMiddles" style="display: none;" >
             <td>${dto.qnaNum}</td>
-            <td class="boardSubject"><a href="${qnaUrl}&qnaNum=${dto.qnaNum}">${dto.subject}</a></td>
-            <td></td>
+            <td colspan="2" class="boardSubject"><a href="${qnaUrl}&qnaNum=${dto.qnaNum}">${dto.subject}</a></td>
+          
          </tr>
 		</c:forEach>
 
