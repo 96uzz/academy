@@ -143,32 +143,28 @@ body{
                <td style="width: 120px; text-align: center;">개강일</td>         
                <td style="width: 120px; text-align: center;">종강일</td>
             </tr>
-  			<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
-               <td>${dto.acaDiv}</td>
-               <td><a href="#">${dto.lecName}</a></td>
-               <td><a href="#">${dto.acaName}</a></td>
-               <td>${dto.acaAddress}</td>      
-               <td>${dto.lecLimit}</td>
-               <td>${dto.lecStartDate}</td>
-               <td>${dto.lecEndDate}</td>
-            </tr>
-<!-- 
-            <tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
-               <td>${dto.acaDiv}</td>
-               <td>${dto.lecName}</td>
-               <td>${dto.acaName}</td>
-               <td>${dto.acaAddress}</td>      
-               <td>${dto.lecLimit }</td>
-               <td>${dto.lecStartDate}</td>
-               <td>${dto.lecEndDate}</td>
-            </tr>
--->		
-
-         </table>	
-			
-			
-		</div>
-			
+  			
+  			<c:choose>
+  				<c:when test="${empty dto.acaDiv}">
+  					<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
+  				 		<td colspan="7">수강 중인 강좌가 없습니다.</td>
+  					</tr>
+  				</c:when>
+  				<c:when test="${not empty dto.acaDiv}">
+  					<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
+		               <td>${dto.acaDiv}</td>
+		               <td><a href="<%=cp%>/lts/lecture/article.do?page=1&rows=10&lecCode=${dto.lecCode}" target="_blank">${dto.lecName}</a></td>
+		               <td><a href="<%=cp%>/acs/article.do?page=1&rows=10&acaNum=${dto.acaNum}" target="_blank">${dto.acaName}</a></td>
+		               <td>${dto.acaAddress}</td>      
+		               <td>${dto.lecLimit}</td>
+		               <td>${dto.lecStartDate}</td>
+		               <td>${dto.lecEndDate}</td>
+		           	</tr>
+           		</c:when>
+        	</c:choose>
+        </table>	
+	</div>
+	
     </div>
 </div>
 
