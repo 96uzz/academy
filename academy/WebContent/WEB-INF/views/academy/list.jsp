@@ -153,12 +153,12 @@ function searchList() {
 			</table>
 			
 			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
-				<tr style="border-bottom: 1px solid black; background-color: #3598DB;">
+				<tr style="border-bottom: 1px solid black; background-color: #3598DB; height: 35px;">
 					<td style="width: 50px; text-align: center;">No</td>
-					<td style="width: 80px; text-align: center;">분류</td>		
+					<td style="width: 100px; text-align: center;">분류</td>		
 					<td style="width: 200px; text-align: center;">학원이름</td>
 					<td style="width: 300px; text-align: center;">주소</td>
-					<td style="width: 70px; text-align: center;">작성자</td>			
+					<!-- <td style="width: 70px; text-align: center;">작성자</td> -->			
 					<td style="width: 180px; text-align: center;">작성일</td>
 					<td style="width: 80px; text-align: center;">조회수</td>
 				</tr>
@@ -173,7 +173,7 @@ function searchList() {
 						<a href="${articleUrl}&acaNum=${dto.acaNum}">${dto.acaName}</a>
 					</td>
 					<td>${dto.acaAddress}</td>		
-					<td>관리자</td>
+					<!-- <td>관리자</td> -->
 					<td>${dto.created}</td>
 					<td>${dto.hitCount}</td>
 				</tr>

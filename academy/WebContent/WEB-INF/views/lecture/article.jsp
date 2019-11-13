@@ -200,6 +200,26 @@ function deleteLecture(lectureCode) {
 						<td width="50%" align="left" style="padding-left: 5px;"></td>
 					</tr>
 					
+					<form name="interForm" action="<%=cp%>/lts/interlecture.do" method="post">
+			            <tr height="35" style="border-bottom: 1px solid #3598DB;">
+						<td align="left" style="padding-left: 5px;">관심 강좌</td>
+						<td align="left" style="padding-left: 5px;">&nbsp;<button type="submit" style="border: none; background: white; font-size: 20px;">★</button>
+						<td width="50%" align="left" style="padding-left: 5px;"></td>	
+						
+						</tr>
+			           <input type="hidden" name="acaNum" value="${dto.acaNum}">
+						<input type="hidden" name="lecCode" value="${dto.lecCode}">
+			        </form>
+			        
+					<%-- <tr height="35" style="border-bottom: 1px solid #3598DB;">
+						<td align="left" style="padding-left: 5px;">관심 강좌</td>
+						<td align="left" style="padding-left: 5px;">&nbsp;<a href="<%=cp%>/lts/interlecture.do">★</a>
+						<input type="hidden" name="acaNum" value="${dto.acaNum}">
+						<input type="hidden" name="lecCode" value="${dto.lecCode}"></td>
+						<td width="50%" align="left" style="padding-left: 5px;"></td>	
+					</tr> --%>
+					
+					
 					<tr style="border-bottom: 1px solid #3598DB; width: 100%">
 						<th style="padding: 10px 5px; vertical-align: top;">
 							<p>교육기관소개</p>
@@ -213,7 +233,7 @@ function deleteLecture(lectureCode) {
 						<td colspan="3" align="left" style="padding-left: 5px;">이전글 &nbsp;
 							<c:if test="${not empty preReadDto}">
 								<a
-									href="<%=cp%>/lts/article.do?${query}&lecCode=${preReadDto.lecCode}">${preReadDto.lecCode}</a>
+									href="<%=cp%>/lts/article.do?${query}&lecCode=${preReadDto.lecCode}">${preReadDto.lecName}</a>
 							</c:if>
 						</td>
 					</tr>
@@ -222,7 +242,7 @@ function deleteLecture(lectureCode) {
 						<td colspan="3" align="left" style="padding-left: 5px;">다음글 &nbsp;
 							<c:if test="${not empty nextReadDto}">
 								<a
-									href="<%=cp%>/lts/article.do?${query}&lecCode=${nextReadDto.lecCode}">${nextReadDto.lecCode}</a>
+									href="<%=cp%>/lts/article.do?${query}&lecCode=${nextReadDto.lecCode}">${nextReadDto.lecName}</a>
 							</c:if>
 						</td>
 					</tr>
