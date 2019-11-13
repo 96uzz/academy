@@ -12,7 +12,7 @@ import com.util.DBConn;
 public class ReviewDAO {
 	private Connection conn=DBConn.getConnection();
 	
-	// 데이터 추가
+	// 리뷰 데이터 추가 ( 관리자용)
 	public int insertBoard(ReviewDTO dto, String mode) {
 		int result=0;
 		PreparedStatement pstmt=null;
@@ -278,6 +278,126 @@ public class ReviewDAO {
 		
 		return dto;
 	}
+	//lecture테이블 읽기 (강좌명 jsp에 넣기 위함)
+	public List<ReviewDTO> listLecture(ReviewDTO dto){
+		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql;
+		
+		try {
+			sql = "SELECT lecname, acaNum from lecture where acanum = ? ";
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, dto.getAcaNum());
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				dto.setLecName(rs.getString("lecname"));
+				dto.setAcaNum(rs.getInt("acaNum"));
+				
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	
+	//academy테이블 읽기 (학원명 jsp에 넣기 위함)
+		public List<ReviewDTO> listAcademy(){
+			List<ReviewDTO> list = new ArrayList<ReviewDTO>();
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String sql;
+			
+			try {
+				sql = "SELECT acaNum, acaName FROM academy";
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					ReviewDTO dto = new ReviewDTO();
+					dto.setAcaNum(rs.getInt("acaNum"));
+					dto.setAcaName(rs.getString("acaName"));
+					list.add(dto);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(rs!=null) {
+					try {
+						rs.close();
+					} catch (Exception e2) {
+					}
+				}
+				if(pstmt!=null) {
+					try {
+						pstmt.close();
+					} catch (Exception e2) {
+					}
+				}
+			}
+			
+			return list;
+			
+		}
+		//reviewreply 테이블 읽기 (rate를 jsp에 넣기 위함)
+		public List<ReviewDTO> listReviewReply(ReviewDTO dto){
+			List<ReviewDTO> list = new ArrayList<ReviewDTO>();
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String sql;
+			
+			try {
+				sql = "SELECT (select ROUND(AVG(RATE),2) from reviewreply rr where r.renum = rr.renum) rate from lecture where acanum = ? ";
+				pstmt=conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, dto.getAcaNum());
+				
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					dto.setLecName(rs.getString("lecname"));
+					dto.setAcaNum(rs.getInt("acaNum"));
+					
+					list.add(dto);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(rs!=null) {
+					try {
+						rs.close();
+					} catch (Exception e2) {
+					}
+				}
+				if(pstmt!=null) {
+					try {
+						pstmt.close();
+					} catch (Exception e2) {
+					}
+				}
+			}
+			
+			return list;
+			
+		}
+	
 	
     // 이전글
 	public ReviewDTO preReadLecture(int renum, String condition, String keyword) {
