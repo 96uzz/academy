@@ -152,7 +152,7 @@ function deleteQna(qnaNum) {
 			</tr>
 			
 			<tr style="border-bottom: 1px solid #3598DB;">
-			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
+			  <td colspan="2" align="left" style="padding: 10px 5px; word-break:break-all;" valign="top" height="200" >
 			      ${dto.content}
 			   </td>
 			</tr>
@@ -180,7 +180,7 @@ function deleteQna(qnaNum) {
 			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
 			    <td width="400" align="left">
-			       <c:if test="${sessionScope.member.userId!=null && dto.userName!='관리자'}">
+			       <c:if test="${sessionScope.member.userId=='admin'}">
 			       	<button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/qna/reply.do?qnaNum=${dto.qnaNum}&page=${page}';">답변</button>
 			       </c:if>
 			          <c:if test="${sessionScope.member.userId == dto.userId}">

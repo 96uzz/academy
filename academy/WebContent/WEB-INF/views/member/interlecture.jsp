@@ -24,7 +24,7 @@
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -133,8 +133,8 @@ body{
 			<span style="font-weight: bold;">${sessionScope.member.userName}</span> 님의 관심강좌입니다.
 			<br><br>
 			<table style="border-collapse: collapse; border-spacing: 0; background: rgba(255, 255, 255, 0.7);
-			 border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
-            <tr style="border-bottom: 1px solid black; background-color: #3598DB;">
+			 border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
+            <tr align="center" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; background-color: #3598DB;">
                <td style="width: 50px; text-align: center;">분류</td>      
                <td style="width: 200px; text-align: center;">강좌</td>
                <td style="width: 200px; text-align: center;">학원</td>
