@@ -54,7 +54,7 @@ public class ReviewServlet extends HttpServlet {
 				list(req, resp);
 			} else if (uri.indexOf("review.do") != -1) {
 				review(req, resp);
-			} else if (uri.indexOf("createdreview.do") != -1) {
+			} else if (uri.indexOf("createdReview.do") != -1) {
 				createdForm(req, resp);
 			} else if (uri.indexOf("created_ok.do") != -1) {
 				CreatedSubmit(req, resp);
@@ -181,7 +181,7 @@ public class ReviewServlet extends HttpServlet {
 		}
 		
 		req.setAttribute("mode", "created");
-		forward(req, resp, "/WEB-INF/views/review/createdreview.jsp");
+		forward(req, resp, "/WEB-INF/views/review/createdReview.jsp");
 	}
 	protected void CreatedSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		 String cp=req.getContextPath();
@@ -213,7 +213,7 @@ public class ReviewServlet extends HttpServlet {
 		
 		dao.insertBoard(dto, "created");
 		
-		forward(req, resp, "/WEB-INF/views/review/createdreview.jsp");
+		forward(req, resp, "/WEB-INF/views/review/createdReview.jsp");
 	}
 	
 	protected void review(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
