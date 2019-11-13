@@ -19,7 +19,7 @@ public class AcademyDAO {
 		String sql;
 		
 		try {
-			sql="INSERT INTO academy(acaNum, acaName, acaWeb, acaTel, acaDiv, acaIntro, acaAddress, userId) VALUES (aca_seq.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+			sql="INSERT INTO academy(acaNum, acaName, acaWeb, acaTel, acaDiv, acaIntro, acaAddress, userId) VALUES (aca_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
 			
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getAcaName());
@@ -94,6 +94,7 @@ public class AcademyDAO {
 			}
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, keyword);
+			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				result=rs.getInt(1);
@@ -126,7 +127,7 @@ public class AcademyDAO {
 		
 		try {
 			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv, ");
-			sb.append("  TO_CHAR(created, 'YYYY-MM-DD')created ");
+			sb.append("  a.userId, TO_CHAR(created, 'YYYY-MM-DD') created ");
 			sb.append("  FROM academy a JOIN member m ON a.userId=m.userId ");
 			sb.append("  ORDER BY acaNum DESC ");
 			
@@ -140,6 +141,7 @@ public class AcademyDAO {
 				dto.setAcaTel(rs.getString("acaTel"));
 				dto.setAcaAddress(rs.getString("acaAddress"));
 				dto.setAcaDiv(rs.getString("acaDiv"));
+				dto.setUserId(rs.getString("userId"));
 				dto.setCreated(rs.getString("created"));
 				
 				list.add(dto);
@@ -172,9 +174,10 @@ public class AcademyDAO {
 		
 		try {
 			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv, ");
-			sb.append("  TO_CHAR(created, 'YYYY-MM-DD')created, ");
-			sb.append("  FROM academy ORDER BY acaNum DESC ");
-			sb.append(" OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
+			sb.append("  hitCount, TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
+			sb.append("  FROM academy a JOIN member m ON a.userId=m.userId ");
+			sb.append("  ORDER BY acaNum DESC ");
+			sb.append("  OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
 			
 			pstmt=conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, offset);
@@ -188,6 +191,8 @@ public class AcademyDAO {
 				dto.setAcaTel(rs.getString("acaTel"));
 				dto.setAcaAddress(rs.getString("acaAddress"));
 				dto.setAcaDiv(rs.getString("acaDiv"));
+				dto.setHitCount(rs.getInt("hitCount"));
+				dto.setUserId(rs.getString("userId"));
 				dto.setCreated(rs.getString("created"));
 				
 				list.add(dto);
@@ -220,7 +225,8 @@ public class AcademyDAO {
 		
 		try {
 			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv ");
-			sb.append(" TO_CHAR(created, 'YYYY-MM-DD')created FROM academy ");
+			sb.append(" hitCount, TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
+			sb.append("FROM academy a JOIN member m ON a.userId=m.userId ");
 			if(condition.equalsIgnoreCase("created")) {
 				keyword = keyword.replaceAll("-", "");
 				sb.append(" WHERE TO_CHAR(created, 'YYYYMMDD') = ? ");
@@ -245,7 +251,9 @@ public class AcademyDAO {
 				dto.setAcaTel(rs.getString("acaTel"));
 				dto.setAcaAddress(rs.getString("acaAddress"));
 				dto.setAcaDiv(rs.getString("acaDiv"));
+				dto.setHitCount(rs.getInt("hitCount"));
 				dto.setCreated(rs.getString("created"));
+				dto.setUserId(rs.getString("userId"));
 			}
 			
 		} catch (Exception e) {
@@ -490,7 +498,7 @@ public class AcademyDAO {
 		}
 	}
 	
-	public void deleteBoard(int num, String userId) {
+	public void deleteAcademy(int num, String userId) {
 		PreparedStatement pstmt =null;
 		String sql;
 		
@@ -499,14 +507,15 @@ public class AcademyDAO {
 				sql="DELETE FROM academy WHERE acaNum = ? ";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
+				pstmt.executeUpdate();
 			} else {
 				sql="DELETE FROM academy WHERE acaNum = ? AND userId = ? ";
-			}
 			
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			pstmt.setString(2, userId);
-			pstmt.executeUpdate();
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				pstmt.setString(2, userId);
+				pstmt.executeUpdate();
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

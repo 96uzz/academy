@@ -1,4 +1,4 @@
-package com.academy;
+  package com.academy;
 
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import com.member.SessionInfo;
 import com.util.MyServlet;
 import com.util.MyUtil;
 
-@WebServlet("/academy/*")
+@WebServlet("/acs/*")
 public class AcademyServlet extends MyServlet{
 	private static final long serialVersionUID = 1L;
 
@@ -140,15 +140,15 @@ public class AcademyServlet extends MyServlet{
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
 		
-		String listUrl=cp+"/academy/list.do?"+query;
-		String articleUrl=cp+"/academy/article.do?page="+current_page+"&"+query;
+		String listUrl=cp+"/acs/list.do?"+query;
+		String articleUrl=cp+"/acs/article.do?page="+current_page+"&"+query;
 		String paging=util.paging(current_page, total_page, listUrl);
 		
 		req.setAttribute("list", list);
 		req.setAttribute("listAcademy", listAcademy);
 		req.setAttribute("paging", paging);
 		req.setAttribute("page", current_page);
-		req.setAttribute("dataCount", paging);
+		req.setAttribute("dataCount", dataCount);
 		req.setAttribute("total_page", total_page);
 		req.setAttribute("rows", rows);
 		req.setAttribute("condition", condition);
@@ -168,7 +168,7 @@ public class AcademyServlet extends MyServlet{
 		}
 		
 		if(!info.getUserId().equals("admin")) {
-			resp.sendRedirect(cp+"/academy/list.do");
+			resp.sendRedirect(cp+"/acs/list.do");
 			return;
 		}
 		
@@ -182,13 +182,28 @@ public class AcademyServlet extends MyServlet{
 		
 		if(info==null) {
 			resp.sendRedirect(cp+"/member/login.do");
-		}
-		
-		if(!info.getUserId().equals("admin")) {
-			resp.sendRedirect(cp+"/academy/list.do");
 			return;
 		}
 		
+		if(!info.getUserId().equals("admin")) {
+			resp.sendRedirect(cp+"/acs/list.do");
+			return;
+		}
+		
+		AcademyDAO dao = new AcademyDAO();
+		AcademyDTO dto = new AcademyDTO();
+		
+		dto.setUserId(info.getUserId());
+		dto.setAcaName(req.getParameter("acaName"));
+		dto.setAcaDiv(req.getParameter("acaDiv"));
+		dto.setAcaIntro(req.getParameter("acaIntro"));
+		dto.setAcaAddress(req.getParameter("acaAddress"));
+		dto.setAcaWeb(req.getParameter("acaWeb"));
+		dto.setAcaTel(req.getParameter("acaTel"));
+		
+		dao.insertAcademy(dto);
+		
+		resp.sendRedirect(cp+"/acs/list.do");
 	}
 	
 	protected void article(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -201,7 +216,7 @@ public class AcademyServlet extends MyServlet{
 			resp.sendRedirect(cp+"/member/login.do");
 			return;
 		}
-		int num=Integer.parseInt(req.getParameter("num"));
+		int num=Integer.parseInt(req.getParameter("acaNum"));
 		String page=req.getParameter("page");
 		
 		String condition=req.getParameter("condition");
@@ -221,7 +236,7 @@ public class AcademyServlet extends MyServlet{
 		
 		AcademyDTO dto=dao.readAcademy(num);
 		if(dto==null) {
-			resp.sendRedirect(cp+"/academy/list.do?"+query);
+			resp.sendRedirect(cp+"/acs/list.do?"+query);
 			return;
 		}
 		
@@ -249,12 +264,12 @@ public class AcademyServlet extends MyServlet{
 		}
 		
 		String page=req.getParameter("page");
-		int num=Integer.parseInt(req.getParameter("num"));
+		int num=Integer.parseInt(req.getParameter("acaNum"));
 		
 		AcademyDAO dao = new AcademyDAO();
 		AcademyDTO dto = dao.readAcademy(num);
 		if(dto==null || ! info.getUserId().equals(dto.getUserId())) {
-			resp.sendRedirect(cp+"/academy/list.do?page="+page);
+			resp.sendRedirect(cp+"/acs/list.do?page="+page);
 			return;
 		}
 		
@@ -276,8 +291,18 @@ public class AcademyServlet extends MyServlet{
 		AcademyDAO dao = new AcademyDAO();
 		AcademyDTO dto = new AcademyDTO();
 		
+		dto.setUserId(info.getUserId());
+		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
+		dto.setAcaName(req.getParameter("acaName"));
+		dto.setAcaDiv(req.getParameter("acaDiv"));
+		dto.setAcaIntro(req.getParameter("acaIntro"));
+		dto.setAcaAddress(req.getParameter("acaAddress"));
+		dto.setAcaWeb(req.getParameter("acaWeb"));
+		dto.setAcaTel(req.getParameter("acaTel"));
 		
-				
+		dao.updateAcademy(dto);
+		
+		resp.sendRedirect(cp+"/acs/list.do");
 	}
 	
 	protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -290,7 +315,7 @@ public class AcademyServlet extends MyServlet{
 		}
 		
 		String page = req.getParameter("page");
-		int num = Integer.parseInt(req.getParameter("num"));
+		int num = Integer.parseInt(req.getParameter("academyNum"));
 		String condition=req.getParameter("condition");
 		String keyword=req.getParameter("keyword");
 		if(condition==null) {
@@ -303,6 +328,16 @@ public class AcademyServlet extends MyServlet{
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
+		
+		AcademyDAO dao = new AcademyDAO();
+		AcademyDTO dto = dao.readAcademy(num);
+		if(dto==null) {
+			resp.sendRedirect(cp+"/acs/list.do?"+query);
+			return;
+		}
+		dao.deleteAcademy(num, info.getUserId());
+		
+		resp.sendRedirect(cp+"/acs/list.do?num="+num+"&page="+page);
 		
 		
 	}
