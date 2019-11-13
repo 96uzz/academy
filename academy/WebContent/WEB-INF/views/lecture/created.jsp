@@ -107,13 +107,6 @@ body{
         var f = document.boardForm;
 
 
-    	var str = f.acaName.value;
-        if(!str) {
-            alert("기관명을 입력하세요. ");
-            f.acaName.focus();
-            return;
-        }
-        
     	var str = f.lecName.value;
         if(!str) {
             alert("과정명을 입력하세요. ");
@@ -190,7 +183,11 @@ body{
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">기관명</td>
 			      <td style="padding-left:10px;"> 
-			          <input type="text" name="acaName" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.acaName}">
+			          <select name="acaNum">
+			            <c:forEach var="vo" items="${listAcademy}">
+			               <option value="${vo.acaNum}" ${dto.acaNum==vo.acaNum ? "selected='selected'" : "" }>${vo.acaName}</option>
+			            </c:forEach>
+			          </select>
 			      </td>
 			  </tr>
 			  

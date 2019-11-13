@@ -172,7 +172,11 @@ public class LectureServlet extends MyServlet{
 			return;
 		}
 		
+		LectureDAO dao = new LectureDAO();
+		List<AcademyDTO> listAcademy = dao.listAcademy();
+		
 		req.setAttribute("mode", "created");
+		req.setAttribute("listAcademy",listAcademy);
 		forward(req, resp, "/WEB-INF/views/lecture/created.jsp");
 	}
 	
@@ -194,14 +198,14 @@ public class LectureServlet extends MyServlet{
 		LectureDTO dto = new LectureDTO();
 		
 		dto.setUserId(info.getUserId());
-		dto.setAcaName(req.getParameter("acaName"));
+		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
 		dto.setLecName(req.getParameter("lecName"));
 		dto.setLecStartDate(req.getParameter("lecStartDate"));
 		dto.setLecEndDate(req.getParameter("lecEndDate"));
 		dto.setLecLimit(Integer.parseInt(req.getParameter("lecLimit")));
 		dto.setLecIntro(req.getParameter("lecIntro"));
 		
-		dao.insertLecture(dto);
+		dao.updateLecture(dto);
 		
 		resp.sendRedirect(cp+"/lts/list.do");
 	}
@@ -265,7 +269,7 @@ public class LectureServlet extends MyServlet{
 		}
 		
 		String page=req.getParameter("page");
-		int num=Integer.parseInt(req.getParameter("lecNum"));
+		int num=Integer.parseInt(req.getParameter("lecCode"));
 		
 		LectureDAO dao = new LectureDAO();
 		LectureDTO dto = dao.readLecture(num);
@@ -274,7 +278,10 @@ public class LectureServlet extends MyServlet{
 			return;
 		}
 		
+		List<AcademyDTO> listAcademy = dao.listAcademy();
+		
 		req.setAttribute("mode", "update");
+		req.setAttribute("listAcademy",listAcademy);
 		req.setAttribute("dto", dto);
 		req.setAttribute("page", page);
 		
@@ -294,15 +301,16 @@ public class LectureServlet extends MyServlet{
 		LectureDTO dto = new LectureDTO();
 		
 		dto.setUserId(info.getUserId());
-		dto.setLecNum(Integer.parseInt(req.getParameter("lecCode")));
+		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
+		dto.setLecCode(Integer.parseInt(req.getParameter("lecCode")));
 		dto.setLecName(req.getParameter("lecName"));
 		dto.setLecStartDate(req.getParameter("lecStartDate"));
 		dto.setLecEndDate(req.getParameter("lecEndDate"));
 		dto.setLecLimit(Integer.parseInt(req.getParameter("lecLimit")));
 		dto.setLecIntro(req.getParameter("lecIntro"));
-		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
 		
-		dao.insertLecture(dto);
+		
+		dao.updateLecture(dto);
 		
 		resp.sendRedirect(cp+"/lts/list.do");
 		

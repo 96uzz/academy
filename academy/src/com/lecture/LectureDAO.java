@@ -16,16 +16,17 @@ public class LectureDAO {
 		String sql;
 		
 		try {
-			sql="INSERT INTO lecture(lecCode, acaNum, lecName, lecNum, lecStartDate, lecendDate, lecLimit, lecIntro, userId) VALUES (lec_seq.NEXTVAL, aca_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
+			sql="INSERT INTO lecture(lecCode, acaNum, lecName, lecNum, lecStartDate, lecendDate, lecLimit, lecIntro, userId) VALUES (lec_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getLecName());
-			pstmt.setInt(2, dto.getLecNum());
-			pstmt.setString(3, dto.getLecStartDate());
-			pstmt.setString(4, dto.getLecEndDate());
-			pstmt.setInt(5, dto.getLecLimit());
-			pstmt.setString(6, dto.getLecIntro());
-			pstmt.setString(7, dto.getUserId());
+			pstmt.setInt(1, dto.getAcaNum());
+			pstmt.setString(2, dto.getLecName());
+			pstmt.setInt(3, dto.getLecNum());
+			pstmt.setString(4, dto.getLecStartDate());
+			pstmt.setString(5, dto.getLecEndDate());
+			pstmt.setInt(6, dto.getLecLimit());
+			pstmt.setString(7, dto.getLecIntro());
+			pstmt.setString(8, dto.getUserId());
 			
 			result=pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -287,7 +288,7 @@ public class LectureDAO {
 		
 		try {
 			sb.append("SELECT l.lecCode, l.lecNum, l.lecName, l.lecStartDate, l.lecEndDate, l.lecLimit, l.lecIntro, ");
-			sb.append(" l.created, l.hitcount, l.userId, a.acaName ");
+			sb.append(" l.created, l.hitcount, l.userId, a.acaNum, a.acaName ");
 			sb.append(" FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
 			sb.append(" WHERE l.lecCode = ? ");
 			
@@ -307,7 +308,8 @@ public class LectureDAO {
 				dto.setCreated(rs.getString("created"));
 				dto.setHitCount(rs.getInt("hitcount"));
 				dto.setUserId(rs.getString("userId"));
-				dto.setAcaName(rs.getString("acaName"));;
+				dto.setAcaNum(rs.getInt("acaNum"));
+				dto.setAcaName(rs.getString("acaName"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -337,7 +339,7 @@ public class LectureDAO {
 		
 		try {
 			if(keyword.length() !=0) {
-				sb.append("SELECT l.lecCode, l.lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaName=a.acaName ");
+				sb.append("SELECT l.lecCode, l.lecName , a.acaName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
 				if(condition.equalsIgnoreCase("created")) {
 					keyword=keyword.replaceAll("-", "");
 					sb.append(" WHERE (TO_CHAR(l.created, 'YYYYMMDD') = ?) ");
@@ -352,7 +354,7 @@ public class LectureDAO {
 				pstmt.setString(1, keyword);
 				pstmt.setInt(2, num);
 			} else {
-				sb.append("SELECT l.lecCode, l.lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaName=a.acaName ");
+				sb.append("SELECT l.lecCode, l.lecName , a.acaName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
 				sb.append(" WHERE l.lecCode > ? ");
 				sb.append(" ORDER BY l.lecCode ASC ");
 				sb.append(" FETCH FIRST 1 ROWS ONLY");
@@ -396,7 +398,7 @@ public class LectureDAO {
 		
 		try {
 			if(keyword.length() !=0) {
-				sb.append("SELECT l.lecCode, l.lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+				sb.append("SELECT l.lecCode, l.lecName , a.acaName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
 				if(condition.equalsIgnoreCase("created")) {
 					keyword=keyword.replaceAll("-", "");
 					sb.append(" WHERE (TO_CHAR(l.created, 'YYYYMMDD') = ?) ");
@@ -411,7 +413,7 @@ public class LectureDAO {
 				pstmt.setString(1, keyword);
 				pstmt.setInt(2, num);
 			} else {
-				sb.append("SELECT l.lecCode, l.lecName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+				sb.append("SELECT l.lecCode, l.lecName , a.acaName FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
 				sb.append(" WHERE l.lecCode < ? ");
 				sb.append(" ORDER BY l.lecCode DESC ");
 				sb.append(" FETCH FIRST 1 ROWS ONLY");
@@ -474,18 +476,17 @@ public class LectureDAO {
 		String sql;
 		
 		try {
-			sql = "UPDATE lecture l SET l.lecNum=?, l.lecName=?, l.lecStartDate=?, l.lecEndDate=?, l.lecLimit=?, l.lecIntro=? ";
+			sql = "UPDATE lecture l SET l.lecName=?, l.lecStartDate=?, l.lecEndDate=?, l.lecLimit=?, l.lecIntro=? ";
 			sql += " WHERE l.lecCode=? AND l.userId=? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getLecNum());
-			pstmt.setString(2, dto.getLecName());
-			pstmt.setString(3, dto.getLecStartDate());
-			pstmt.setString(4,  dto.getLecEndDate());
-			pstmt.setInt(5, dto.getLecLimit());
-			pstmt.setString(6, dto.getLecIntro());
-			pstmt.setInt(7, dto.getLecCode());
-			pstmt.setString(8, dto.getUserId());
+			pstmt.setString(1, dto.getLecName());
+			pstmt.setString(2, dto.getLecStartDate());
+			pstmt.setString(3,  dto.getLecEndDate());
+			pstmt.setInt(4, dto.getLecLimit());
+			pstmt.setString(5, dto.getLecIntro());
+			pstmt.setInt(6, dto.getLecCode());
+			pstmt.setString(7, dto.getUserId());
 			
 			pstmt.executeUpdate();
 			
@@ -534,6 +535,43 @@ public class LectureDAO {
 				}
 			}
 		}
+		
+	}
+	
+	public List<AcademyDTO> listAcademy() {
+		List<AcademyDTO> list = new ArrayList<AcademyDTO>();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql;
+		
+		try {
+			sql = "SELECT acaNum, acaName FROM academy";
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				AcademyDTO dto = new AcademyDTO();
+				dto.setAcaNum(rs.getInt("acaNum"));
+				dto.setAcaName(rs.getString("acaName"));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		
+		return list;
 		
 	}
 	
