@@ -245,7 +245,7 @@ function listQna(){
          <tr>
          	<td class="boardMenu"><button id="btnNotice" onclick="listNotice();">공지사항</button>|</td>
          	<td class="boardMenu"><button id="btnBoard" onclick="listBoard();">자유게시판</button>|</td>
-         	<td class="boardMenu"><button id="btnQna" onclick="listQna();">Q/A</button></td>
+         	<td class="boardMenu"><button id="btnQna" onclick="listQna();">Q&amp;A</button></td>
          </tr>
       </table>
 
