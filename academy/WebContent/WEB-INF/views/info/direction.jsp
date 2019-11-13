@@ -88,7 +88,7 @@ body{
             <h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span>   홈페이지 소개 </h3>
         	</div>
 			<table>
-				<tr><td><a href="<%=cp%>/info/infoWeb.do" id="nav3">조장 인사말</a></td></tr>
+				<tr><td><a href="<%=cp%>/info/infoWeb.do" id="nav3">인사말</a></td></tr>
 				<tr><td><a href="<%=cp%>/info/history.do" id="nav4">연혁</a></td></tr>
 				<tr><td><a href="<%=cp%>/info/direction.do" id="nav1">찾아오시는 길</a></td></tr>
 				<tr><td><a href="<%=cp%>/info/group.do" id="nav2">역할 분담</a></td></tr>
@@ -124,23 +124,24 @@ body{
 				</tr>
 				<tr style="height: 30px;"></tr>
 			</table>
-			<table style="width: 800px; font-size: 18px; color: black;" >
+			<table style="width: 800px; font-size: 21px; color: black; height: 100%" >
 				<tr style=" width: 800px; height: 80px;">
 					<td width="80px;" height="80px;">
-						<img src="<%=cp%>/resource/images/subway.png">
+						<img src="<%=cp%>/resource/images/subway2.png">
 					</td>
 					<td width="310px;">
-						<p>2호선 홍대입구역 하차</p>
-						<p>&nbsp;</p>
-						<p>1번 출구에서 도보로 5분</p>
+						<p>2호선 홍대입구역 하차</p><br>
+						<p>경의중앙선 홍대입구역 하차</p><br>
+						<p>공항철도 홍대입구역 하차</p>
 					</td>
+					<td width="80px;" height="80px;" style="font-size: 30px;"> -> </td>
 					<td width="80px;" height="80px;">
 						<img src="<%=cp%>/resource/images/walking.png">
 					</td>
 					<td width="310px;">
-						<p>2호선 홍대입구역 하차</p>
-						<p>&nbsp;</p>
-						<p>1번 출구에서 도보로 5분</p>
+						<p>2호선 1번 출구로 나와 직진 후</p><br>
+						<p>월드컵 북로 방향으로 우회전</p><br>
+						<p>조금 걸어 길 건너 농협 건물 2층</p>
 					</td>
 				<tr style="height: 100px;"></tr>
 			</table>

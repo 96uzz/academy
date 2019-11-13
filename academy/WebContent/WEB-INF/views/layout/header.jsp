@@ -36,13 +36,13 @@ body{
 <body>
 <div class="header-top">
    	 <div class="header-left">
-        <p style="margin-top: 15px;">
+        
             <a href="<%=cp%>/main/main.do" style="text-decoration: none;">
                 <span style="width: 350px; height: 150px; position: relative;">
-                	<img src="<%=cp%>/resource/images/logo2.png">
+                	<img src="<%=cp%>/resource/images/logo2.png" style="margin-top: 15px;">
                 </span>
             </a>
-        </p>
+        
     </div>
 
     <div class="menu" style="margin:15px auto; width:800px;">
@@ -50,7 +50,7 @@ body{
         <li>
             <a href="<%=cp%>/info/infoWeb.do" style="margin-left: 15px;">홈페이지소개</a>
             <ul>
-                <li><a href="<%=cp%>/info/infoWeb.do">조장 인사말</a></li>
+                <li><a href="<%=cp%>/info/infoWeb.do">인사말</a></li>
                 <li><a href="<%=cp%>/info/history.do">연혁</a></li>
                 <li><a href="<%=cp%>/info/direction.do">찾아오시는 길</a></li>
                 <li><a href="<%=cp%>/info/group.do">역할 분담</a></li>

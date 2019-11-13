@@ -22,10 +22,7 @@ a {
     /* line-height: 150%; */
 	/* box-sizing: border-box;*/  /* padding과 border는 크기에 포함되지 않음 */
 }
-a:hover, a:active {
-    color: #F28011;
-    text-decoration: underline;
-}
+
 
 .btn {
     color:#333333;

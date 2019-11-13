@@ -152,14 +152,14 @@ function searchList() {
 				</tr>
 			</table>
 			
-			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
-				<tr style="border-bottom: 1px solid black; background-color: #3598DB;">
-					<td style="width: 50px; text-align: center;">No</td>			
-					<td style="width: 350px; text-align: center;">제목</td>
-					<td style="width: 80px; text-align: center;">작성자</td>			
-					<td style="width: 50px; text-align: center;">첨부</td>
-					<td style="width: 100px; text-align: center;">작성일</td>
-					<td style="width: 60px; text-align: center;">조회수</td>
+			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
+				<tr align="center" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; background-color: #3598DB;">
+					<th style="width: 60px;">No</th>			
+					<th style="width: 350px;">제목</th>
+					<th style="width: 80px;">작성자</th>			
+					<th style="width: 50px;">첨부</th>
+					<th style="width: 100px;">작성일</th>
+					<th style="width: 60px;">조회수</th>
 				</tr>
 <%-- 			<c:forEach var="dto" items="${listNotice}"> --%>
 <!-- 				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;"> -->
@@ -179,12 +179,12 @@ function searchList() {
 <%-- 			</c:forEach>		 --%>
 				
 			<c:forEach var="dto" items="${list}">
-				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
+				<tr style="border-bottom: 1px solid #cccccc; height: 40px; text-align: center;">
 					<td>${dto.listNum}</td>				
 					<td style="text-align: left;">
 						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">
 						<c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif" style="float: left;">&nbsp;</c:if>
-							<span style="width: 415px; display: inline-block; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"> ${dto.subject}</span>
+							<span style="width: 400px; display: inline-block; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;"> ${dto.subject}</span>
 						</a>
 					</td>			
 					<td>관리자</td>
@@ -225,7 +225,7 @@ function searchList() {
 			   </tr>
 			</table>
 			
-			<table style="width: 100%; margin: 50px auto; border-spacing: 0px;">
+			<table style="width: 100%; margin: 20px auto; border-spacing: 0px;">
 			   <tr height="35">
 				<td align="center">
 			        ${dataCount==0? "등록된 게시글이 없습니다." : paging}
@@ -234,9 +234,7 @@ function searchList() {
 			</table>
 			
 		</div>
-		
-			
-		
+	
     </div>
 </div>
 

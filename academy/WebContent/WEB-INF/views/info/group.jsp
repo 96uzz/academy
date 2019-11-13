@@ -108,7 +108,7 @@ p {
             <h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span>   홈페이지 소개 </h3>
         	</div>
 			<table>
-				<tr><td><a href="<%=cp%>/info/infoWeb.do" id="nav2">조장 인사말</a></td></tr>
+				<tr><td><a href="<%=cp%>/info/infoWeb.do" id="nav2">인사말</a></td></tr>
 				<tr><td><a href="<%=cp%>/info/history.do" id="nav3">연혁</a></td></tr>
 				<tr><td><a href="<%=cp%>/info/direction.do" id="nav4">찾아오시는 길</a></td></tr>
 				<tr><td><a href="<%=cp%>/info/group.do" id="nav1">역할 분담</a></td></tr>
@@ -159,7 +159,7 @@ p {
 					<td class="bunhal"><p>일정 검색</p></td>
 				</tr>
 				<tr>
-					<td class="bunhal"><p>Q/A게시판</p></td>
+					<td class="bunhal"><p>Q&amp;A게시판</p></td>
 					<td class="bunhal"><p>강의 평가</p></td>
 					<td class="bunhal"><p>관심강좌 /수강강좌</p></td>
 					<td class="bunhal"><p>강의 검색</p></td>
