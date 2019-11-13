@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap&subset=korean" rel="stylesheet">
 <meta charset="UTF-8">
 <title>spring</title>
 
@@ -16,18 +17,102 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 
+<style type="text/css">
+@import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
+
+#background{
+	background-image:url(/academy/resource/images/back_opacity.png); 
+    background-position: center;
+    background-repeat: no-repeat;
+   	background-size: 1350px 600px;
+   	width: 1400px;
+   	height: 550px;
+  	margin: 0px auto 0px auto;
+}
+
+body{
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 20px;
+}
+
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
+
+.container2 {
+    width:100%;
+    text-align:left;
+}
+.body-container2 {
+	margin : auto;
+	width: 1300px;
+	clear: both;
+	min-height: 500px;
+}
+.navigation2 {
+	float: left;
+}
+
+.content2 {
+	float: left;
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.navigation2 td {
+ 	font-family: 'Nanum Square', sans-serif;
+	font-size : 20px;
+	border-radius: 2px;
+	margin : 20px auto;
+	padding : 10px;
+	
+}
+
+#nav1 {
+	font-weight: 800;
+}
+
+</style>
+
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-	function searchList() {
-		var f=document.searchForm;
-		f.submit();
-	}
-	
-	function searchList() {
-		var f=document.searchForm;
-		f.submit();
-	}
+function selectList() {
+	var f=document.selectForm;
+	f.submit();
+}
+
+function searchList() {
+	var f=document.searchForm;
+	f.submit();
+}
+
 </script>
 </head>
 <body>
@@ -35,119 +120,103 @@
 <div class="header">
     <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
 </div>
-	
-<div class="container">
-    <div class="body-container" style="width: 700px;">
-        <div class="body-title">
-            <h3><span style="font-family: Webdings">2</span> 공지사항 </h3>
-        </div>
-        
-        <div>
 
-			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-			   <tr height="35">
-			      <td align="left" width="50%">
-			          ${dataCount}개(${page}/${total_page} 페이지)
-			      </td>
-			      <td align="right">
-			          <form name="selectForm" action="<%=cp%>/notice/list.do" method="post" onchange="selectList();">
-			          	<select name="rows" class="selectField">
-			          		<option value="5" ${rows==5 ? "selected ='selected' ":""}>5개 보기</option>
-			          		<option value="10" ${rows==10 ? "selected ='selected' ":""}>10개 보기</option>
-			          		<option value="20" ${rows==20 ? "selected ='selected' ":""}>20개 보기</option>
-			          		<option value="30" ${rows==30 ? "selected ='selected' ":""}>30개 보기</option>
-			          		<option value="50" ${rows==50 ? "selected ='selected' ":""}>50개 보기</option>
+<div id="background" class="container2">
+    <div class="body-container2">
+		<div class="navigation2" >
+			<div class="body-title">
+            	<h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span>   교육 정보 </h3>
+        	</div>
+			<table>
+				<tr><td><a href="<%=cp%>/acs/list.do" id="nav1">교육기관 검색</a></td></tr>
+				<tr><td><a href="<%=cp%>/lts/list.do" id="nav2">교육과정 검색</a></td></tr>
+			</table>
+		</div>
+		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
+			<p>학원검색</p>
+			
+			
+			<table style="width: 100%;">
+				<tr height="35px;">
+					<td align="right">
+						<form name="selectForm" action="<%=cp%>/acs/list.do" method="post" onchange="selectList();">
+							<select name="rows" class="selectField" style="margin-bottom: 5px;" >
+			          		<option value="10" ${rows==10? "selected='selected'" : ""}>10개</option>
+			          		<option value="20" ${rows==20? "selected='selected'" : ""}>20개</option>
 			          	</select>
 			          	<input type="hidden" name="condition" value="${condition}">
 			          	<input type="hidden" name="keyword" value="${keyword}">
-			          </form>
-			      </td>
-			   </tr>
+						</form>
+					</td>
+				</tr>
 			</table>
 			
-			<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-			  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-			      <th width="60" style="color: #787878;">번호</th>
-			      <th style="color: #787878;">제목</th>
-			      <th width="100" style="color: #787878;">작성자</th>
-			      <th width="80" style="color: #787878;">작성일</th>
-			      <th width="60" style="color: #787878;">조회수</th>
-			      <th width="50" style="color: #787878;">첨부</th>
-			  </tr>
-			 
-			 <c:forEach var="dto" items="${listNotice}">
-			  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-			      <td>
-			      <span style="display: inline-block;padding:1px 3px; background: #ED4C00; color: #FFFFFF; ">공지</span>
-			      </td>
-			      <td align="left" style="padding-left: 10px;">
-			           <a href="${articleUrl}&num=${dto.num}">${dto.subject}</a>
-               </td>
-               <td>${dto.userName}</td>
-               <td>${dto.created}</td>
-               <td>${dto.hitCount}</td>
-               <td>
-                  <c:if test="${not empty dto.saveFilename}">
-                          <a href="<%=cp%>/notice/download.do?num=${dto.num}"><img alt="new" src="<%=cp%>/resource/images/disk.gif"></a>
-                    </c:if>
-               </td>
-			  </tr>
-			</c:forEach>
-			
+			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
+				<tr style="border-bottom: 1px solid black; background-color: #3598DB;">
+					<td style="width: 50px; text-align: center;">No</td>
+					<td style="width: 80px; text-align: center;">분류</td>		
+					<td style="width: 200px; text-align: center;">학원이름</td>
+					<td style="width: 300px; text-align: center;">주소</td>
+					<td style="width: 70px; text-align: center;">작성자</td>			
+					<td style="width: 180px; text-align: center;">작성일</td>
+					<td style="width: 80px; text-align: center;">조회수</td>
+				</tr>
+
 			<c:forEach var="dto" items="${list}">
-			  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;">
-			      <td>${dto.listNum}</td>
-			      <td align="left" style="padding-left: 10px;">
-			           <a href="${articleUrl}&num=${dto.num}">${dto.subject}</a>
+				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
+					<td>${dto.listNum}</td>	
+					<td>${dto.acaDiv}</td>
+					<td>
 			           <c:if test="${dto.gap<1}"><img src="<%=cp%>/resource/images/new.gif"></c:if>
-			      </td>
-			      <td>${dto.userName}</td>
-			      <td>${dto.created}</td>
-			      <td>${dto.hitCount}</td>
-			      <td>
-						<c:if test="${not empty dto.saveFilename}">
-						      <a href="<%=cp%>/notice/download.do?num=${dto.num}"><img src="<%=cp%>/resource/images/disk.gif" border="0" style="margin-top: 1px;"></a>
-						</c:if>
-			      </td>
-			  </tr>
-			</c:forEach>
+						&nbsp;
+						<a href="${articleUrl}&acaNum=${dto.acaNum}">${dto.acaName}</a>
+					</td>
+					<td>${dto.acaAddress}</td>		
+					<td>관리자</td>
+					<td>${dto.created}</td>
+					<td>${dto.hitCount}</td>
+				</tr>
+			</c:forEach>	
 			</table>
-			 
-			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
-			   <tr height="35">
-				<td align="center">
-			        ${dataCount==0? "등록된 게시글이 없습니다.":paging}
-				</td>
-			   </tr>
-			</table>
+			
+			
 			
 			<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			   <tr height="40">
 			      <td align="left" width="100">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/notice/list.do';">새로고침</button>
+			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/acs/list.do';">새로고침</button>
 			      </td>
 			      <td align="center">
-			          <form name="searchForm" action="<%=cp%>/notice/list.do" method="post">
+			          <form name="searchForm" action="<%=cp%>/acs/list.do" method="post">
 			              <select name="condition" class="selectField">
-			                  <option value="subject" ${condition=="subject"? "selected='selected'" : "" }>제목</option>
-			                  <option value="userName" ${condition=="userName"? "selected='selected'" : "" }>작성자</option>
-			                  <option value="content" ${condition=="content"? "selected='selected'" : "" }>내용</option>
-			                  <option value="created" ${condition=="created"? "selected='selected'" : "" }>등록일</option>
-			            </select>
+			                  <option value="subject" ${condition=="subject" ? "selected='selected'":""}>제목</option>
+			                  <option value="content" ${condition=="content" ? "selected='selected'":""}>내용</option>
+			              </select>
 			            <input type="text" name="keyword" class="boxTF" value="${keyword}">
 			            <input type="hidden" name="rows" value="${rows}">
 			            <button type="button" class="btn" onclick="searchList()">검색</button>
 			        </form>
 			      </td>
 			      <td align="right" width="100">
-			      	<c:if test="${sessionScope.member.userId == 'admin'}">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/notice/created.do';">글올리기</button>
-			      	</c:if>
+			      	<c:if test="${sessionScope.member.userId=='admin'}">
+			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/acs/created.do';">글올리기</button>
+			        </c:if>
 			      </td>
 			   </tr>
 			</table>
-
-        </div>
+			
+			<table style="width: 100%; margin: 50px auto; border-spacing: 0px;">
+			   <tr height="35">
+				<td align="center">
+			        ${dataCount==0? "등록된 게시글이 없습니다." : paging}
+				</td>
+			   </tr>
+			</table>
+			
+		</div>
+		
+			
+		
     </div>
 </div>
 

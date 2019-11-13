@@ -212,7 +212,7 @@ public class MemberDAO {
 		String sql;
 
 		try {
-		sql = "SELECT userId FROM member WHERE userName = ? AND birth = ?";
+		sql = "SELECT userId FROM member WHERE userName = ? AND TO_CHAR(birth,'YYYYMMDD') = ?";
 		pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setString(1, userName);

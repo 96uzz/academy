@@ -14,13 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.academy.AcademyDAO;
-import com.academy.AcademyDTO;
 import com.member.SessionInfo;
 import com.util.MyServlet;
 import com.util.MyUtil;
 
-@WebServlet("/lecture/*")
+@WebServlet("/lts/*")
 public class LectureServlet extends MyServlet{
 	private static final long serialVersionUID = 1L;
 
@@ -124,8 +122,6 @@ public class LectureServlet extends MyServlet{
 		Date curDate = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		
-		
 		int listNum, n=0;
 		for(LectureDTO dto : list) {
 			listNum = dataCount - (offset+n);
@@ -144,15 +140,15 @@ public class LectureServlet extends MyServlet{
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
 		
-		String listUrl=cp+"/lecture/list.do?"+query;
-		String articleUrl=cp+"/lecture/article.do?page="+current_page+"&"+query;
+		String listUrl=cp+"/lts/list.do?"+query;
+		String articleUrl=cp+"/lts/lecture/article.do?page="+current_page+"&"+query;
 		String paging=util.paging(current_page, total_page, listUrl);
 		
 		req.setAttribute("list", list);
 		req.setAttribute("listLecture", listLecture);
 		req.setAttribute("paging", paging);
 		req.setAttribute("page", current_page);
-		req.setAttribute("dataCount", paging);
+		req.setAttribute("dataCount", dataCount);
 		req.setAttribute("total_page", total_page);
 		req.setAttribute("rows", rows);
 		req.setAttribute("condition", condition);
@@ -172,7 +168,7 @@ public class LectureServlet extends MyServlet{
 		}
 		
 		if(!info.getUserId().equals("admin")) {
-			resp.sendRedirect(cp+"/lecture/list.do");
+			resp.sendRedirect(cp+"/lts/list.do");
 			return;
 		}
 		
@@ -182,7 +178,32 @@ public class LectureServlet extends MyServlet{
 	
 	
 	protected void createdSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		SessionInfo info = loginUser(req);
+		String cp=req.getContextPath();
 		
+		if(info==null) {
+			resp.sendRedirect(cp+"/member/login.do");
+			return;
+		}
+		if(!info.getUserId().equals("admin")) {
+			resp.sendRedirect(cp+"/lts/list.do");
+			return;
+		}
+		
+		LectureDAO dao = new LectureDAO();
+		LectureDTO dto = new LectureDTO();
+		
+		dto.setUserId(info.getUserId());
+		dto.setAcaName(req.getParameter("acaName"));
+		dto.setLecName(req.getParameter("lecName"));
+		dto.setLecStartDate(req.getParameter("lecStartDate"));
+		dto.setLecEndDate(req.getParameter("lecEndDate"));
+		dto.setLecLimit(Integer.parseInt(req.getParameter("lecLimit")));
+		dto.setLecIntro(req.getParameter("lecIntro"));
+		
+		dao.insertLecture(dto);
+		
+		resp.sendRedirect(cp+"/lts/list.do");
 	}
 	
 	protected void article(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -195,73 +216,10 @@ public class LectureServlet extends MyServlet{
 			resp.sendRedirect(cp+"/member/login.do");
 			return;
 		}
-		int num=Integer.parseInt(req.getParameter("num"));
+		
+		int num=Integer.parseInt(req.getParameter("lecCode"));
 		String page=req.getParameter("page");
 		
-		String condition=req.getParameter("condition");
-		String keyword=req.getParameter("keyword");
-		if(condition==null) {
-			condition="acaName";
-			keyword="";
-		}
-		keyword=URLDecoder.decode(keyword, "utf-8");
-		
-		String query="page="+page;
-		if(keyword.length()!=0) {
-			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
-		}
-		
-		dao.updateHitCount(num);
-		
-		LectureDTO dto=dao.readLecture(num);
-		if(dto==null) {
-			resp.sendRedirect(cp+"/Lecture/list.do?"+query);
-			return;
-		}
-	}
-	
-	protected void updateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		SessionInfo info = loginUser(req);
-		String cp = req.getContextPath();
-		
-		if(info==null) {
-			resp.sendRedirect(cp+"/member/login.do");
-			return;
-		}
-		
-		String page=req.getParameter("page");
-		int num=Integer.parseInt(req.getParameter("num"));
-		
-		LectureDAO dao = new LectureDAO();
-		LectureDTO dto = dao.readLecture(num);
-		if(dto==null || ! info.getUserId().equals(dto.getUserId())) {
-			resp.sendRedirect(cp+"/Lecture/list.do?page="+page);
-			return;
-		}
-		
-		req.setAttribute("mode", "update");
-		req.setAttribute("dto", dto);
-		req.setAttribute("page", page);
-		
-		forward(req, resp, "/WEB-INF/views/Lecture/created.jsp");
-	
-	}
-	
-	protected void updateSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-	}
-	
-	protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		SessionInfo info = loginUser(req);
-		String cp = req.getContextPath();
-		
-		if(info==null) {
-			resp.sendRedirect(cp+"/member/login.do");
-			return;
-		}
-		
-		String page = req.getParameter("page");
-		int num = Integer.parseInt(req.getParameter("num"));
 		String condition=req.getParameter("condition");
 		String keyword=req.getParameter("keyword");
 		if(condition==null) {
@@ -275,6 +233,113 @@ public class LectureServlet extends MyServlet{
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
 		
+		dao.updateHitCount(num);
 		
+		LectureDTO dto=dao.readLecture(num);
+		if(dto==null) {
+			resp.sendRedirect(cp+"/lts/list.do?"+query);
+			return;
+		}
+		
+		dto.setLecIntro(dto.getLecIntro().replaceAll("\n", "<br>"));
+		
+		LectureDTO preReadDto = dao.preReadLecture(dto.getLecCode(), condition, keyword);
+		LectureDTO nextReadDto = dao.nextReadLecture(dto.getLecCode(), condition, keyword);
+		
+		req.setAttribute("dto", dto);
+		req.setAttribute("preReadDto", preReadDto);
+		req.setAttribute("nextReadDto", nextReadDto);
+		req.setAttribute("query", query);
+		req.setAttribute("page", page);
+		
+		forward(req, resp, "/WEB-INF/views/lecture/article.jsp");
+	}
+	
+	protected void updateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		SessionInfo info = loginUser(req);
+		String cp = req.getContextPath();
+		
+		if(info==null) {
+			resp.sendRedirect(cp+"/member/login.do");
+			return;
+		}
+		
+		String page=req.getParameter("page");
+		int num=Integer.parseInt(req.getParameter("lecNum"));
+		
+		LectureDAO dao = new LectureDAO();
+		LectureDTO dto = dao.readLecture(num);
+		if(dto==null || ! info.getUserId().equals(dto.getUserId())) {
+			resp.sendRedirect(cp+"/lts/list.do?page="+page);
+			return;
+		}
+		
+		req.setAttribute("mode", "update");
+		req.setAttribute("dto", dto);
+		req.setAttribute("page", page);
+		
+		forward(req, resp, "/WEB-INF/views/lecture/created.jsp");
+	
+	}
+	
+	protected void updateSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		SessionInfo info = loginUser(req);
+		String cp = req.getContextPath();
+		if(info==null) {
+			resp.sendRedirect(cp+"/member/login.do");
+			return;
+		}
+		
+		LectureDAO dao = new LectureDAO();
+		LectureDTO dto = new LectureDTO();
+		
+		dto.setUserId(info.getUserId());
+		dto.setLecNum(Integer.parseInt(req.getParameter("lecCode")));
+		dto.setLecName(req.getParameter("lecName"));
+		dto.setLecStartDate(req.getParameter("lecStartDate"));
+		dto.setLecEndDate(req.getParameter("lecEndDate"));
+		dto.setLecLimit(Integer.parseInt(req.getParameter("lecLimit")));
+		dto.setLecIntro(req.getParameter("lecIntro"));
+		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
+		
+		dao.insertLecture(dto);
+		
+		resp.sendRedirect(cp+"/lts/list.do");
+		
+	}
+	
+	protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		SessionInfo info = loginUser(req);
+		String cp = req.getContextPath();
+		
+		if(info==null) {
+			resp.sendRedirect(cp+"/member/login.do");
+			return;
+		}
+		
+		String page = req.getParameter("page");
+		int num = Integer.parseInt(req.getParameter("lecCode"));
+		String condition=req.getParameter("condition");
+		String keyword=req.getParameter("keyword");
+		if(condition==null) {
+			condition="lecName";
+			keyword="";
+		}
+		keyword=URLDecoder.decode(keyword, "utf-8");
+		
+		String query="page="+page;
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		LectureDAO dao = new LectureDAO();
+		LectureDTO dto = dao.readLecture(num);
+		if(dto==null) {
+			resp.sendRedirect(cp+"/lts/list.do?"+query);
+			return;
+		}
+		dao.deleteLecture(num, info.getUserId());
+		
+		resp.sendRedirect(cp+"/lts/list.do?page="+page);
 	}
 }

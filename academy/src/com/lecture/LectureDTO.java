@@ -14,6 +14,15 @@ public class LectureDTO {
 	private int hitCount;
 	private String userId;
 	private Long gap;
+	private String acaName;
+	
+	
+	public String getAcaName() {
+		return acaName;
+	}
+	public void setAcaName(String acaName) {
+		this.acaName = acaName;
+	}
 	
 	public Long getGap() {
 		return gap;
