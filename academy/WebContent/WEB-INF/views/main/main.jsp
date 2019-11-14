@@ -15,7 +15,7 @@
 <style>
 
 #background{
-	background-image:url(/academy/resource/images/back1.jpg); 
+	background-image:url("<%=cp%>/resource/images/back1.jpg"); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
