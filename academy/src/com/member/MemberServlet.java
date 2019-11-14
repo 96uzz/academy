@@ -49,6 +49,8 @@ public class MemberServlet extends MyServlet {
 			updateSubmit(req, resp);
 		} else if (uri.indexOf("interlecture.do") != -1) {
 			interLecture(req, resp);
+		} else if (uri.indexOf("interlecturedelete.do") != -1) {
+			interLectureDelete(req, resp);
 		} else if (uri.indexOf("takinglecture.do") != -1) {
 			takingLecture(req, resp);
 		} else if (uri.indexOf("delete.do") != -1) {
@@ -59,7 +61,7 @@ public class MemberServlet extends MyServlet {
 			findUserId(req, resp);
 		} else if (uri.indexOf("finduserpassword.do") != -1) {
 			findUserPwd(req, resp);
-		} else if (uri.indexOf("personalInfo.do")!=-1){
+		} else if (uri.indexOf("personalInfo.do") != -1) {
 			personalInfo(req, resp);
 		}
 	}
@@ -376,6 +378,23 @@ public class MemberServlet extends MyServlet {
 		String path = "/WEB-INF/views/member/interlecture.jsp";
 		forward(req, resp, path);
 
+	}
+	
+	private void interLectureDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	// 관심강좌 삭제
+		HttpSession session = req.getSession();
+		String cp = req.getContextPath();
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info == null) {
+			resp.sendRedirect(cp + "/member/login.do");
+			return;
+		}
+		int interNum = Integer.parseInt(req.getParameter("interNum"));
+		MemberDAO dao = new MemberDAO();
+		dao.interLecDelete(interNum);
+		
+		resp.sendRedirect(cp + "/member/interlecture.do");		
 	}
 
 	private void takingLecture(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

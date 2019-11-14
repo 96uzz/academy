@@ -142,16 +142,17 @@ body{
                <td style="width: 50px; text-align: center;">정원</td>
                <td style="width: 120px; text-align: center;">개강일</td>         
                <td style="width: 120px; text-align: center;">종강일</td>
+               <td style="width: 50px; text-align: center;"></td>
             </tr>
   			
   			<c:choose>
-  				<c:when test="${empty dto.acaDiv}">
+  				<c:when test="${empty list}">
   					<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
-  				 		<td colspan="7">관심강좌가 없습니다.</td>
+  				 		<td colspan="8">관심강좌가 없습니다.</td>
   					</tr>
   				</c:when>
   			
-  			<c:when test="${not empty dto.acaDiv}">
+  			<c:when test="${not empty list}">
   			<c:forEach var="dto" items="${list}">
   			<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
                <td>${dto.acaDiv}</td>
@@ -161,6 +162,7 @@ body{
                <td>${dto.lecLimit}</td>
                <td>${dto.lecStartDate}</td>
                <td>${dto.lecEndDate}</td>
+               <td><a href="<%=cp%>/member/interlecturedelete.do?interNum=${dto.interNum}">삭제</a></td>
             </tr>
             </c:forEach>
 			</c:when>

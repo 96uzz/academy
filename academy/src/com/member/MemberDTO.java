@@ -13,6 +13,7 @@ public class MemberDTO {
 	private String lecStartDate, lecEndDate;
 	private int lecNum;
 	private int lecLimit;
+	private int interNum;
 
 	public String getUserId() {
 		return userId;
@@ -204,6 +205,14 @@ public class MemberDTO {
 
 	public void setLecLimit(int lecLimit) {
 		this.lecLimit = lecLimit;
+	}
+
+	public int getInterNum() {
+		return interNum;
+	}
+
+	public void setInterNum(int interNum) {
+		this.interNum = interNum;
 	}
 
 }

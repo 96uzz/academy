@@ -158,8 +158,9 @@ public class MemberDAO {
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			sb.append("SELECT i.userId, acaDiv, acaName, acaAddress, a.acaNum, l.* FROM interlecture i  ");
-			sb.append("INNER JOIN (SELECT acaNum, lecCode, lecName, lecStartDate, lecEndDate, lecLimit FROM lecture) l ");
+			sb.append("SELECT interNum, i.userId, acaDiv, acaName, acaAddress, a.acaNum, l.* FROM interlecture i  ");
+			sb.append(
+					"INNER JOIN (SELECT acaNum, lecCode, lecName, lecStartDate, lecEndDate, lecLimit FROM lecture) l ");
 			sb.append("ON i.lecCode = l.lecCode ");
 			sb.append("INNER JOIN academy a ON l.acaNum = a.acaNum ");
 			sb.append("WHERE i.userId = ?");
@@ -171,6 +172,7 @@ public class MemberDAO {
 
 			while (rs.next()) {
 				MemberDTO dto = new MemberDTO();
+				dto.setInterNum(rs.getInt("interNum"));
 				dto.setAcaDiv(rs.getString("acaDiv"));
 				dto.setLecName(rs.getString("lecName"));
 				dto.setAcaName(rs.getString("acaName"));
@@ -202,8 +204,30 @@ public class MemberDAO {
 
 	}
 
-	
-	
+	public void interLecDelete(int interNum) {
+		PreparedStatement pstmt = null;
+		String sql;
+
+		try {
+			sql = "DELETE FROM interlecture WHERE interNum = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, interNum);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+
+	}
+
 	public MemberDTO takingLecList(String userId) {
 		MemberDTO dto = null;
 		PreparedStatement pstmt = null;
@@ -234,7 +258,7 @@ public class MemberDAO {
 				dto.setLecCode(rs.getString("lecCode"));
 				dto.setAcaNum(rs.getInt("acaNum"));
 			}
-			} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
@@ -260,17 +284,17 @@ public class MemberDAO {
 		String sql;
 
 		try {
-		sql = "SELECT userId FROM member WHERE userName = ? AND TO_CHAR(birth,'YYYYMMDD') = ?";
-		pstmt = conn.prepareStatement(sql);
-		
-		pstmt.setString(1, userName);
-		pstmt.setString(2, birth);
-				
-		rs = pstmt.executeQuery();
-		
-		if(rs.next()) {
-			userId = rs.getString("userId");
-		}
+			sql = "SELECT userId FROM member WHERE userName = ? AND TO_CHAR(birth,'YYYYMMDD') = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, userName);
+			pstmt.setString(2, birth);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				userId = rs.getString("userId");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -299,17 +323,17 @@ public class MemberDAO {
 		String sql;
 
 		try {
-		sql = "SELECT userPwd FROM member WHERE userId= ? AND email = ?";
-		pstmt = conn.prepareStatement(sql);
-		
-		pstmt.setString(1, userId);
-		pstmt.setString(2, email);
-				
-		rs = pstmt.executeQuery();
-		
-		if(rs.next()) {
-			userPwd = rs.getString("userPwd");
-		}
+			sql = "SELECT userPwd FROM member WHERE userId= ? AND email = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, userId);
+			pstmt.setString(2, email);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				userPwd = rs.getString("userPwd");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
