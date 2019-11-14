@@ -24,7 +24,7 @@ body{
 #container {
    width: 100%;
    height: 100%;
-   background-image:url("back1.jpg");
+   /* background-image:url("<%=cp%>/resource/images/back1.jpg"); */
    background-repeat: no-repeat;
    background-position: center center;
 } 
