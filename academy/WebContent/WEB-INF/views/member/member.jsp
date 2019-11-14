@@ -114,7 +114,7 @@ function memberOk() {
 		f.userId.focus();
 		return;
 	}
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
+	if(!/^[a-z][a-z0-9_]{4,11}$/i.test(str)) { 
 		alert("아이디는 5~12자의 영숫자이며 첫글자는 영문자이어야 합니다.");
 		f.userId.focus();
 		return;
@@ -127,7 +127,7 @@ function memberOk() {
 		f.userPwd.focus();
 		return;
 	}
-	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
+	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,12}$/i.test(str)) { 
 		alert("패스워드는 5~12자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
 		f.userPwd.focus();
 		return;
