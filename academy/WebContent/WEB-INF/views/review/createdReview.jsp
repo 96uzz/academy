@@ -20,27 +20,50 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+
 function sendOk() {
     var f = document.boardForm;
 
-	var str = f.subject.value;
+	var str = f.acaNum.value;
     if(!str) {
-        alert("제목을 입력하세요. ");
+        alert("기관명을 입력하세요. ");
         f.subject.focus();
         return;
     }
 
-	str = f.content.value;
+	str = f.lecNum.value;
     if(!str) {
-        alert("내용을 입력하세요. ");
+        alert("과정명을 입력하세요. ");
         f.content.focus();
         return;
     }
-
+	
+    str = f.content.value;
+    if(!str) {
+        alert("교육과정소개를 입력하세요. ");
+        f.content.focus();
+        return;
+    }
+    
 	f.action="<%=cp%>/review/${mode}_ok.do";
 
     f.submit();
 }
+
+$(function(){
+	$("select[name=acaNum]").change(function(){
+		var acaNum = $(this).val();
+		if(! acaNum) {
+			return false;
+		}
+		
+		var url = "<%=cp%>/review/listLectureChange.do";
+		$.get(url, {acaNum:acaNum}, function(data){
+			$(".listLectureCls").html(data);
+		});
+		
+	});
+});
 
 </script>
 <style type="text/css">
@@ -131,21 +154,29 @@ body{
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">기관명</td>
 			      <td style="padding-left:10px;"> 
-			          <input type="text" name="acaName" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.acaName}">
+			         <select name="acaNum">
+			            <c:forEach var="vo" items="${listAcademy}">
+			               <option value="${vo.acaNum}" ${dto.acaNum==vo.acaNum ? "selected='selected'" : "" }>${vo.acaName}</option>
+			            </c:forEach>
+			          </select>
 			      </td>
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">과정명</td>
-			      <td style="padding-left:10px;"> 
-			          <input type="text" name="lecName" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.lecName}">
+			      <td style="padding-left:10px;" class="listLectureCls"> 
+			         <select name="lecNum">
+			            <c:forEach var="vo" items="${listLecture}">
+			               <option value="${vo.lecCode}" ${dto.lecCode==vo.lecCode ? "selected='selected'" : "" }>${vo.lecName}</option>
+			            </c:forEach>
+			          </select>
 			      </td>
 			  </tr>
 			
 			    <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">교육과정 소개</td>
-			      <td style="padding-left:10px;"> 
-			         ${dto.lecIntro}
+			     <td style="padding-left:10px;"> 
+			          <input type="text" name="content" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.content}">
 			      </td>
 			  </tr>
 			</table>

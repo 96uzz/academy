@@ -575,4 +575,32 @@ public class LectureDAO {
 		
 	}
 	
+	public int insertInterLecture(LectureDTO dto) {
+		int result=0;
+		PreparedStatement pstmt = null;
+		String sql;
+		
+		try {
+			sql="insert into interlecture(interNum,acaNum,lecCode,userId) ";
+			sql+=" values (interlec_seq.nextval,?,?,?) ";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getAcaNum());
+			pstmt.setInt(2, dto.getLecCode());
+			pstmt.setString(3, dto.getUserId());
+			
+			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) 
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			
+		}
+		return result;
+	}
+	
 }

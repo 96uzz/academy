@@ -16,7 +16,18 @@ public class LectureDTO {
 	private Long gap;
 	private String acaName;
 	
+	private int interNum;
 	
+	
+	public int getInterNum() {
+		return interNum;
+	}
+	public void setInterNum(int interNum) {
+		this.interNum = interNum;
+	}
+	public void setGap(Long gap) {
+		this.gap = gap;
+	}
 	public String getAcaName() {
 		return acaName;
 	}

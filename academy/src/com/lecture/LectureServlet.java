@@ -65,6 +65,8 @@ public class LectureServlet extends MyServlet{
 			updateSubmit(req, resp);
 		} else if(uri.indexOf("delete.do")!=-1) {
 			delete(req,resp);
+		} else if(uri.indexOf("interlecture.do")!=-1) {
+			interLecture(req, resp);
 		}
 	}
 	
@@ -350,5 +352,35 @@ public class LectureServlet extends MyServlet{
 		dao.deleteLecture(num, info.getUserId());
 		
 		resp.sendRedirect(cp+"/lts/list.do?num="+num+"&page="+page);
+	}
+	
+	protected void interLecture(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		SessionInfo info = loginUser(req);
+		String cp=req.getContextPath();
+		
+		if(info==null) {
+			resp.sendRedirect(cp+"/member/login.do");
+			return;
+		}
+		/*
+		if(!info.getUserId().equals("admin")) {
+			resp.sendRedirect(cp+"/lts/list.do");
+			return;
+		}
+		*/
+		
+		LectureDAO dao = new LectureDAO();
+		LectureDTO dto = new LectureDTO();
+		
+		//dto.setInterNum(Integer.parseInt(req.getParameter("interNum").trim()));
+		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
+		dto.setLecCode(Integer.parseInt(req.getParameter("lecCode")));
+		dto.setUserId(info.getUserId());
+		
+		dao.insertInterLecture(dto);
+		
+		resp.sendRedirect(cp+"/lts/list.do");
+		
+
 	}
 }

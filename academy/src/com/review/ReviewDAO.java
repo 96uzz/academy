@@ -18,9 +18,8 @@ public class ReviewDAO {
 		PreparedStatement pstmt=null;
 		String sql;
 		
-		
 		try {
-			sql = "INSERT INTO review(renum, leccode, userId, rate,content, created)"
+			sql = "INSERT INTO review(renum, leccode, userId, rate, content, created)"
 					+ "  VALUES (review_seq.nextval, ?, ?, ?, ?, sysdate)";
 			
 			pstmt=conn.prepareStatement(sql);
@@ -278,23 +277,24 @@ public class ReviewDAO {
 		
 		return dto;
 	}
-	//lecture테이블 읽기 (강좌명 jsp에 넣기 위함)
-	public List<ReviewDTO> listLecture(ReviewDTO dto){
+	// lecture테이블 읽기 (강좌명 jsp에 넣기 위함)
+	public List<ReviewDTO> listLecture(int acaNum){
 		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql;
 		
 		try {
-			sql = "SELECT lecname, acaNum from lecture where acanum = ? ";
+			sql = "SELECT lecname, lecCode from lecture where acaNum = ? ";
 			pstmt=conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, dto.getAcaNum());
+			pstmt.setInt(1, acaNum);
 			
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				dto.setLecName(rs.getString("lecname"));
-				dto.setAcaNum(rs.getInt("acaNum"));
+				ReviewDTO dto=new ReviewDTO();
+				dto.setLecName(rs.getString("lecName"));
+				dto.setLecCode(rs.getInt("lecCode"));
 				
 				list.add(dto);
 			}
@@ -357,47 +357,8 @@ public class ReviewDAO {
 			return list;
 			
 		}
-		//reviewreply 테이블 읽기 (rate를 jsp에 넣기 위함)
-		public List<ReviewDTO> listReviewReply(ReviewDTO dto){
-			List<ReviewDTO> list = new ArrayList<ReviewDTO>();
-			PreparedStatement pstmt=null;
-			ResultSet rs=null;
-			String sql;
-			
-			try {
-				sql = "SELECT (select ROUND(AVG(RATE),2) from reviewreply rr where r.renum = rr.renum) rate from lecture where acanum = ? ";
-				pstmt=conn.prepareStatement(sql);
-				
-				pstmt.setInt(1, dto.getAcaNum());
-				
-				rs=pstmt.executeQuery();
-				while(rs.next()) {
-					dto.setLecName(rs.getString("lecname"));
-					dto.setAcaNum(rs.getInt("acaNum"));
-					
-					list.add(dto);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				if(rs!=null) {
-					try {
-						rs.close();
-					} catch (Exception e2) {
-					}
-				}
-				if(pstmt!=null) {
-					try {
-						pstmt.close();
-					} catch (Exception e2) {
-					}
-				}
-			}
-			
-			return list;
-			
-		}
-	
+		
+		
 	
     // 이전글
 	public ReviewDTO preReadLecture(int renum, String condition, String keyword) {
