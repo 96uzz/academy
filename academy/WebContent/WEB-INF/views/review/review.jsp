@@ -22,12 +22,7 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-function deleteBoard(reNum) {
-	if(confirm("게시물을 삭제 하시겠습니까 ?")) {
-		var url="<%=cp%>/review/delete.do?boardNum="+reNum+"&${query}";
-		location.href=url;
-	}
-}
+
 </script>
 
 <style type="text/css">
@@ -158,33 +153,22 @@ function drawAvgStar(){
    	}
 }
 
-function deleteBoard(reNum) {
-	<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+function deleteReview(reNum) {
+	console.log(query);
 	    var query = "reNum="+reNum+"&${query}";
 	    var url = "<%=cp%>/review/delete.do?" + query;
-
+		
 	    if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
 	    	location.href=url;
-	</c:if>
-	
-	<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
-	    alert("게시물을 삭제할 수  없습니다.");
-	</c:if>
 	}
 
-	function updateBoard(reNum) {
-	<c:if test="${sessionScope.member.userId==dto.userId}">
-	    var page = "${page}";
-	    var query = "reNum="+reNum+"&page="+page;
-	    var url = "<%=cp%>/review/update.do?" + query;
+function updateReview(reNum) {
+	 var page = "${page}";
+	 var query = "reNum="+reNum+"&page="+page;
+	 var url = "<%=cp%>/review/update.do?" + query;
 
-	    location.href=url;
-	</c:if>
-
-	<c:if test="${sessionScope.member.userId!=dto.userId}">
-	   alert("게시물을 수정할 수  없습니다.");
-	</c:if>
-	}
+	 location.href=url;
+}
 	</script>
 
 	<script type="text/javascript">
@@ -359,7 +343,7 @@ function deleteBoard(reNum) {
 			
 			<tr>
 			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="80">
-			      ${dto.lecIntro}
+			      ${dto.content}
 			   </td>
 			</tr>
 			
@@ -369,10 +353,10 @@ function deleteBoard(reNum) {
 			<tr height="45">
 			    <td align="left" style="width: 250px;">
 			    	<c:if test="${sessionScope.member.userId=='admin'}">
-			          <button type="button" class="btn" onclick="updateBoard('${dto.reNum}');">수정</button>
+			          <button type="button" class="btn" onclick="updateReview('${dto.reNum}');">수정</button>
 			       </c:if>
 			       <c:if test="${sessionScope.member.userId=='admin'}">			    
-			          <button type="button" class="btn" onclick="deleteBoard('${dto.reNum}');">삭제</button>
+			          <button type="button" class="btn" onclick="deleteReview('${dto.reNum}');">삭제</button>
 			       </c:if>
 			    </td>
 			
@@ -428,28 +412,6 @@ function deleteBoard(reNum) {
             
             <div id="listReply" style="width: 900px; float:right;"></div>
  	    </div>
- 	    
- 	    <div style="min-height: 300px;">
- 	  	  <table style="width: 900px; float:right; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-	 	    	<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				    <td colspan="2" align="left" style="padding-left: 5px;">
-				       이전글 :
-				         <c:if test="${not empty preReadDto}">
-				              <a href="<%=cp%>/review/review.do?${query}&renum=${preReadDto.reNum}">${preReadDto.subject}</a>
-				        </c:if>
-				    </td>
-				</tr>
-				
-				<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				    <td colspan="2" align="left" style="padding-left: 5px;">
-				    다음글 :
-				         <c:if test="${not empty nextReadDto}">
-				              <a href="<%=cp%>/review/review.do?${query}&renum=${nextReadDto.reNum}">${nextReadDto.subject}</a>
-				        </c:if>
-				    </td>
-				</tr>
-			</table>
-		</div>
  	    </div>
         <!--  여기까지 메인 -->
     </div>

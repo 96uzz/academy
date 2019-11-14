@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.lecture.LectureDAO;
 import com.member.SessionInfo;
 import com.util.MyUtil;
 
@@ -57,21 +56,20 @@ public class ReviewServlet extends HttpServlet {
 				createdForm(req, resp);
 			} else if (uri.indexOf("created_ok.do") != -1) {
 				createdSubmit(req, resp);
-			} else if (uri.indexOf("insertReply.do") != -1) {
-				// 댓글 추가
+			} else if (uri.indexOf("insertReply.do") != -1) { //댓글 추가
 				insertReply(req, resp);
 			}else if (uri.indexOf("listReply.do") != -1) { // 댓글 리스트
 				listReply(req, resp);
 			} else if(uri.indexOf("listLectureChange.do")!=-1) {
 				listLectureChange(req, resp);
-			}
-		/*	} else if (uri.indexOf("update.do") != -1) {
+			} else if (uri.indexOf("deletereview.do") != -1) {
+				deleteReview(req, resp);
+			} else if (uri.indexOf("update.do") != -1) {
 				updateForm(req, resp);
 			} else if (uri.indexOf("update_ok.do") != -1) {
 				updateSubmit(req, resp);
-			} else if (uri.indexOf("deletereview.do") != -1) {
-				reviewDelete(req, resp);
 			} 
+		/*	} 
 			 else if (uri.indexOf("deleteReply.do") != -1) {
 				// 댓글 삭제
 				deleteReply(req, resp);
@@ -182,10 +180,12 @@ public class ReviewServlet extends HttpServlet {
 		}
 		
 		ReviewDAO dao = new ReviewDAO();
+	
 		List<ReviewDTO> listAcademy = dao.listAcademy();
 		List<ReviewDTO> listLecture = null;
 		if(listAcademy.size()>=0)
 			listLecture = dao.listLecture(listAcademy.get(0).getAcaNum());
+	
 		
 		req.setAttribute("mode", "created");
 		req.setAttribute("listAcademy",listAcademy);
@@ -210,7 +210,7 @@ public class ReviewServlet extends HttpServlet {
 	  	ReviewDAO dao = new ReviewDAO();
 		ReviewDTO dto = new ReviewDTO();
 		
-		dto.setLecCode(Integer.parseInt("lecCode"));
+		dto.setLecCode(Integer.parseInt(req.getParameter("lecNum")));
 		dto.setAcaName(req.getParameter("acaName"));
 		dto.setLecName(req.getParameter("lecName"));
 		dto.setUserId(info.getUserId());
@@ -219,8 +219,8 @@ public class ReviewServlet extends HttpServlet {
 		
 		dao.insertBoard(dto, "created");
 		
-		
-		forward(req, resp, "/WEB-INF/views/review/list.jsp");
+		String cp=req.getContextPath();
+		resp.sendRedirect(cp+"/review/list.do");
 	}
 	
 	//리뷰 글보기
@@ -270,7 +270,7 @@ public class ReviewServlet extends HttpServlet {
 		ReviewDAO dao = new ReviewDAO();
 		MyUtil util = new MyUtil();
 
-		int reNum = Integer.parseInt(req.getParameter("reNum"));
+		int num = Integer.parseInt(req.getParameter("reNum"));
 		String pageNo = req.getParameter("pageNo");
 		int current_page = 1;
 		if (pageNo != null)
@@ -280,7 +280,7 @@ public class ReviewServlet extends HttpServlet {
 		int total_page = 0;
 		int replyCount = 0;
 
-		replyCount = dao.dataCountReply(reNum);
+		replyCount = dao.dataCountReply(num);
 		total_page = util.pageCount(rows, replyCount);
 		if (current_page > total_page)
 			current_page = total_page;
@@ -288,7 +288,7 @@ public class ReviewServlet extends HttpServlet {
 		int offset = (current_page - 1) * rows;
 		
 		// 리스트에 출력할 데이터
-		List<ReviewDTO> listReply = dao.listReply(reNum, offset, rows);
+		List<ReviewDTO> listReply = dao.listReply(num, offset, rows);
 
 		// 엔터를 <br>
 		for (ReviewDTO dto : listReply) {
@@ -297,7 +297,8 @@ public class ReviewServlet extends HttpServlet {
 
 		// 페이징 처리(인수2개 짜리로 자바스크립트 listPage(page) 함수 호출)
 		String paging = util.paging(current_page, total_page);
-
+		
+		
 		req.setAttribute("listReply", listReply);
 		req.setAttribute("pageNo", current_page);
 		req.setAttribute("replyCount", replyCount);
@@ -309,7 +310,7 @@ public class ReviewServlet extends HttpServlet {
 	}
 
 	private void insertReply(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 리플 또는 답글 저장 - AJAX:JSON
+		// 리플 저장 - AJAX:JSON
 		ReviewDAO dao = new ReviewDAO();
 		ReviewDTO dto = new ReviewDTO();
 		
@@ -337,6 +338,114 @@ public class ReviewServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		out.print(job.toString());
 	}
+	
+	
+	
+	protected void deleteReview(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session=req.getSession();
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		String cp=req.getContextPath();
+
+		int reNum = Integer.parseInt(req.getParameter("reNum"));
+		String page = req.getParameter("page");
+		String rows = req.getParameter("rows");
+		String condition = req.getParameter("condition");
+		String keyword = req.getParameter("keyword");
+		if (condition == null) {
+			condition = "subject";
+			keyword = "";
+		}
+		keyword = URLDecoder.decode(keyword, "UTF-8");
+
+		String query = "page=" + page + "&rows=" + rows;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		ReviewDAO dao = new ReviewDAO();
+		dao.deleteReview(reNum, info.getUserId());
+
+		resp.sendRedirect(cp + "/review/list.do?"+ query);
+	}
+	
+	protected void updateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String cp = req.getContextPath();
+
+		int reNum = Integer.parseInt(req.getParameter("reNum"));
+		String page = req.getParameter("page");
+		String rows = req.getParameter("rows");
+
+		ReviewDAO dao = new ReviewDAO();
+		ReviewDTO dto = dao.readReview(reNum);
+
+		if (dto == null) {
+			resp.sendRedirect(cp + "/review/list.do?page=" + page + "&rows=" + rows);
+			return;
+		}
+
+		if (!info.getUserId().equals(dto.getUserId())) {
+			resp.sendRedirect(cp + "/review/list.do?page=" + page + "&rows=" + rows);
+			return;
+		}
+
+		req.setAttribute("dto", dto);
+		req.setAttribute("page", page);
+		req.setAttribute("rows", rows);
+		req.setAttribute("mode", "update");
+
+		forward(req, resp, "/WEB-INF/views/review/created.jsp");
+	}
+
+	protected void updateSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String cp = req.getContextPath();
+
+		ReviewDAO dao = new ReviewDAO();
+		ReviewDTO dto = new ReviewDTO();
+
+		dto.setReNum(Integer.parseInt(req.getParameter("reNum")));
+		dto.setUserId(info.getUserId());
+		dto.setContent(req.getParameter("content"));
+
+		dao.updateBoard(dto);
+
+		String page = req.getParameter("page");
+		String rows = req.getParameter("rows");
+
+		String url = cp + "/review/list.do?page=" + page + "&rows=" + rows;
+
+		resp.sendRedirect(url);
+	}
+}
+	
+/*
+	private void deleteReply(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 리플 또는 답글 삭제 - AJAX:JSON
+		BoardDAO dao = new BoardDAO();
+
+		HttpSession session = req.getSession();
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		int replyNum = Integer.parseInt(req.getParameter("replyNum"));
+
+		String state = "false";
+		int result = dao.deleteReply(replyNum, info.getUserId());
+		if (result == 1)
+			state = "true";
+
+		JSONObject job = new JSONObject();
+		job.put("state", state);
+
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(job.toString());
+	}
+	
+	
+}
 	
 /*
 	protected void updateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -419,44 +528,6 @@ public class ReviewServlet extends HttpServlet {
 		resp.sendRedirect(cp + "/bbs/list.do?" + query);
 	}
 
-	private void countBoardLike(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 게시물 공감 개수 - AJAX:JSON
-		BoardDAO dao = new BoardDAO();
-
-		int num = Integer.parseInt(req.getParameter("num"));
-
-		int countBoardLike = dao.countBoardLike(num);
-		JSONObject job = new JSONObject();
-		job.put("countBoardLike", countBoardLike);
-
-		resp.setContentType("text/html;charset=utf-8");
-		PrintWriter out = resp.getWriter();
-		out.print(job.toString());
-	}
-
-	private void insertBoardLike(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		// 게시물 공감 저장 - AJAX:JSON
-		BoardDAO dao = new BoardDAO();
-
-		HttpSession session = req.getSession();
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-
-		String state = "false";
-		int num = Integer.parseInt(req.getParameter("num"));
-
-		int result = dao.insertBoardLike(num, info.getUserId());
-		if (result == 1)
-			state = "true";
-
-		JSONObject job = new JSONObject();
-		job.put("state", state);
-
-		resp.setContentType("text/html;charset=utf-8");
-		PrintWriter out = resp.getWriter();
-		out.print(job.toString());
-	}
-
 	
 /*
 	private void deleteReply(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -480,56 +551,5 @@ public class ReviewServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		out.print(job.toString());
 	}
-
-	private void insertReplyAnswer(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		// 답글 저장 - AJAX:JSON
-		insertReply(req, resp);
-	}
-
-	private void listReplyAnswer(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		// 리플의 답글 리스트 - AJAX:TEXT
-		BoardDAO dao = new BoardDAO();
-
-		int answer = Integer.parseInt(req.getParameter("answer"));
-
-		List<ReplyDTO> listReplyAnswer = dao.listReplyAnswer(answer);
-
-		// 엔터를 <br>(스타일 => style="white-space:pre;")
-		for (ReplyDTO dto : listReplyAnswer) {
-			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-		}
-
-		req.setAttribute("listReplyAnswer", listReplyAnswer);
-
-		forward(req, resp, "/WEB-INF/views/bbs/listReplyAnswer.jsp");
-	}
-
-	private void deleteReplyAnswer(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		// 리플 답글 삭제 - AJAX:JSON
-		deleteReply(req, resp);
-	}
-
-	private void countReplyAnswer(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		// 리플의 답글 개수 - AJAX:JSON
-		BoardDAO dao = new BoardDAO();
-
-		int answer = Integer.parseInt(req.getParameter("answer"));
-
-		int count = dao.dataCountReplyAnswer(answer);
-
-		JSONObject job = new JSONObject();
-		job.put("count", count);
-
-		resp.setContentType("text/html;charset=utf-8");
-		PrintWriter out = resp.getWriter();
-		out.print(job.toString());
-	}
-	
-	
-	}
-*/
 }
+*/

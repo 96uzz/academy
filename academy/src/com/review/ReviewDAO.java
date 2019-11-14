@@ -434,15 +434,39 @@ public class ReviewDAO {
 		return dto;
 	}
 	
-	public void insertReview(ReviewDTO dto) { // 강의 리뷰 등록
+	public int deleteReview(int reNum, String userId) { // 강의 리뷰 삭제(관리자만)
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql;
 		
+		try {
+			if(userId.equals("admin")) {
+				sql="DELETE FROM review WHERE num=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, reNum);
+				result = pstmt.executeUpdate();
+			}else {
+				sql="DELETE FROM review WHERE renum=? AND userId=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, reNum);
+				pstmt.setString(2, userId);
+				result = pstmt.executeUpdate();
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+				}
+			}
+		}		
+		return result;
 	}
 	
-	
-	
-	public void deleteReview(int reNum, String userId) { // 강의 리뷰 삭제(관리자만)
-		
-	}
 	
 	public int insertReply(ReviewDTO dto) {
 		int result=0;
@@ -513,7 +537,7 @@ public class ReviewDAO {
 		}
 	
 	
-		// 게시물 댓글 리스트
+		// 게시물 마다 댓글 리스트
 		public List<ReviewDTO> listReply(int reNum, int offset, int rows) {
 			List<ReviewDTO> list=new ArrayList<>();
 			PreparedStatement pstmt=null;
@@ -521,15 +545,17 @@ public class ReviewDAO {
 			StringBuffer sb=new StringBuffer();
 			
 			try {
-				sb.append("SELECT r.replyNum, m.userId, m.userName, r.content, r.answer, r.created, r.rate ");
+				sb.append("SELECT r.replyNum, m.userId, m.userName, r.content, r.answer, r.created, r.rate, r.reNum ");
 				sb.append(" FROM reviewreply r ");
 				sb.append("	JOIN member m ON r.userId = m.userId ");
+				sb.append("	WHERE renum = ? ");
 				sb.append("	order by replynum desc ");
 				sb.append(" OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
 				
 				pstmt = conn.prepareStatement(sb.toString());
-				pstmt.setInt(1, offset);
-				pstmt.setInt(2, rows);
+				pstmt.setInt(1, reNum);
+				pstmt.setInt(2, offset);
+				pstmt.setInt(3, rows);
 
 				rs=pstmt.executeQuery();
 				
@@ -543,6 +569,7 @@ public class ReviewDAO {
 					dto.setAnswer(rs.getInt("answer"));
 					dto.setCreated(rs.getString("created"));
 					dto.setRate(rs.getString("rate"));
+					dto.setReNum(rs.getInt("reNum"));
 					
 					list.add(dto);
 				}
@@ -566,245 +593,31 @@ public class ReviewDAO {
 			}
 			return list;
 		}
-}
-	
-	
 
-/*
-	// 게시물 수정
-	public int updateReview(ReviewDTO dto) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql;
-		
-		sql="UPDATE bbs SET subject=?, content=? WHERE num=? AND userId=?";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getSubject());
-			pstmt.setString(2, dto.getContent());
-			pstmt.setInt(3, dto.getNum());
-			pstmt.setString(4, dto.getUserId());
-			result = pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			}
-		}		
-		return result;
-	}
 	
-	// 게시물 삭제
-	public int deleteBoard(int num, String userId) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql;
-		
-		try {
-			if(userId.equals("admin")) {
-				sql="DELETE FROM bbs WHERE num=?";
+		public int updateBoard(ReviewDTO dto) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql;
+			
+			sql="UPDATE review SET content=? WHERE renum=?";
+			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, num);
+				pstmt.setString(1, dto.getContent());
+				pstmt.setInt(2, dto.getReNum());
 				result = pstmt.executeUpdate();
-			}else {
-				sql="DELETE FROM bbs WHERE num=? AND userId=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, num);
-				pstmt.setString(2, userId);
-				result = pstmt.executeUpdate();
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			}
-		}		
-		return result;
-	}
-*/
-	
-	
-/*
-
-	public ReplyDTO readReply(int replyNum) {
-		ReplyDTO dto=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		StringBuffer sb=new StringBuffer();
-		
-		try {
-			sb.append("SELECT replyNum, num, r.userId, userName, content ,r.created ");
-			sb.append(" FROM bbsReply r JOIN member1 m ON r.userId=m.userId  ");
-			sb.append(" WHERE replyNum = ? ");
-
-			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, replyNum);
-
-			rs=pstmt.executeQuery();
-			
-			if(rs.next()) {
-				dto=new ReplyDTO();
-				dto.setReplyNum(rs.getInt("replyNum"));
-				dto.setNum(rs.getInt("num"));
-				dto.setUserId(rs.getString("userId"));
-				dto.setUserName(rs.getString("userName"));
-				dto.setContent(rs.getString("content"));
-				dto.setCreated(rs.getString("created"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(rs!=null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-				}
-			}
 				
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(pstmt!=null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+					}
 				}
-			}
+			}		
+			return result;
 		}
-		
-		return dto;
-	}
-	
-	// 게시물의 댓글 삭제
-	public int deleteReply(int replyNum, String userId) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql;
-		
-		if(! userId.equals("admin")) {
-			ReplyDTO dto=readReply(replyNum);
-			if(dto==null || (! userId.equals(dto.getUserId())))
-				return result;
-		}
-		
-		sql="DELETE FROM bbsReply ";
-		sql+="  WHERE replyNum IN  ";
-		sql+="  (SELECT replyNum FROM bbsReply START WITH replyNum = ?";
-		sql+="    CONNECT BY PRIOR replyNum = answer)";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, replyNum);
-			
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			}
-		}		
-		
-		return result;
-	}
-
-	// 댓글의 답글 리스트
-	public List<ReplyDTO> listReplyAnswer(int answer) {
-		List<ReplyDTO> list=new ArrayList<>();
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		StringBuffer sb=new StringBuffer();
-		
-		try {
-			sb.append("SELECT replyNum, num, r.userId, userName, content, created, answer");
-			sb.append(" FROM bbsReply r ");
-			sb.append(" JOIN member1 m ON r.userId=m.userId");
-			sb.append(" WHERE answer=?");
-			sb.append(" ORDER BY replyNum DESC");
-
-			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, answer);
-
-			rs=pstmt.executeQuery();
-			
-			while(rs.next()) {
-				ReplyDTO dto=new ReplyDTO();
-				
-				dto.setReplyNum(rs.getInt("replyNum"));
-				dto.setNum(rs.getInt("num"));
-				dto.setUserId(rs.getString("userId"));
-				dto.setUserName(rs.getString("userName"));
-				dto.setContent(rs.getString("content"));
-				dto.setCreated(rs.getString("created"));
-				dto.setAnswer(rs.getInt("answer"));
-				
-				list.add(dto);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(rs!=null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-				}
-			}
-				
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-		return list;
-	}
-	
-	// 댓글의 답글 개수
-	public int dataCountReplyAnswer(int answer) {
-		int result=0;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String sql;
-		
-		try {
-			sql="SELECT NVL(COUNT(*), 0) FROM bbsReply WHERE answer=?";
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, answer);
-			
-			rs=pstmt.executeQuery();
-			if(rs.next())
-				result=rs.getInt(1);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(rs!=null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-				}
-			}
-				
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-		
-		return result;
-	}
 }
-*/
+

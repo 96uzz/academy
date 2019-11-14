@@ -146,8 +146,8 @@ body{
 			  <tr align="center" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; background-color: #3598DB;"> 
 			      <th width="60">No</th>
 			      <th>과정명</th>
-			      <th width="100">기관명</th>
-			      <th width="150">평점</th>
+			      <th width="150">기관명</th>
+			      <th width="100">평점</th>
 			  </tr>
 			 
 		<c:forEach var="dto" items="${list}">

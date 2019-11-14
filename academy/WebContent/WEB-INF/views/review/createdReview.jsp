@@ -44,11 +44,14 @@ function sendOk() {
         f.content.focus();
         return;
     }
-    
+  
+   
 	f.action="<%=cp%>/review/${mode}_ok.do";
 
     f.submit();
 }
+
+
 
 $(function(){
 	$("select[name=acaNum]").change(function(){
@@ -184,18 +187,16 @@ body{
 				
 			  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
-			      <td align="center" >
-			      	<c:if test="${mode=='update'}">
-			      		<input type="hidden" name="page" value="${page}">
-			      		<input type="hidden" name="lecCode" value="${dto.lecCode}">
-			      		<input type="hidden" name="reNum" value="${dto.reNum}">
-			      	
-			      	</c:if>
-			        <button type="button" class="loginButton" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
-			        <button type="reset" class="loginButton">다시입력</button>
-			        <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/review/list.do';">${mode=='update'?'수정취소':'등록취소'}</button>
-
-				  </td>
+			       <td align="center" >
+                  <c:if test="${mode=='update'}">
+                     <input type="hidden" name="page" value="${page}">
+                     <input type="hidden" name="reNum" value="${dto.reNum}">
+                  </c:if>
+	               
+	                 <button type="button" class="loginButton" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
+	                 <button type="reset" class="loginButton">다시입력</button>
+	                 <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/review/list.do';">${mode=='update'?'수정취소':'등록취소'}</button>
+              </td>
 			    </tr>
 			  </table>
 			</form>
