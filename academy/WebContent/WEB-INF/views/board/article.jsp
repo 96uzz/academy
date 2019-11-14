@@ -46,12 +46,42 @@ body{
 	font-size: 20px;
 }
 
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
+
 .container2 {
     width:100%;
     text-align:left;
 }
 .body-container2 {
-	margin : 20px auto;
+	margin : auto;
 	width: 1300px;
 	clear: both;
 	min-height: 500px;
@@ -103,22 +133,21 @@ body{
 				<tr><td><a href="#" id="nav2">강의 평가</a></td></tr>
 			</table>
 		</div>
-		<div class="content2">
+		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
 			자유 게시판
-		</div>
-			<br><br><br><br>
+			<br>
 			<!--  여기부터 소스 -->
 			
 			<div>
-			<table style="width: 800px; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid #3598DB; border-top: 1px solid #3598DB; font-size: 17px; color: black; width: 100%;">
+			<tr height="35" style="border-top: 1px solid #3598DB; border-bottom: 1px solid #3598DB;">
 			    <td colspan="2" align="center">
 				   <c:if test="${dto.depth!=0 }">[Re] </c:if>
 				   ${dto.subject}
 			    </td>
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
+			<tr height="35" style="border-bottom: 1px solid #3598DB;">
 			    <td width="50%" align="left" style="padding-left: 5px;">
 			       이름 : ${dto.userName}
 			    </td>
@@ -127,13 +156,13 @@ body{
 			    </td>
 			</tr>
 			
-			<tr style="border-bottom: 1px solid #cccccc;">
+			<tr style="border-bottom: 1px solid #3598DB;">
 			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
 			      ${dto.content}
 			   </td>
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
+			<tr height="35" style="border-bottom: 1px solid #3598DB;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 :
                   <c:if test="${not empty preReadDto}">
@@ -142,7 +171,7 @@ body{
 			    </td>
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
+			<tr height="35" style="border-bottom: 1px solid #3598DB;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       다음글 :
                   <c:if test="${not empty nextReadDto}">
@@ -152,31 +181,32 @@ body{
 			</tr>
 			</table>
 			
-			<table style="width: 800px; margin : 50px 100px 0 0; float : right;  border-spacing: 0px;">
+			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
-			    <td width="300" align="left">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/reply.do?boardNum=${dto.boardNum}&page=${page}';">답변</button>
+			    <td width="400" align="left">
+			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/board/reply.do?boardNum=${dto.boardNum}&page=${page}';">답변</button>
 			          <c:if test="${sessionScope.member.userId == dto.userId}">
-			              <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/update.do?boardNum=${dto.boardNum}&${query}';">수정</button>
+			              <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/board/update.do?boardNum=${dto.boardNum}&${query}';">수정</button>
 			          </c:if>
 			          <c:if test="${sessionScope.member.userId != dto.userId}">
-			              <button type="button" class="btn" disabled="disabled">수정</button>
+			              <button type="button" class="loginButton" disabled="disabled">수정</button>
 			          </c:if>
 			          <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
-			              <button type="button" class="btn" onclick="deleteBoard('${dto.boardNum}');">삭제</button>
+			              <button type="button" class="loginButton" onclick="deleteBoard('${dto.boardNum}');">삭제</button>
 			          </c:if>
 			          <c:if test="${sessionScope.member.userId!=dto.userId && sessionScope.member.userId!='admin'}">
-			              <button type="button" class="btn" disabled="disabled">삭제</button>
+			              <button type="button" class="loginButton" disabled="disabled">삭제</button>
 			          </c:if>
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/list.do?${query}';">리스트</button>
+			        <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/board/list.do?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>
         </div>
         <!--  여기까지 메인 -->
+        </div>
     </div>
 </div>
 

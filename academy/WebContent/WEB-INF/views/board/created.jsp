@@ -46,7 +46,7 @@ function sendOk() {
 <style type="text/css">
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 #background{
-		background-image:url(/academy/resource/images/back_opacity.png); 
+	background-image:url(/academy/resource/images/back_opacity.png); 
     background-position: center;
     background-repeat: no-repeat;
    	background-size: 1350px 600px;
@@ -60,12 +60,42 @@ body{
 	font-size: 20px;
 }
 
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
+
 .container2 {
     width:100%;
     text-align:left;
 }
 .body-container2 {
-	margin : 20px auto;
+	margin : auto;
 	width: 1300px;
 	clear: both;
 	min-height: 500px;
@@ -92,7 +122,6 @@ body{
 #nav1 {
 	font-weight: 800;
 }
-
 
 
 </style>
@@ -139,14 +168,13 @@ function sendOk() {
 				<tr><td><a href="#" id="nav2">강의 평가</a></td></tr>
 			</table>
 		</div>
-		<div class="content2">
+		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
 			자유 게시판
-		</div>
-			<br><br><br><br>
+			<br><br>
 			<!--  여기부터 메인 -->
 			  <div>
 			<form name="boardForm" method="post">
-			  <table style="width: 800px; margin: 30px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			  <table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center; background-color: #3598DB;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 			      <td style="padding-left:10px;"> 
@@ -155,7 +183,7 @@ function sendOk() {
 			  </tr>
 			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#eeeeee" style="text-align: center; background-color: #3598DB;">작성자</td>
+			      <td width="100" style="text-align: center; background-color: #3598DB;">작성자</td>
 			      <td style="padding-left:10px;"> 
 			          ${sessionScope.member.userName}
 			      </td>
@@ -169,7 +197,7 @@ function sendOk() {
 			  </tr>
 			  </table>
 			
-			  <table style="width: 800px%; margin: 50px 0 0 700px; border-spacing: 0px;">
+			  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center">
 			         <c:if test="${mode=='update'}">
@@ -185,9 +213,9 @@ function sendOk() {
 			      	     <input type="hidden" name="parent" value="${dto.boardNum}">
 			      	     <input type="hidden" name="page" value="${page}">
 			      	</c:if>
-			        <button type="button" class="btn" onclick="sendOk();">${mode=='update'?'수정완료':(mode=='reply'? '답변완료':'등록하기')}</button>
-			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/list.do';">${mode=='update'?'수정취소':(mode=='reply'? '답변취소':'등록취소')}</button>
+			        <button type="button" class="loginButton" onclick="sendOk();">${mode=='update'?'수정완료':(mode=='reply'? '답변완료':'등록하기')}</button>
+			        <button type="reset" class="loginButton">다시입력</button>
+			        <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/board/list.do';">${mode=='update'?'수정취소':(mode=='reply'? '답변취소':'등록취소')}</button>
 			      </td>
 			    </tr>
 			  </table>
@@ -196,7 +224,7 @@ function sendOk() {
 	
 	<!--  여기까지 메인 -->
 	
-	
+		</div>
     </div>
 </div>
 

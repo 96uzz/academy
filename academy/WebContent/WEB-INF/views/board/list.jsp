@@ -36,31 +36,63 @@ function searchList() {
 <style type="text/css">
 @import url(//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css);
 
-#background{
-	background-image:url(/academy/resource/images/back1.jpg); 
-    background-position: center;
-    background-repeat: no-repeat;
-   	background-size: 1350px 600px;
-   	width: 1400px;
-   	height: 550px;
-  	margin: 0px auto 0px auto;
+#background {
+	background-image: url(/academy/resource/images/back_opacity.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 1350px 600px;
+	width: 1400px;
+	height: 550px;
+	margin: 0px auto 0px auto;
 }
 
-body{
+body {
 	font-family: 'Nanum Square', sans-serif;
 	font-size: 20px;
 }
 
-.container2 {
-    width:100%;
-    text-align:left;
+.loginButton {
+	font-family: 'Nanum Square', sans-serif;
+	font-weight: bold;
+	color: black;
+	font-size: 15px;
+	background-color: white;
+	border: 1px solid;
+	outline: 0px;
+	text-align: center;
+	border-radius: 3px;
+	height: 32px;
+	width: 100px;
 }
+
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+	background-color: #3598DB;
+	border-color: #adadad;
+	color: #333333;
+	cursor: pointer;
+}
+
+.loginButton[disabled], fieldset[disabled] .loginButton {
+	pointer-events: none;
+	cursor: not-allowed;
+	filter: alpha(opacity = 65);
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	opacity: .65;
+}
+
+.container2 {
+	width: 100%;
+	text-align: left;
+}
+
 .body-container2 {
-	margin : 20px auto;
+	margin: auto;
 	width: 1300px;
 	clear: both;
 	min-height: 500px;
 }
+
 .navigation2 {
 	float: left;
 }
@@ -72,12 +104,11 @@ body{
 }
 
 .navigation2 td {
- 	font-family: 'Nanum Square', sans-serif;
-	font-size : 20px;
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 20px;
 	border-radius: 2px;
-	margin : 20px auto;
-	
-	
+	margin: 20px auto;
+	padding : 10px;
 }
 
 #nav1 {
@@ -105,21 +136,16 @@ body{
         	</div>
 			<table>
 				<tr><td><a href="<%=cp%>/board/list.do" id="nav1">자유 게시판</a></td></tr>
-				<tr><td><br><a href="#" id="nav2">강의 평가</a></td></tr>
+				<tr><td><a href="<%=cp%>/review/list.do" id="nav2">강의 평가</a></td></tr>
 			</table>
 		</div>
-		<div class="content2">
-			자유 게시판
-		</div>
-			<br><br>
+		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
+			<p>자유 게시판<p>
+		
 			<!--  여기부터 소스 -->
 			
-			<div style="margin-left: 250px;">
-			<table style="width: 800px; margin: 20px auto 0px; border-spacing: 0px;">
+			<table style="width: 100%;">
 			   <tr height="35">
-			      <td align="left" width="50%">
-			          ${dataCount}개(${page}/${total_page} 페이지)
-			      </td>
 			      <td align="right">
 			        <form name="selectForm" action="<%=cp%>/board/list.do" method="post" onchange="selectList();">
 							<select name="rows" class="selectField" style="margin-bottom: 5px;" >
@@ -129,12 +155,11 @@ body{
 			          	<input type="hidden" name="condition" value="${condition}">
 			          	<input type="hidden" name="keyword" value="${keyword}">
 						</form>
-			          &nbsp;
 			      </td>
 			   </tr>
 			</table>
 				
-			<table style="width: 800px; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
+			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
 			  <tr align="center" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; background-color: #3598DB;"> 
 			      <th width="60">No</th>
 			      <th>제목</th>
@@ -144,7 +169,7 @@ body{
 			  </tr>
 			 
 		<c:forEach var="dto" items="${list}">
-			  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+			  <tr style="border-bottom: 1px solid #cccccc; height: 40px; text-align: center;"> 
 			      <td>${dto.listNum}</td>
 			      <td align="left" style="padding-left: 20px;">
 			           <c:forEach var="n" begin="1" end="${dto.depth}">&nbsp;&nbsp;</c:forEach>
@@ -159,18 +184,10 @@ body{
 		</c:forEach>
 			</table>
 			 
-			<table style="width: 800px; margin: 0px auto; border-spacing: 0px;">
-			   <tr height="35">
-				<td align="center">
-			        ${dataCount==0?"게시물이 존재하지 않습니다.":paging}
-				</td>
-			   </tr>
-			</table>
-			
-			<table style="width: 800px; margin : 50px 100px 0 0; border-spacing: 0px; float: right;">
+			 <table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			   <tr height="40">
 			      <td align="left" width="100px">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/list.do';">새로고침</button>
+			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/board/list.do';">새로고침</button>
 			      </td>
 			      <td align="center">
 			          <form name="searchForm" action="<%=cp%>/board/list.do" method="post">
@@ -184,10 +201,21 @@ body{
 			        </form>
 			      </td>
 			      <td align="right" width="100">
-			          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/board/created.do';">글올리기</button>
+			          <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/board/created.do';">글올리기</button>
 			      </td>
 			   </tr>
 			</table>
+			 
+			 
+			<table style="width: 800px; margin: 0px auto; border-spacing: 0px;">
+			   <tr height="35">
+				<td align="center">
+			        ${dataCount==0?"게시물이 존재하지 않습니다.":paging}
+				</td>
+			   </tr>
+			</table>
+			
+			
         </div>
         <!--  여기까지 소스 -->
     </div>
