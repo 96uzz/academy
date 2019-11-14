@@ -81,7 +81,7 @@ public class LectureDAO {
 		String sql;
 		
 		try {
-			sql="SELECT NVL(COUNT(*), 0) FROM lecture l JOIN academy a ON l.userId=a.userId ";
+			sql="SELECT NVL(COUNT(*), 0) FROM lecture l JOIN academy a ON l.acaNum=a.acaNum";
 			if(condition.equalsIgnoreCase("l.lecName")) {
 				sql += " WHERE TO_CHAR(lecName, ?) >= 1 ";
 			} else if(condition.equalsIgnoreCase("a.acaName")) {

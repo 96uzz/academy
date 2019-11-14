@@ -119,6 +119,7 @@ body {
 		}
 	}
 </c:if>
+<c:if test="${sessionScope.member.userId!=null}">
 	function insertInterLecture(lectureCode) {
 		var f = document.interForm;
 		
@@ -132,6 +133,7 @@ body {
 		
 		f.submit();
 	}
+</c:if>
 </script>
 
 </head>
