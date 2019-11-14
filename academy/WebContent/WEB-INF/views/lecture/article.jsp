@@ -119,7 +119,7 @@ body {
 		}
 	}
 </c:if>
-<c:if test="${sessionScope.member.userId!=null}">
+<c:if test="${not empty sessionScope.member.userId}">
 	function insertInterLecture(lectureCode) {
 		var f = document.interForm;
 		
