@@ -129,8 +129,8 @@ body{
            <h3><span><img src="<%=cp%>/resource/images/menu-button.png" style="height: 21px;"/></span> 커뮤니티 </h3>
         	</div>
 			<table>
-				<tr><td><a href="#" id="nav1">자유 게시판</a></td></tr>
-				<tr><td><a href="#" id="nav2">강의 평가</a></td></tr>
+				<tr><td><a href="<%=cp%>/board/list.do" id="nav1">자유 게시판</a></td></tr>
+				<tr><td><a href="<%=cp%>/review/list.do" id="nav2">강의 평가</a></td></tr>
 			</table>
 		</div>
 		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
