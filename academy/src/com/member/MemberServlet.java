@@ -458,10 +458,12 @@ public class MemberServlet extends MyServlet {
 		MemberDAO dao = new MemberDAO();
 
 		String foundUserId = dao.findUserId(userName, birth);
+		int quit = dao.quitOrNotId(userName, birth);
+		
 		if (userName.equals("") || birth.equals("")) {
 			req.setAttribute("message", "이름과 생년월일을 입력해주세요.");
 			req.setAttribute("mode", "wrong");
-		} else if (foundUserId != null) {
+		} else if (foundUserId != null&&quit==1) {
 			req.setAttribute("message", "회원님의 ID는 " + foundUserId + "입니다.");
 		} else {
 			req.setAttribute("message", "일치하는 ID가 없습니다.");
@@ -486,11 +488,12 @@ public class MemberServlet extends MyServlet {
 		MemberDAO dao = new MemberDAO();
 
 		String foundUserPwd = dao.findUserPwd(userId, email);
-
+		int quit = dao.quitOrNotPwd(userId, email);
+		
 		if (userId.equals("") || email.equals("")) {
 			req.setAttribute("message", "ID와 이메일을 입력해주세요.");
 			req.setAttribute("mode", "wrong");
-		} else if (foundUserPwd != null) {
+		} else if (foundUserPwd != null&&quit==1) {
 			req.setAttribute("message", "회원님의 비밀번호는 " + foundUserPwd + "입니다.");
 		} else {
 			req.setAttribute("message", "일치하는 비밀번호가 없습니다.");

@@ -356,4 +356,82 @@ public class MemberDAO {
 		return userPwd;
 	}
 
+	public int quitOrNotId(String userName, String birth) {
+		PreparedStatement pstmt = null;
+		int quit = 0;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+			sql = "SELECT quit FROM member WHERE userName = ? AND TO_CHAR(birth,'YYYYMMDD') = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userName);
+			pstmt.setString(2, birth);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				quit = rs.getInt("quit");
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+				}
+			}
+
+		}
+
+		return quit;
+	}
+
+	public int quitOrNotPwd(String userId, String email) {
+		PreparedStatement pstmt = null;
+		int quit = 0;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+			sql = "SELECT quit FROM member WHERE userId = ? AND email = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, email);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				quit = rs.getInt("quit");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+				}
+			}
+		}
+
+		return quit;
+	}
 }
