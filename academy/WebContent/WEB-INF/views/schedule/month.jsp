@@ -199,34 +199,36 @@ function changeDate(year, month) {
 // 등록 대화상자 출력
 $(function(){
 	$(".textDate").click(function(){
-		// 폼 reset
-		$("form[name=scheduleForm]").each(function(){
-			this.reset();
-		});
-		
-		$("#form-eday").closest("tr").show();
-		
-		var date=$(this).attr("data-date");
-		date=date.substr(0,4)+"-"+date.substr(4,2)+"-"+date.substr(6,2);
-
-		$("form[name=scheduleForm] input[name=sday]").val(date);
-		$("form[name=scheduleForm] input[name=eday]").val(date);
-		
-		$("#form-sday").datepicker({showMonthAfterYear:true});
-		$("#form-eday").datepicker({showMonthAfterYear:true});
-		
-		$("#form-sday").datepicker("option", "defaultDate", date);
-		$("#form-eday").datepicker("option", "defaultDate", date);
-		
-		$('#schedule-dialog').dialog({
-			  modal: true,
-			  height: 650,
-			  width: 600,
-			  title: '강의 스케줄 등록',
-			  close: function(event, ui) {
-			  }
-		});
-
+		if(${sessionScope.member.userId=='admin'}) {
+			
+			// 폼 reset
+			$("form[name=scheduleForm]").each(function(){
+				this.reset();
+			});
+			
+			$("#form-eday").closest("tr").show();
+			
+			var date=$(this).attr("data-date");
+			date=date.substr(0,4)+"-"+date.substr(4,2)+"-"+date.substr(6,2);
+	
+			$("form[name=scheduleForm] input[name=sday]").val(date);
+			$("form[name=scheduleForm] input[name=eday]").val(date);
+			
+			$("#form-sday").datepicker({showMonthAfterYear:true});
+			$("#form-eday").datepicker({showMonthAfterYear:true});
+			
+			$("#form-sday").datepicker("option", "defaultDate", date);
+			$("#form-eday").datepicker("option", "defaultDate", date);
+			
+			$('#schedule-dialog').dialog({
+				  modal: true,
+				  height: 650,
+				  width: 600,
+				  title: '강의 스케줄 등록',
+				  close: function(event, ui) {
+				  }
+			});
+		}
 	});
 });
 
