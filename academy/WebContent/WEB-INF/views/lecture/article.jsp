@@ -111,15 +111,32 @@ body {
 
 <script type="text/javascript">
 <c:if test="${sessionScope.member.userId=='admin'}">
-function deleteLecture(lectureCode) {
+	function deleteLecture(lectureCode) {
 	if(confirm("게시물을 삭제 하시겠습니까 ?")) {
 		var url="<%=cp%>/lts/delete.do?lectureCode=" + lectureCode + "&${query}";
 		
 		location.href = url;
 		}
 	}
-	</c:if>
+</c:if>
+	function interForm {
+		var f = document.interForm;
+	
+		var str = f.lecCode.value;
+		if() {
+			alert("이미 등록한 강의 입니다. ");
+			f.lecCode.focus();
+			return;
+		}
+	
+		f.action="<%=cp%>/lts/${mode}_ok.do";
+	
+		f.submit();
+		
+	}
+
 </script>
+
 </head>
 <body>
 
@@ -203,9 +220,10 @@ function deleteLecture(lectureCode) {
 					<form name="interForm" action="<%=cp%>/lts/interlecture.do" method="post">
 			            <tr height="35" style="border-bottom: 1px solid #3598DB;">
 						<td align="left" style="padding-left: 5px;">관심 강좌</td>
-						<td align="left" style="padding-left: 5px;">&nbsp;<button type="submit" style="border: none; background: white; font-size: 20px;">★</button>
+						<td align="left" style="padding-left: 5px;">&nbsp;
+						<button type="submit" style="background: white; font-size: 17px;">등록하기</button>
+						</td>
 						<td width="50%" align="left" style="padding-left: 5px;"></td>	
-						
 						</tr>
 			           <input type="hidden" name="acaNum" value="${dto.acaNum}">
 						<input type="hidden" name="lecCode" value="${dto.lecCode}">

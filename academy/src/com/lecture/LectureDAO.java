@@ -175,7 +175,7 @@ public class LectureDAO {
 		try {
 			sb.append("SELECT l.lecCode, l.lecNum, l.lecName, l.lecStartDate, l.lecEndDate, l.lecLimit, l.lecIntro, ");
 			sb.append(" TO_CHAR(l.created, 'YYYY-MM-DD')created, l.hitCount, l.userId, a.acaName ");
-			sb.append(" FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ORDER BY l.lecCode DESC ");
+			sb.append(" FROM lecture l JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ORDER BY created DESC ");
 			sb.append(" OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
 			
 			pstmt=conn.prepareStatement(sb.toString());
@@ -450,7 +450,7 @@ public class LectureDAO {
 		String sql;
 		
 		try {
-			sql = "UPDATE lecture l SET hitCount=hitCount+1 WHERE l.lecCode = ? ";
+			sql = "UPDATE lecture SET hitCount=hitCount+1 WHERE lecCode = ? ";
 			
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);

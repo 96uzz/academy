@@ -173,9 +173,9 @@ public class AcademyDAO {
 		
 		try {
 			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv, ");
-			sb.append("  TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
+			sb.append("  TO_CHAR(created, 'YYYY-MM-DD') created, a.userId, hitCount ");
 			sb.append("  FROM academy a JOIN member m ON a.userId=m.userId ");
-			sb.append("  ORDER BY acaNum DESC ");
+			sb.append("  ORDER BY created DESC ");
 			sb.append("  OFFSET ? ROWS FETCH FIRST ? ROWS ONLY ");
 			
 			pstmt=conn.prepareStatement(sb.toString());
@@ -193,6 +193,7 @@ public class AcademyDAO {
 				dto.setAcaDiv(rs.getString("acaDiv"));
 				dto.setCreated(rs.getString("created"));
 				dto.setUserId(rs.getString("userId"));
+				dto.setHitCount(rs.getInt("hitCount"));
 				
 				list.add(dto);
 			}
