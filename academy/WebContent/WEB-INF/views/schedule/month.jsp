@@ -167,6 +167,35 @@ body {
 	font-family: 'Nanum Square', sans-serif;
 	font-size : 15px;
 }
+
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
@@ -536,9 +565,9 @@ $(function(){
 
 					<tr height="45">
 						<td align="center" colspan="2">
-							<button type="button" class="btn" id="btnScheduleSendOk">일정등록</button>
-							<button type="reset" class="btn">다시입력</button>
-							<button type="button" class="btn" id="btnScheduleSendCancel">등록취소</button>
+							<button type="button" class="loginButton" id="btnScheduleSendOk">일정등록</button>
+							<button type="reset" class="loginButton">다시입력</button>
+							<button type="button" class="loginButton" id="btnScheduleSendCancel">등록취소</button>
 						</td>
 					</tr>
 				</table>

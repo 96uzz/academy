@@ -161,22 +161,24 @@ function searchList() {
 					<th style="width: 100px;">작성일</th>
 					<th style="width: 60px;">조회수</th>
 				</tr>
-<%-- 			<c:forEach var="dto" items="${listNotice}"> --%>
-<!-- 				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;"> -->
-<%-- 					<td>${dto.listNum}</td>				 --%>
-<!-- 					<td> -->
-<%-- 						<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a> --%>
-<!-- 					</td>			 -->
-<!-- 					<td>관리자</td> -->
-<!-- 					<td> -->
-<%-- 						<c:if test="${not empty dto.saveFilename}"> --%>
-<%-- 							<a href="<%=cp%>/notice/download.do?noticeNum=${dto.noticeNum}"><img src="<%=cp%>/resource/images/disk.gif" width="15" height="15"></a> --%>
-<%-- 						</c:if> --%>
-<!-- 			      	</td> -->
-<%-- 					<td>${dto.created}</td> --%>
-<%-- 					<td>${dto.hitCount}</td> --%>
-<!-- 				</tr> -->
-<%-- 			</c:forEach>		 --%>
+			<c:forEach var="dto" items="${listNotice}">
+				<tr style="border-bottom: 1px solid black; height: 40px; text-align: center;">
+					<td><span style="display: inline-block; padding: 1px 3px; background: red; color: #FFFFFF;">공지</span></td>				
+					<td>
+						<a href="${articleUrl}&noticeNum=${dto.noticeNum}" >
+							<span style="width: 400px; display: inline-block; overflow:hidden; text-overflow: ellipsis; white-space: nowrap;">${dto.subject}</span>
+						</a>
+					</td>			
+					<td>관리자</td>
+					<td>
+						<c:if test="${not empty dto.saveFilename}">
+							<a href="<%=cp%>/notice/download.do?noticeNum=${dto.noticeNum}"><img src="<%=cp%>/resource/images/disk.gif" width="15" height="15"></a>
+						</c:if>
+			      	</td>
+					<td>${dto.created}</td>
+					<td>${dto.hitCount}</td>
+				</tr>
+			</c:forEach>		
 				
 			<c:forEach var="dto" items="${list}">
 				<tr style="border-bottom: 1px solid #cccccc; height: 40px; text-align: center;">

@@ -36,7 +36,6 @@
    	width: 1400px;
    	min-height: 550px;
   	margin: 0px auto 0px auto;
-  	background-attachment: scroll;
 }
 
 body{
@@ -47,13 +46,12 @@ body{
 .container2 {
     width:100%;
     text-align:left;
-    min-height: 600px;
 }
 .body-container2 {
-	margin : 20px auto;
+	margin : auto;
 	width: 1300px;
 	clear: both;
-	min-height: 600px;
+	min-height: 500px;
 }
 .navigation2 {
 	float: left;
@@ -78,15 +76,33 @@ body{
 	font-weight: 800;
 }
 
-.btnLike {
-    color:#333333;
-    font-weight:500;
-    border:1px solid #cccccc;
-    background-color:#ffffff;
-    text-align:center;
-    cursor:pointer;
-    padding:6px 10px 5px;
-    border-radius:4px;
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
 }
 
 .star{
@@ -104,6 +120,18 @@ body{
   background: url(http://gahyun.wooga.kr/main/img/testImg/star.png) no-repeat -30px 0; 
   background-size: 60px; 
   margin-left: -3px;
+}
+
+.star_left2 {
+  background: url(http://gahyun.wooga.kr/main/img/testImg/star.png) no-repeat 0 0; 
+  background-size: 60px; 
+  margin-right: -4px;
+}
+
+.star_right2 {
+  background: url(http://gahyun.wooga.kr/main/img/testImg/star.png) no-repeat -30px 0; 
+  background-size: 60px; 
+  margin-left: -4px;
 }
 
 .star.on{
@@ -299,29 +327,25 @@ function updateReview(reNum) {
         	</div>
 			<table>
 				<tr><td><a href="<%=cp%>/board/list.do" id="nav2">자유 게시판</a></td></tr>
-				<tr><td><br><a href="<%=cp%>/review/list.do" id="nav1">강의 평가</a></td></tr>
+				<tr><td><a href="<%=cp%>/review/list.do" id="nav1">강의 평가</a></td></tr>
 			</table>
 		</div>
-		<div class="content2">
-			&nbsp;&nbsp;&nbsp;<h3 style="width: 200px; margin-left: 70px;">강의 평가</h3>
-		</div>
-			<br><br><br><br>
+		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 900px;">
+			<p>강의 평가<p>
+		
 			<!--  여기부터 소스 -->
+			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid #3598DB; border-top: 1px solid #3598DB; font-size: 17px; color: black; width: 100%;">
+				<tr height="35" style="border-top: 1px solid #3598DB; border-bottom: 1px solid #3598DB;">
+			    	<td colspan="2" align="center">
+				  	${dto.lecName}
+			    	</td>
+				</tr>
 			
-			<div style="min-height: 600px;">
-			 <div style="min-height: 600px;">
-			<table style="width: 800px; min-height: 600px; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			
-			<tr height="25" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="center">
-				  강의명: ${dto.lecName}
+			<tr height="35" style="border-bottom: 1px solid #3598DB;">
+			    <td width="60%" align="left" style="padding-left: 5px; font-size: 20px;">
+			    	전체 평점 : <span class="avg_rate">${dto.rate}</span>
 			    </td>
-			</tr>
-			
-			<tr height="15" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%"  style="padding-left: 5px; text-align: right; ">
-			      <span style="float: left;">전체 평점 : </span><span style="float: left;" class="avg_rate">${dto.rate}</span>
-			      
+			      <td>
 			      <span class='avg-draw-star-rate' style="cursor: text !important;">
 	        		<span class="draw star star_left small"></span>
 				  	<span class="draw star star_right small"></span>
@@ -341,7 +365,7 @@ function updateReview(reNum) {
 			    </td>
 			</tr>
 			
-			<tr>
+			<tr style="border-bottom: 1px solid #3598DB;">
 			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="80">
 			      ${dto.content}
 			   </td>
@@ -349,70 +373,70 @@ function updateReview(reNum) {
 			
 			</table>
 			
-			<table style="width: 900px; margin: 0px auto 20px; border-spacing: 0px; float: right;">
+			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
-			    <td align="left" style="width: 250px;">
+			    <td width="300" align="left">
 			    	<c:if test="${sessionScope.member.userId=='admin'}">
-			          <button type="button" class="btn" onclick="updateReview('${dto.reNum}');">수정</button>
+			          <button type="button" class="loginButton" onclick="updateReview('${dto.reNum}');">수정</button>
 			       </c:if>
 			       <c:if test="${sessionScope.member.userId=='admin'}">			    
-			          <button type="button" class="btn" onclick="deleteReview('${dto.reNum}');">삭제</button>
+			          <button type="button" class="loginButton" onclick="deleteReview('${dto.reNum}');">삭제</button>
 			       </c:if>
 			    </td>
 			
-			    <td width ="150" align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/review/list.do?${query}';">리스트</button>
+			    <td align="right">
+			        <button type="button" class="loginButton" onclick="javascript:location.href='<%=cp%>/review/list.do?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>
-        </div>
+        
 
- 	    <div style="min-height: 300px;">
-            <table style="width: 900px; margin: 0px auto 20px; border-spacing: 0px; float: right;">
-            <tr height='30'> 
+ 	    
+            <table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
+            <tr height="100"></tr>
+            <tr height='45'> 
 	            <td align='left'>
-	            	<span style='font-weight: bold;' >후기쓰기</span><span> - 수강 후기를 남겨주세요</span>
+	            	<span style="font-size: 25px; width:800px; color: black"> 수강 후기를 남겨주세요</span>
 	            </td>
             </tr>
             <tr height='30'> 
 	            <td>
 	            	<div class="star-box">
-	            		<span class="star star_left"></span>
-					  	<span class="star star_right"></span>
+	            		<span class="star star_left2"></span>
+					  	<span class="star star_right2"></span>
 					
-					  	<span class="star star_left"></span>
-					  	<span class="star star_right"></span>
+					  	<span class="star star_left2"></span>
+					  	<span class="star star_right2"></span>
 					
-					  	<span class="star star_left"></span>
-					  	<span class="star star_right"></span>
+					  	<span class="star star_left2"></span>
+					  	<span class="star star_right2"></span>
 					
-						<span class="star star_left"></span>
-						<span class="star star_right"></span>
+						<span class="star star_left2"></span>
+						<span class="star star_right2"></span>
 						
-						<span class="star star_left"></span>
-						<span class="star star_right"></span>
+						<span class="star star_left2"></span>
+						<span class="star star_right2"></span>
 					</div>
-	            </td>
-	            <td>
-			    	<span id="star_score">0</span> 점
+					<span id="star_score" style="font-size: 30px; color: black;">0</span>점
 			    	<!--  jQuery('#star_score').html()  -->
-			    </td>
+	            </td>
+	           
             </tr>
             <tr>
-               <td style='padding:5px 5px 0px;'>
-                    <textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
+               <td>
+                    <textarea class='boxTA' style='width:100%; height: 80px;'></textarea>
                 </td>
             </tr>
             <tr>
                <td align='right'>
-                    <button type='button' class='btn btnSendReply' style='padding:10px 20px;'>댓글 등록</button>
+                    <button type='button' class='loginButton btnSendReply' >댓글 등록</button>
                 </td>
             </tr>
             </table>
             
-            <div id="listReply" style="width: 900px; float:right;"></div>
- 	    </div>
- 	    </div>
+            <div id="listReply" style="width: 900px; font-size: 17px; color: black;"></div>
+ 	   </div>
+ 	    
         <!--  여기까지 메인 -->
     </div>
 </div>

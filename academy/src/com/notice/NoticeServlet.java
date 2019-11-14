@@ -125,13 +125,13 @@ public class NoticeServlet extends MyServlet {
 		}
 		
 		// 공지글
-//		List<NoticeDTO> listNotice=null;
-//		if(current_page==1) {
-//			listNotice=dao.listNotice();
-//			for(NoticeDTO dto : listNotice) {
-//				dto.setCreated(dto.getCreated().substring(0,10));
-//			}
-//		}
+		List<NoticeDTO> listNotice=null;
+		if(current_page==1) {
+			listNotice=dao.listNotice();
+			for(NoticeDTO dto : listNotice) {
+				dto.setCreated(dto.getCreated().substring(0,10));
+			}
+		}
 		
 		// SimpleDateFormat : 문자열을 날짜로 / 날짜를 문자열로
 		long gap;
@@ -169,7 +169,7 @@ public class NoticeServlet extends MyServlet {
 		req.setAttribute("list", list);
 		req.setAttribute("paging", paging);
 		req.setAttribute("page", current_page);
-//		req.setAttribute("listNotice", listNotice);
+		req.setAttribute("listNotice", listNotice);
 		req.setAttribute("dataCount", dataCount);
 		req.setAttribute("total_page", total_page);
 		req.setAttribute("rows", rows); // 한 화면에 보이는 갯수

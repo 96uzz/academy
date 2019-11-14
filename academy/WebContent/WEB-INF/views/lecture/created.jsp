@@ -100,6 +100,13 @@ body{
 	font-weight: 800;
 }
 
+.selectIm {
+	border: 1px solid white;
+	height: 35px;
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 17px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -184,7 +191,7 @@ body{
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">기관명</td>
 			      <td style="padding-left:10px;"> 
-			          <select name="acaNum">
+			          <select name="acaNum" class="selectIm" >
 			            <c:forEach var="vo" items="${listAcademy}">
 			               <option value="${vo.acaNum}" ${dto.acaNum==vo.acaNum ? "selected='selected'" : "" }>${vo.acaName}</option>
 			            </c:forEach>

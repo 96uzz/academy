@@ -121,47 +121,47 @@ public class NoticeDAO {
 	}
 	
 	// 공지글 리스트
-//	public List<NoticeDTO> listNotice() {
-//		PreparedStatement pstmt=null;
-//		ResultSet rs=null;
-//		StringBuilder sb=new StringBuilder();
-//		List<NoticeDTO> list=new ArrayList<NoticeDTO>();
-//		
-//		try {
-//			sb.append("SELECT noticeNum, subject, hitCount, saveFilename, created FROM notice WHERE notice=1 ");
-//			
-//			pstmt=conn.prepareStatement(sb.toString());
-//			
-//			rs=pstmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				NoticeDTO dto=new NoticeDTO();
-//				dto.setNoticeNum(rs.getInt("noticeNum"));
-//				dto.setSubject(rs.getString("subject"));
-//				dto.setHitCount(rs.getInt("hitCount"));
-//				dto.setSaveFilename(rs.getString("saveFilename"));
-//				dto.setCreated(rs.getString("created"));
-//				list.add(dto);
-//			}
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if(rs!=null) {
-//				try {
-//					rs.close();
-//				} catch (Exception e2) {
-//				}
-//			}
-//			if(pstmt!=null) {
-//				try {
-//					pstmt.close();
-//				} catch (Exception e2) {
-//				}
-//			}
-//		}
-//		return list;
-//	}
+	public List<NoticeDTO> listNotice() {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		StringBuilder sb=new StringBuilder();
+		List<NoticeDTO> list=new ArrayList<NoticeDTO>();
+		
+		try {
+			sb.append("SELECT noticeNum, subject, hitCount, saveFilename, created FROM notice WHERE notice=1 ");
+			
+			pstmt=conn.prepareStatement(sb.toString());
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				NoticeDTO dto=new NoticeDTO();
+				dto.setNoticeNum(rs.getInt("noticeNum"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setHitCount(rs.getInt("hitCount"));
+				dto.setSaveFilename(rs.getString("saveFilename"));
+				dto.setCreated(rs.getString("created"));
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		return list;
+	}
 	
 	public List<NoticeDTO> listNotice(int offset, int rows) {
 		List<NoticeDTO> list = new ArrayList<NoticeDTO>();

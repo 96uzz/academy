@@ -40,21 +40,32 @@ body{
 }
 
 .loginButton {
-	font-family: 'Nanum Square', sans-serif;
-	font-weight: bold;
-	color: white;
-	font-size: 15px;
-	background-color: #3598DB;
-	border: 0px;
-	outline: 0px;
-	text-align: center;
-	border-radius: 3px;
-	height: 29px;
-	width: 90px;
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
 }
-
-.loginButton:hover {
-	cursor: pointer;
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
 }
 
 .container2 {
@@ -517,9 +528,9 @@ function cancel(){
 								<tr height="45">
 									<td align="center">
 										<button type="button" name="sendButton" ${mode=="created"?"disabled='disabled'":""} 
-											class="btn loginButton" onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
-										<button type="reset" class="btn loginButton">다시입력</button>
-										<button type="button" class="btn loginButton"
+											class="loginButton" onclick="memberOk();">${mode=="created"?"회원가입":"정보수정"}</button>
+										<button type="reset" class="loginButton">다시입력</button>
+										<button type="button" class="loginButton"
 											onclick="javascript:location.href='<%=cp%>/';">${mode=="created"?"가입취소":"수정취소"}</button>
 									</td>
 								</tr>

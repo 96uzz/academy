@@ -56,6 +56,19 @@ body {
 	width: 100px;
 }
 
+.addButton {
+	font-family: 'Nanum Square', sans-serif;
+	color: white;
+	font-size: 17px;
+	background-color: orange;
+	border: 1px solid;
+	outline: 0px;
+	text-align: center;
+	border-radius: 3px;
+	height: 30px;
+	width: 80px;
+}
+
 .loginButton:active, .loginButton:focus, .loginButton:hover {
 	background-color: #3598DB;
 	border-color: #adadad;
@@ -63,6 +76,12 @@ body {
 	cursor: pointer;
 }
 
+.addButton:active, .addButton:focus, .addButton:hover {
+	background-color: orange;
+	border-color: black;
+	color: #333333;
+	cursor: pointer;
+}
 .loginButton[disabled], fieldset[disabled] .loginButton {
 	pointer-events: none;
 	cursor: not-allowed;
@@ -216,18 +235,20 @@ body {
 						<td width="50%" align="left" style="padding-left: 5px;"></td>
 					</tr>
 					
-					<form name="interForm" action="<%=cp%>/lts/interlecture.do" method="post">
-			            <tr height="35" style="border-bottom: 1px solid #3598DB;">
-						<td align="left" style="padding-left: 5px;">관심 강좌</td>
-						<td align="left" style="padding-left: 5px;">&nbsp;
-						<button type="submit" onclick="insertInterLecture('${dto.lecCode}');"style="background: white; font-size: 17px;">등록하기</button>
+					
+			        <tr height="35" style="border-bottom: 1px solid #3598DB;">
+						<td align="left" style="padding-left: 5px; height: 35px;">관심 강좌</td>
+						<td align="left" style="padding-left: 5px;">
+							<form name="interForm" action="<%=cp%>/lts/interlecture.do" method="post" style="display: inline-block;">
+								<button class="addButton" type="submit" onclick="insertInterLecture('${dto.lecCode}');">등록하기</button>
+								<input type="hidden" name="acaNum" value="${dto.acaNum}">
+								<input type="hidden" name="lecCode" value="${dto.lecCode}">
+			        		</form>
 						</td>
 						<td width="50%" align="left" style="padding-left: 5px;"></td>	
-						</tr>
-			           <input type="hidden" name="acaNum" value="${dto.acaNum}">
-						<input type="hidden" name="lecCode" value="${dto.lecCode}">
-			        </form>
-			        
+					</tr>
+			           
+			       
 					<%-- <tr height="35" style="border-bottom: 1px solid #3598DB;">
 						<td align="left" style="padding-left: 5px;">관심 강좌</td>
 						<td align="left" style="padding-left: 5px;">&nbsp;<a href="<%=cp%>/lts/interlecture.do">★</a>

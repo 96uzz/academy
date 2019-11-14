@@ -49,10 +49,10 @@ padding: 60px 0px 0px 60px;
 .loginButton {
    font-family: 'Nanum Square', sans-serif;
    font-weight: bold;
-   color: white;
+   color: black;
    font-size: 15px;
-   background-color: #3598DB;
-   border: 0px;
+   background-color: white;
+   border: 1px solid;
    outline: 0px;
    text-align: center;
    border-radius: 3px;
@@ -61,7 +61,7 @@ padding: 60px 0px 0px 60px;
    
 }
 .loginButton:active, .loginButton:focus, .loginButton:hover {
-    background-color:#e6e6e6;
+    background-color:#3598DB;
     border-color: #adadad;
     color: #333333;
     cursor: pointer;

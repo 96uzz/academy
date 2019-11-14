@@ -100,6 +100,12 @@ body{
 	font-weight: 800;
 }
 
+.selectIm {
+	border: 1px solid white;
+	height: 35px;
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 17px;
+}
 </style>
 
 <script type="text/javascript">
@@ -168,12 +174,12 @@ body{
 			      </td>
 			  </tr>
 
-<!-- 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">  -->
-<!-- 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">상시 공지</td> -->
-<!-- 			      <td style="padding-left:10px;">  -->
-<%-- 			          <input type="checkbox" name="notice" value="1" ${dto.notice==1 ? "checked='checked'" : "" }> <label></label> --%>
-<!-- 			      </td> -->
-<!-- 			  </tr> -->
+			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
+			      <td width="100" bgcolor="#3598DB" style="text-align: center;">상시 공지</td>
+			      <td style="padding-left:10px;"> 
+			          <input type="checkbox" name="notice" value="1" ${dto.notice==1 ? "checked='checked'" : "" }> <label></label>
+			      </td>
+			  </tr>
 			  
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">작성자</td>
@@ -191,8 +197,8 @@ body{
 			  
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
-			      <td style="padding-left:10px;"> 
-			          <input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
+			      <td style="padding-left:10px; height: 35px;"> 
+			          <input type="file" name="upload" class="boxTF" size="53">
 			       </td>
 			  </tr>
 			  

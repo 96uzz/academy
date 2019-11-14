@@ -152,17 +152,13 @@ function searchList() {
 				</tr>
 			</table>
 			
-			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
-				<tr style="border-bottom: 1px solid black; background-color: #3598DB; height: 35px;">
+			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
+				<tr align="center" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; background-color: #3598DB;">
 					<td style="width: 50px; text-align: center;">No</td>
 					<td style="width: 200px; text-align: center;">교육기관</td>
-					<!-- <td style="width: 200px; text-align: center;">과정명</td> -->
 					<td style="width: 400px; text-align: center;">과정명</td>
-					<!-- <td style="width: 100px; text-align: center;">분류번호</td>	 -->	
 					<td style="width: 150px; text-align: center;">교육시작일</td>
 					<td style="width: 150px; text-align: center;">교육종료일</td>
-				<!-- 	<td style="width: 80px; text-align: center;">작성자</td>
-					<td style="width: 150px; text-align: center;">작성일</td> -->
 					<td style="width: 80px; text-align: center;">조회수</td>
 				</tr>
 

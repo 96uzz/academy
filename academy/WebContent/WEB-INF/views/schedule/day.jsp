@@ -24,6 +24,8 @@
 	type="text/css">
 
 <style type="text/css">
+
+
 .ui-widget-header {
 	background: none;
 	border: none;
@@ -131,18 +133,45 @@ body {
 }
 
 #btnList, #btnUpdate, #btnDelete {
-	background: #3598DB;
-	color : white;
+	background: white;
+	color : black;
 }
 
 #btnList:hover, #btnUpdate:hover, #btnDelete:hover{
-	background: #e6e6e6;
+	background: #3598DB;
 	border-color: #adadad;
     color: #333333;
     cursor: pointer;
 }
 
-
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
@@ -426,15 +455,15 @@ function deleteOk(num) {
 							</tr>
 							<tr height="45">
 								<td colspan="2" align="right" style="padding-right: 5px;">
-									<button type="button" id="btnList" class="btn"
+									<button type="button" id="btnList" class="loginButton"
 										onclick="javascript:location.href='<%=cp%>/cal/list.do';">리스트</button>
 								</td>
 							</tr>
 							<tr height="45">
 								<c:if test="${sessionScope.member.userId=='admin'}">
 									<td colspan="2" align="right" style="padding-right: 5px;">
-										<button type="button" id="btnUpdate" class="btn">수정</button>
-										<button type="button" id="btnDelete" class="btn"
+										<button type="button" id="btnUpdate" class="loginButton">수정</button>
+										<button type="button" id="btnDelete" class="loginButton"
 											onclick="deleteOk('${dto.num}');">삭제</button>
 									</td>
 								</c:if>
@@ -553,8 +582,8 @@ function deleteOk(num) {
 						<tr height="45">
 							<td align="center" colspan="2"><input type="hidden"
 								name="num" value="${dto.num}">
-								<button type="button" class="btn" id="btnScheduleSendOk">수정완료</button>
-								<button type="button" class="btn" id="btnScheduleSendCancel">수정취소</button>
+								<button type="button" class="loginButton" id="btnScheduleSendOk">수정완료</button>
+								<button type="button" class="loginButton" id="btnScheduleSendCancel">수정취소</button>
 							</td>
 						</tr>
 					</table>
