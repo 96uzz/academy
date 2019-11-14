@@ -81,17 +81,17 @@ public class LectureDAO {
 		String sql;
 		
 		try {
-			sql="SELECT NVL(COUNT(*), 0) FROM lecture ";
-			if(condition.equalsIgnoreCase("created")) {
-				keyword=keyword.replaceAll("-", "");
-				sql += " WHERE TO_CHAR(l.created, 'YYYYMMDD') = ? ";
-			} else if(condition.equalsIgnoreCase("lecName")) {
-				sql += " WHERE INSTR(l.lecName, ?) = 1 ";
+			sql="SELECT NVL(COUNT(*), 0) FROM lecture l JOIN academy a ON l.userId=a.userId ";
+			if(condition.equalsIgnoreCase("l.lecName")) {
+				sql += " WHERE TO_CHAR(lecName, ?) >= 1 ";
+			} else if(condition.equalsIgnoreCase("a.acaName")) {
+				sql += " WHERE INSTR(acaName, ?) >= 1 ";
 			} else {
 				sql += " WHERE INSTR("+condition+", ?) >= 1 ";
 			}
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, keyword);
+			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				result=rs.getInt(1);
@@ -226,12 +226,9 @@ public class LectureDAO {
 		try {
 			sb.append("SELECT l.lecCode, l.lecNum, l.lecName, l.lecStartDate, l.lecEndDate, l.lecLimit, l.lecIntro, ");
 			sb.append(" TO_CHAR(l.created, 'YYYY-MM-DD') created, l.hitCount, l.userId, a.acaName FROM lecture l ");
-			sb.append(" JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ORDER BY l.lecCode DESC");
-			if(condition.equalsIgnoreCase("Created")) {
-				keyword = keyword.replaceAll("-", "");
-				sb.append(" WHERE TO_CHAR(l.created, 'YYYYMMDD' = ? ");
-			} else if(condition.equalsIgnoreCase("lecName")) {
-				sb.append(" WHERE INSTR(l.lecName, ?) = 1 ");
+			sb.append(" JOIN member m ON l.userId=m.userId JOIN academy a ON l.acaNum=a.acaNum ");
+			if(condition.equalsIgnoreCase("lecName")) {
+				sb.append(" WHERE INSTR(l.lecName, ?) >= 1 ");
 			} else {
 				sb.append(" WHERE INSTR("+condition+", ?) >= 1 ");
 			}

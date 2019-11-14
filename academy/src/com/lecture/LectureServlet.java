@@ -81,6 +81,10 @@ public class LectureServlet extends MyServlet{
 			current_page = Integer.parseInt(page);
 		}
 		int rows = 10;
+		String srows = req.getParameter("rows");
+		if(srows!=null) {
+			rows = Integer.parseInt(srows);
+		}
 		
 		String condition = req.getParameter("condition");
 		String keyword=req.getParameter("keyword");
@@ -92,25 +96,27 @@ public class LectureServlet extends MyServlet{
 			keyword=URLDecoder.decode(keyword, "UTF-8");
 		}
 		int dataCount;
-		if(keyword.length()==0)
+		if(keyword.length()==0) {
 			dataCount = dao.dataCount();
-		
-		else
+		}else {
 			dataCount = dao.dataCount(condition, keyword);
+		}
 		
 		int total_page = util.pageCount(rows, dataCount);
-		if(current_page > total_page)
+		if(current_page > total_page) {
 			current_page = total_page;
-		
+		}
 		int offset = (current_page-1)*rows;
-		if(offset<0) offset = 0;
+		if(offset<0) {
+			offset = 0;
+		}
 		
 		List<LectureDTO> list;
 		if(keyword.length()==0) {
 			list = dao.listLecture(offset, rows);
 		} else
 			list = dao.listLecture(offset, rows, condition, keyword);
-		
+		/*
 		List<LectureDTO> listLecture=null;
 		if(current_page==1) {
 			listLecture = dao.listLecture();
@@ -118,7 +124,7 @@ public class LectureServlet extends MyServlet{
 				dto.setCreated(dto.getCreated().substring(0, 10));
 			}
 		}
-		
+		*/
 		
 		long gap;
 		Date curDate = new Date();
@@ -143,11 +149,11 @@ public class LectureServlet extends MyServlet{
 		}
 		
 		String listUrl=cp+"/lts/list.do?"+query;
-		String articleUrl=cp+"/lts/lecture/article.do?page="+current_page+"&"+query;
+		String articleUrl=cp+"/lts/article.do?page="+current_page+"&"+query;
 		String paging=util.paging(current_page, total_page, listUrl);
 		
 		req.setAttribute("list", list);
-		req.setAttribute("listLecture", listLecture);
+		// req.setAttribute("listLecture", listLecture);
 		req.setAttribute("paging", paging);
 		req.setAttribute("page", current_page);
 		req.setAttribute("dataCount", dataCount);

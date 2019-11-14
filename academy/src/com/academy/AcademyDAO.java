@@ -224,7 +224,7 @@ public class AcademyDAO {
 		
 		try {
 			sb.append("SELECT acaNum, acaName, acaTel, acaAddress, acaDiv, ");
-			sb.append(" TO_CHAR(created, 'YYYY-MM-DD') created, a.userId ");
+			sb.append(" TO_CHAR(created, 'YYYY-MM-DD') created, hitCount, a.userId ");
 			sb.append(" FROM academy a JOIN member m ON a.userId=m.userId ");
 			if(condition.equalsIgnoreCase("acaName")) {
 				sb.append(" WHERE INSTR(acaName, ?) >= 1 ");
@@ -249,6 +249,7 @@ public class AcademyDAO {
 				dto.setAcaAddress(rs.getString("acaAddress"));
 				dto.setAcaDiv(rs.getString("acaDiv"));
 				dto.setCreated(rs.getString("created"));
+				dto.setHitCount(rs.getInt("hitCount"));
 				dto.setUserId(rs.getString("userId"));
 				
 				list.add(dto);
