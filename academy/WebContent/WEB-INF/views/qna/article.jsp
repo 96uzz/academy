@@ -144,7 +144,7 @@ function deleteQna(qnaNum) {
 			
 			<tr height="35" style="border-bottom: 1px solid #3598DB;">
 			    <td width="50%" align="left" style="padding-left: 5px;">
-			       이름 : 관리자
+			       이름 : ${dto.userName}
 			    </td>
 			    <td width="50%" align="right" style="padding-right: 5px;">
 			        ${dto.created} | 조회 ${dto.hitCount}
