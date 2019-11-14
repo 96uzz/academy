@@ -215,15 +215,9 @@ public class AcademyServlet extends MyServlet{
 	}
 	
 	protected void article(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		SessionInfo info = loginUser(req);
-		
 		AcademyDAO dao = new AcademyDAO();
 		String cp=req.getContextPath();
 		
-		if(info==null) {
-			resp.sendRedirect(cp+"/member/login.do");
-			return;
-		}
 		int num=Integer.parseInt(req.getParameter("acaNum"));
 		String page=req.getParameter("page");
 		

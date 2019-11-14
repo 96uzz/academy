@@ -219,15 +219,9 @@ public class LectureServlet extends MyServlet{
 	}
 	
 	protected void article(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		SessionInfo info = loginUser(req);
-		
 		LectureDAO dao = new LectureDAO();
 		String cp=req.getContextPath();
 		
-		if(info==null) {
-			resp.sendRedirect(cp+"/member/login.do");
-			return;
-		}
 		
 		int num=Integer.parseInt(req.getParameter("lecCode"));
 		String page=req.getParameter("page");
