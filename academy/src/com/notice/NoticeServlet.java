@@ -407,14 +407,7 @@ public class NoticeServlet extends MyServlet {
 	}
 	
 	private void download(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		SessionInfo info=loginUser(req);
-		String cp=req.getContextPath();
-		
-		if(info==null) {
-			resp.sendRedirect(cp+"/member/login.do");
-			return;
-		}
-		
+
 		NoticeDAO dao = new NoticeDAO();
 		String pathname = getFilePathname(req);
 		
