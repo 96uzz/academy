@@ -86,7 +86,7 @@ public class MemberServlet extends MyServlet {
 
 		MemberDTO dto = dao.readMember(userId);
 		if (dto != null) {
-			if (dto.getUserPwd().equals(userPwd)) { // 비밀번호가 일치하면
+			if (dto.getUserPwd().equals(userPwd)&&dto.getQuit()==1) { // 비밀번호가 일치하고 탈퇴되지 않은 회원이면
 				// 로그인 성공
 				// 세션의 유지시간을 20분으로 설정(기본 : 30분)
 				session.setMaxInactiveInterval(20 * 60); // 초단위
@@ -95,7 +95,6 @@ public class MemberServlet extends MyServlet {
 				SessionInfo info = new SessionInfo();
 				info.setUserId(dto.getUserId());
 				info.setUserName(dto.getUserName());
-
 				// 세션에 member이라는 이름으로 session info 객체를 저장
 				session.setAttribute("member", info);
 
@@ -420,12 +419,18 @@ public class MemberServlet extends MyServlet {
 	private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
 		String cp = req.getContextPath();
+		HttpSession session = req.getSession();
 
-		String userId = req.getParameter("userId");
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info == null) {
+			resp.sendRedirect(cp + "/member/login.do");
+			return;
+		}
+
+		String userId = info.getUserId();
 		MemberDAO dao = new MemberDAO();
 		dao.deleteMember(userId);
 
-		HttpSession session = req.getSession();
 
 		// 세션에 저장된 정보 지우기
 		session.removeAttribute("member");

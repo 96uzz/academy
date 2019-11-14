@@ -14,6 +14,7 @@ public class MemberDTO {
 	private int lecNum;
 	private int lecLimit;
 	private int interNum;
+	private int quit;
 
 	public String getUserId() {
 		return userId;
@@ -213,6 +214,14 @@ public class MemberDTO {
 
 	public void setInterNum(int interNum) {
 		this.interNum = interNum;
+	}
+
+	public int getQuit() {
+		return quit;
+	}
+
+	public void setQuit(int quit) {
+		this.quit = quit;
 	}
 
 }

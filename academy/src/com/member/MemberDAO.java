@@ -20,7 +20,7 @@ public class MemberDAO {
 
 		try {
 			sb.append(
-					"select userId, userName, userPwd, to_char(birth,'YYYY-MM-DD') birth, email, tel, lecCode, zip, addr1, addr2 ");
+					"select quit, userId, userName, userPwd, to_char(birth,'YYYY-MM-DD') birth, email, tel, lecCode, zip, addr1, addr2 ");
 			sb.append(" from member");
 			sb.append(" where userId = ? ");
 
@@ -40,6 +40,7 @@ public class MemberDAO {
 				dto.setZip(rs.getString("zip"));
 				dto.setAddr1(rs.getString("addr1"));
 				dto.setAddr2(rs.getString("addr2"));
+				dto.setQuit(rs.getInt("quit"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -131,7 +132,7 @@ public class MemberDAO {
 		String sql;
 
 		try {
-			sql = "DELETE FROM member WHERE userId = ?";
+			sql = "UPDATE member SET quit = 0 WHERE userId = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, userId);
