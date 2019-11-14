@@ -156,7 +156,7 @@ function drawAvgStar(){
 function deleteReview(reNum) {
 	console.log(query);
 	    var query = "reNum="+reNum+"&${query}";
-	    var url = "<%=cp%>/review/delete.do?" + query;
+	    var url = "<%=cp%>/review/deleteReview.do?" + query;
 		
 	    if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
 	    	location.href=url;
@@ -164,7 +164,7 @@ function deleteReview(reNum) {
 
 function updateReview(reNum) {
 	 var page = "${page}";
-	 var query = "reNum="+reNum+"&page="+page;
+	 var query = "reNum="+reNum+"&page="+page+"&rows="+${rows};
 	 var url = "<%=cp%>/review/update.do?" + query;
 
 	 location.href=url;

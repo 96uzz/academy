@@ -43,8 +43,8 @@ public class ReviewServlet extends HttpServlet {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 
-		HttpSession session = req.getSession();
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		// HttpSession session = req.getSession();
+		// SessionInfo info = (SessionInfo) session.getAttribute("member");
 		String uri = req.getRequestURI();
 
 		//if (info != null) {
@@ -62,7 +62,7 @@ public class ReviewServlet extends HttpServlet {
 				listReply(req, resp);
 			} else if(uri.indexOf("listLectureChange.do")!=-1) {
 				listLectureChange(req, resp);
-			} else if (uri.indexOf("deletereview.do") != -1) {
+			} else if (uri.indexOf("deleteReview.do") != -1) {
 				deleteReview(req, resp);
 			} else if (uri.indexOf("update.do") != -1) {
 				updateForm(req, resp);
@@ -103,6 +103,7 @@ public class ReviewServlet extends HttpServlet {
 		}
 
 		int rows = 10;
+		
 		String srows = req.getParameter("rows");
 		if (srows != null) {
 			rows = Integer.parseInt(srows);
@@ -198,7 +199,6 @@ public class ReviewServlet extends HttpServlet {
 		ReviewDAO dao = new ReviewDAO();
 		List<ReviewDTO> listLecture = dao.listLecture(acaNum);
 		req.setAttribute("listLecture",listLecture);
-		System.out.println(listLecture.size());
 		forward(req, resp, "/WEB-INF/views/review/listLecture.jsp");
 	}
 	
@@ -346,7 +346,7 @@ public class ReviewServlet extends HttpServlet {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		String cp=req.getContextPath();
 
-		int reNum = Integer.parseInt(req.getParameter("reNum"));
+		
 		String page = req.getParameter("page");
 		String rows = req.getParameter("rows");
 		String condition = req.getParameter("condition");
@@ -361,9 +361,17 @@ public class ReviewServlet extends HttpServlet {
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
-
+		int reNum = Integer.parseInt(req.getParameter("reNum"));
 		ReviewDAO dao = new ReviewDAO();
-		dao.deleteReview(reNum, info.getUserId());
+		ReviewDTO dto = dao.readReview(reNum);
+		
+		if (dto == null) {
+			resp.sendRedirect(cp + "/review/list.do?" + query);
+			return;
+		}
+		
+		
+		dao.deleteReview(reNum);
 
 		resp.sendRedirect(cp + "/review/list.do?"+ query);
 	}
@@ -376,10 +384,16 @@ public class ReviewServlet extends HttpServlet {
 		int reNum = Integer.parseInt(req.getParameter("reNum"));
 		String page = req.getParameter("page");
 		String rows = req.getParameter("rows");
-
+System.out.println(reNum+":"+page+":"+rows);
 		ReviewDAO dao = new ReviewDAO();
 		ReviewDTO dto = dao.readReview(reNum);
-
+		
+		List<ReviewDTO> listAcademy = dao.listAcademy();
+		List<ReviewDTO> listLecture = null;
+		if(listAcademy.size()>=0)
+			listLecture = dao.listLecture(listAcademy.get(0).getAcaNum());
+		
+		
 		if (dto == null) {
 			resp.sendRedirect(cp + "/review/list.do?page=" + page + "&rows=" + rows);
 			return;
@@ -390,13 +404,17 @@ public class ReviewServlet extends HttpServlet {
 			return;
 		}
 
+		req.setAttribute("listAcademy",listAcademy);
+		req.setAttribute("listLecture",listLecture);
 		req.setAttribute("dto", dto);
 		req.setAttribute("page", page);
 		req.setAttribute("rows", rows);
 		req.setAttribute("mode", "update");
 
-		forward(req, resp, "/WEB-INF/views/review/created.jsp");
+		forward(req, resp, "/WEB-INF/views/review/createdReview.jsp");
 	}
+	
+	
 
 	protected void updateSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
@@ -405,12 +423,16 @@ public class ReviewServlet extends HttpServlet {
 
 		ReviewDAO dao = new ReviewDAO();
 		ReviewDTO dto = new ReviewDTO();
-
+		
 		dto.setReNum(Integer.parseInt(req.getParameter("reNum")));
-		dto.setUserId(info.getUserId());
+//		dto.setLecCode(Integer.parseInt(req.getParameter("lecNum")));
+//		dto.setAcaName(req.getParameter("acaName"));
+//		dto.setLecName(req.getParameter("lecName"));
+//		dto.setUserId(info.getUserId());
+//		dto.setRate(req.getParameter("rate"));
 		dto.setContent(req.getParameter("content"));
 
-		dao.updateBoard(dto);
+		dao.updateBoard(dto, "update");
 
 		String page = req.getParameter("page");
 		String rows = req.getParameter("rows");

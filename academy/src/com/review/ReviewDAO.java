@@ -434,24 +434,16 @@ public class ReviewDAO {
 		return dto;
 	}
 	
-	public int deleteReview(int reNum, String userId) { // 강의 리뷰 삭제(관리자만)
+	public int deleteReview(int reNum) { // 강의 리뷰 삭제(관리자만)
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql;
 		
 		try {
-			if(userId.equals("admin")) {
-				sql="DELETE FROM review WHERE num=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, reNum);
-				result = pstmt.executeUpdate();
-			}else {
-				sql="DELETE FROM review WHERE renum=? AND userId=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, reNum);
-				pstmt.setString(2, userId);
-				result = pstmt.executeUpdate();
-			}
+			sql= "DELETE FROM REVIEW WHERE reNum = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reNum);
+			result = pstmt.executeUpdate();
 			
 			
 		} catch (Exception e) {
@@ -595,16 +587,19 @@ public class ReviewDAO {
 		}
 
 	
-		public int updateBoard(ReviewDTO dto) {
+		public int updateBoard(ReviewDTO dto, String mode) {
+			System.out.println(dto.toString());
 			int result = 0;
 			PreparedStatement pstmt = null;
 			String sql;
 			
+//			sql="UPDATE review SET lecCode=?,content=?,created=sysdate WHERE renum=?";
 			sql="UPDATE review SET content=? WHERE renum=?";
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, dto.getContent());
 				pstmt.setInt(2, dto.getReNum());
+			
 				result = pstmt.executeUpdate();
 				
 			} catch (Exception e) {

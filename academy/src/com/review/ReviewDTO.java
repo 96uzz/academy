@@ -215,4 +215,15 @@ public class ReviewDTO {
 		this.created = created;
 	}
 
+	@Override
+	public String toString() {
+		return "ReviewDTO [listNum=" + listNum + ", lecCode=" + lecCode + ", lecNum=" + lecNum + ", lecName=" + lecName
+				+ ", lecStartDate=" + lecStartDate + ", lecEndDate=" + lecEndDate + ", lecLimit=" + lecLimit
+				+ ", acaNum=" + acaNum + ", acaName=" + acaName + ", lecIntro=" + lecIntro + ", replyNum=" + replyNum
+				+ ", num=" + num + ", userName=" + userName + ", answer=" + answer + ", replyLike=" + replyLike
+				+ ", answerCount=" + answerCount + ", likeCount=" + likeCount + ", disLikeCount=" + disLikeCount
+				+ ", reNum=" + reNum + ", userId=" + userId + ", rate=" + rate + ", content=" + content + ", created="
+				+ created + "]";
+	}
+
 }
