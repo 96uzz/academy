@@ -210,9 +210,9 @@ public class ReviewServlet extends HttpServlet {
 	  	ReviewDAO dao = new ReviewDAO();
 		ReviewDTO dto = new ReviewDTO();
 		
-		dto.setLecCode(Integer.parseInt(req.getParameter("lecNum")));
+		dto.setLecCode(Integer.parseInt(req.getParameter("lecCode")));
+		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
 		dto.setAcaName(req.getParameter("acaName"));
-		dto.setLecName(req.getParameter("lecName"));
 		dto.setUserId(info.getUserId());
 		dto.setRate(req.getParameter("rate"));
 		dto.setContent(req.getParameter("content"));
@@ -250,12 +250,7 @@ public class ReviewServlet extends HttpServlet {
 			return;
 		}
 		
-		ReviewDTO preDto = dao.preReadLecture(reNum, condition, keyword);
-		ReviewDTO nextDto = dao.nextReadLecture(reNum, condition, keyword);
-		
 		req.setAttribute("dto", dto);
-		req.setAttribute("preDto", preDto);
-		req.setAttribute("nextDto", nextDto);
 		req.setAttribute("query", query);
 		req.setAttribute("page", page);
 		req.setAttribute("rows", rows);
@@ -384,8 +379,9 @@ public class ReviewServlet extends HttpServlet {
 		int reNum = Integer.parseInt(req.getParameter("reNum"));
 		String page = req.getParameter("page");
 		String rows = req.getParameter("rows");
-System.out.println(reNum+":"+page+":"+rows);
+	
 		ReviewDAO dao = new ReviewDAO();
+		
 		ReviewDTO dto = dao.readReview(reNum);
 		
 		List<ReviewDTO> listAcademy = dao.listAcademy();
@@ -395,11 +391,6 @@ System.out.println(reNum+":"+page+":"+rows);
 		
 		
 		if (dto == null) {
-			resp.sendRedirect(cp + "/review/list.do?page=" + page + "&rows=" + rows);
-			return;
-		}
-
-		if (!info.getUserId().equals(dto.getUserId())) {
 			resp.sendRedirect(cp + "/review/list.do?page=" + page + "&rows=" + rows);
 			return;
 		}
@@ -425,14 +416,12 @@ System.out.println(reNum+":"+page+":"+rows);
 		ReviewDTO dto = new ReviewDTO();
 		
 		dto.setReNum(Integer.parseInt(req.getParameter("reNum")));
-//		dto.setLecCode(Integer.parseInt(req.getParameter("lecNum")));
-//		dto.setAcaName(req.getParameter("acaName"));
-//		dto.setLecName(req.getParameter("lecName"));
-//		dto.setUserId(info.getUserId());
-//		dto.setRate(req.getParameter("rate"));
+		dto.setLecCode(Integer.parseInt(req.getParameter("lecCode")));
+		dto.setAcaNum(Integer.parseInt(req.getParameter("acaNum")));
+		dto.setUserId(info.getUserId());
 		dto.setContent(req.getParameter("content"));
 
-		dao.updateBoard(dto, "update");
+		dao.updateReview(dto, "update");
 
 		String page = req.getParameter("page");
 		String rows = req.getParameter("rows");

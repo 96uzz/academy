@@ -22,7 +22,7 @@
 <script type="text/javascript">
 
 function sendOk() {
-    var f = document.boardForm;
+    var f = document.reviewForm;
 
 	var str = f.acaNum.value;
     if(!str) {
@@ -31,7 +31,7 @@ function sendOk() {
         return;
     }
 
-	str = f.lecNum.value;
+	str = f.lecCode.value;
     if(!str) {
         alert("과정명을 입력하세요. ");
         f.content.focus();
@@ -180,7 +180,7 @@ body{
 		
 			<br>
 			<!--  여기부터 메인 -->
-			<form name="boardForm" method="post" style="width: 100%;">
+			<form name="reviewForm" method="post" style="width: 100%;">
 			  <table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">작성자</td>
@@ -202,8 +202,8 @@ body{
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">과정명</td>
-			      <td style="padding-left:10px;"> 
-			         <select name="lecNum" class="listLectureCls selectIm">
+			      <td style="padding-left:10px;" class="listLectureCls"> 
+			         <select name="lecCode" class="selectIm">
 			            <c:forEach var="vo" items="${listLecture}">
 			               <option value="${vo.lecCode}" ${dto.lecCode==vo.lecCode ? "selected='selected'" : "" }>${vo.lecName}</option>
 			            </c:forEach>
