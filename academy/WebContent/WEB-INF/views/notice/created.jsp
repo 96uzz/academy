@@ -166,7 +166,7 @@ body{
         
        
 			<form name="boardForm" method="post" enctype="multipart/form-data">
-			  <table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
+			  <table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 			      <td style="padding-left:10px;"> 

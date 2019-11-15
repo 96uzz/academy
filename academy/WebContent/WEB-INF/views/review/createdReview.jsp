@@ -119,7 +119,42 @@ body{
 	font-weight: 800;
 }
 
+.loginButton {
+   font-family: 'Nanum Square', sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   border: 1px solid;
+   outline: 0px;
+   text-align: center;
+   border-radius: 3px;
+   height: 32px;
+   width: 100px;
+   
+}
+.loginButton:active, .loginButton:focus, .loginButton:hover {
+    background-color:#3598DB;
+    border-color: #adadad;
+    color: #333333;
+    cursor: pointer;
+}
+.loginButton[disabled], fieldset[disabled] .loginButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
 
+
+.selectIm {
+	border: 1px solid white;
+	height: 35px;
+	font-family: 'Nanum Square', sans-serif;
+	font-size: 17px;
+}
 </style>
 </head>
 <body>
@@ -136,18 +171,18 @@ body{
         	</div>
 			<table>
 				<tr><td><a href="<%=cp%>/board/list.do" id="nav2">자유 게시판</a></td></tr>
-				<tr><td><br><a href="<%=cp%>/review/list.do" id="nav1">강의 평가</a></td></tr>
+				<tr><td><a href="<%=cp%>/review/list.do" id="nav1">강의 평가</a></td></tr>
 			</table>
 		</div>
-		<div class="content2">
-			&nbsp;&nbsp;&nbsp;<h3 style="width: 200px; margin-left: 70px;">강의 평가</h3>
-		</div>
-			<br><br><br><br>
+		<div class="content2" style="font-size: 30px; font-weight: 800; color: #3598DB; width: 800px;">
+			<p>강의 평가</p>
+			
+		
+			<br>
 			<!--  여기부터 메인 -->
-			<form name="boardForm" method="post" style="width: 900px; float: right;">
-				<br><br>
-			  <table style="min-height: 400px;    border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
-			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
+			<form name="boardForm" method="post" style="width: 100%;">
+			  <table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 17px; color: black; width: 100%;">
+			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">작성자</td>
 			      <td style="padding-left:10px;"> 
 			          ${sessionScope.member.userName}
@@ -157,7 +192,7 @@ body{
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">기관명</td>
 			      <td style="padding-left:10px;"> 
-			         <select name="acaNum">
+			         <select name="acaNum" class="selectIm">
 			            <c:forEach var="vo" items="${listAcademy}">
 			               <option value="${vo.acaNum}" ${dto.acaNum==vo.acaNum ? "selected='selected'" : "" }>${vo.acaName}</option>
 			            </c:forEach>
@@ -168,7 +203,7 @@ body{
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">과정명</td>
 			      <td style="padding-left:10px;" class="listLectureCls"> 
-			         <select name="lecNum">
+			         <select name="lecNum" class="selectIm">
 			            <c:forEach var="vo" items="${listLecture}">
 			               <option value="${vo.lecCode}" ${dto.lecCode==vo.lecCode ? "selected='selected'" : "" }>${vo.lecName}</option>
 			            </c:forEach>
@@ -176,10 +211,10 @@ body{
 			      </td>
 			  </tr>
 			
-			    <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+			    <tr align="left" height="250" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">교육과정 소개</td>
 			     <td style="padding-left:10px;"> 
-			          <input type="text" name="content" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.content}">
+			          <textarea rows="12" cols="2" name="content" maxlength="100" class="boxTF" style="width: 80%;">${dto.content}</textarea> 
 			      </td>
 			  </tr>
 			</table>
@@ -205,8 +240,9 @@ body{
         </div>
 	<!--  여기까지 메인 -->
 	
-	
+		</div>
     </div>
+   
 
 
 <div class="footer">
