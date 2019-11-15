@@ -202,8 +202,8 @@ body{
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#3598DB" style="text-align: center;">과정명</td>
-			      <td style="padding-left:10px;" class="listLectureCls"> 
-			         <select name="lecNum" class="selectIm">
+			      <td style="padding-left:10px;"> 
+			         <select name="lecNum" class="listLectureCls selectIm">
 			            <c:forEach var="vo" items="${listLecture}">
 			               <option value="${vo.lecCode}" ${dto.lecCode==vo.lecCode ? "selected='selected'" : "" }>${vo.lecName}</option>
 			            </c:forEach>

@@ -153,7 +153,7 @@ function searchList() {
 			</table>
 			
 			<table style="border-collapse: collapse; border-spacing: 0; border-bottom: 1px solid black; border-top: 1px solid black; font-size: 18px; color: black; width: 100%;">
-				<tr style="border-bottom: 1px solid black; background-color: #3598DB; height: 35px;">
+				<tr align="center" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; background-color: #3598DB;">
 					<td style="width: 50px; text-align: center;">No</td>
 					<td style="width: 100px; text-align: center;">분류</td>		
 					<td style="width: 200px; text-align: center;">학원이름</td>
